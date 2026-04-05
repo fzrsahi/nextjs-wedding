@@ -35,8 +35,8 @@ Pastikan judul kolom mengikuti yang disepakati (supaya situs dan spreadsheet coc
 | **group** | Kategori tamu, misalnya: keluarga, teman kantor, teman kuliah. Hanya untuk penataan Anda; tidak wajib tampil ke tamu. |
 | **nama** | Nama yang **akan tampil** di undangan, misalnya: “Budi Santoso”. Tulis dengan benar ejaannya. |
 | **ket** | Catatan internal Anda sebelum tamu jawab, misalnya perkiraan: datang / tidak / mungkin. Boleh dikosongkan jika tidak dipakai. |
-| **tipe** | **Jenis undangan** untuk orang ini — isi persis salah satu kata berikut (huruf kecil, tanpa spasi ekstra): `akad`, `resepsi`, atau `keduanya`. Penjelasan ada di bawah. |
-| **LINK undangan** | **Tautan pribadi** untuk tamu ini. Biasanya diisi otomatis dengan **rumus** dari nama atau dari kode pendek, lalu Anda salin untuk dikirim. |
+| **tipe** | **Jenis undangan** — isi `akad`, `resepsi`, atau `keduanya` (huruf kecil / campuran, akan dinormalisasi). **Boleh dikosongkan:** sistem menganggap **keduanya** (akad + resepsi tampil). |
+| **link** | **Tautan pribadi** untuk tamu ini (header kolom ditulis persis: `link`). Biasanya diisi otomatis dengan **rumus** dari nama atau kode pendek, lalu Anda salin untuk dikirim. |
 | **konfirmasi** | Diisi **otomatis dari situs** setelah tamu mengirim RSVP. Anda **tidak perlu** mengetik manual di sini untuk jawaban resmi tamu. Kalau tamu mengubah jawaban, nilai di sini akan **diganti** dengan jawaban terbaru. |
 
 ---
@@ -62,12 +62,12 @@ RSVP untuk tamu **keduanya** bisa lebih detail (misalnya jawab terpisah untuk ak
 3. Isi **no** (opsional tapi membantu), **group** (opsional), **nama** (wajib benar).
 4. Isi **tipe** dengan salah satu: `akad`, `resepsi`, atau `keduanya`.
 5. Isi **ket** jika Anda punya catatan internal (opsional).
-6. Untuk kolom **LINK undangan**:
+6. Untuk kolom **link**:
    - Jika sudah ada **rumus** di baris atas, seret / salin rumus ke baris baru supaya tautan terbentuk sendiri, **atau**
    - Minta bantuan satu kali ke yang mengurus teknis untuk **contoh rumus** yang cocok dengan struktur kolom Anda.
 7. **Jangan mengubah** isi kolom **konfirmasi** secara manual untuk jawaban tamu — biarkan dari situs. Kecuali Anda sengaja mengoreksi data secara administratif dan sepakat dengan tim.
 
-Setelah **LINK undangan** terisi, **salin** isi sel itu dan kirim ke tamu.
+Setelah kolom **link** terisi, **salin** isi sel itu dan kirim ke tamu.
 
 ---
 

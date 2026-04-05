@@ -50,8 +50,8 @@ Prinsip: satu kontrak nama/key aset; sumber (CDN vs lokal) ditentukan oleh env d
 
 Kolom sheet (header disarankan persis seperti ini agar mapping API konsisten):
 
-| no | group | nama | ket | tipe | LINK undangan | konfirmasi |
-|----|-------|------|-----|------|---------------|------------|
+| no | group | nama | ket | tipe | link | konfirmasi |
+|----|-------|------|-----|------|------|------------|
 
 ### Penjelasan Field
 
@@ -61,15 +61,15 @@ Kolom sheet (header disarankan persis seperti ini agar mapping API konsisten):
 | **group** | Kategori tamu: keluarga, teman, kantor, dll. |
 | **nama** | Nama tamu **yang ditampilkan** di website. |
 | **ket** | Status awal dari admin: `datang`, `tidak`, `possible`. |
-| **tipe** | Jenis undangan: `akad`, `resepsi`, `keduanya`. |
-| **LINK undangan** | URL personal; nilai diisi admin (biasanya dengan **rumus** di kolom ini, bukan dari fitur app). |
+| **tipe** | Jenis undangan: `akad`, `resepsi`, `keduanya`. **Kosong** = di aplikasi dianggap `keduanya` (memudahkan sheet yang baru isi nama saja). |
+| **link** | URL undangan personal; diisi admin (biasanya dengan **rumus** di spreadsheet, bukan dari fitur app). |
 | **konfirmasi** | Hasil RSVP: `datang` atau `tidak`. Di-update API (overwrite). |
 
 ---
 
 ## Link undangan: rumus spreadsheet (bukan fitur app)
 
-Aplikasi **tidak** menyediakan tombol atau endpoint untuk “generate link”. Admin memakai **Excel / Google Sheets** agar kolom `LINK undangan` terisi otomatis dari nama atau dari kolom slug.
+Aplikasi **tidak** menyediakan tombol atau endpoint untuk “generate link”. Admin memakai **Excel / Google Sheets** agar kolom **`link`** terisi otomatis dari nama atau dari kolom slug.
 
 **Bisa?** Ya. Spreadsheet mendukung penggabungan teks (`&`, `CONCAT`), `LOWER`, `SUBSTITUTE` untuk mengganti spasi jadi `-`, dll.
 
@@ -78,10 +78,10 @@ Aplikasi **tidak** menyediakan tombol atau endpoint untuk “generate link”. A
 Asumsi:
 
 - Domain produksi di cell **satu tempat** (mis. `Settings!$B$1` = `https://domain.com`), atau string tetap di rumus.
-- Nama tamu di kolom **C** (sesuaikan huruf kolom Anda).
+- Layout umum: **A**=`no`, **B**=`group`, **C**=`nama`, **D**=`ket`, **E**=`tipe`, **F**=`link`, **G**=`konfirmasi` (sesuaikan jika urutan Anda beda).
 - Baris pertama header, data mulai baris 2.
 
-**Opsi A — domain tetap di rumus, slug sederhana dari nama (spasi → strip):**
+**Opsi A — isi sel kolom `link` (mis. F2): domain tetap, slug dari `nama` di C (spasi → strip):**
 
 ```excel
 ="https://domain.com?to="&LOWER(SUBSTITUTE(C2;" ";"-"))
@@ -89,10 +89,10 @@ Asumsi:
 
 Di Excel locale Indonesia pemisah argumen bisa koma: `SUBSTITUTE(C2," ","-")`.
 
-**Opsi B — domain dari cell (mis. `$J$1`), slug di kolom dedikasi `slug` (kolom F):**
+**Opsi B — domain dari cell (mis. `$J$1`), slug di kolom dedikasi (mis. kolom `H`, bukan kolom `link`):**
 
 ```excel
-=$J$1&"?to="&F2
+=$J$1&"?to="&H2
 ```
 
 **Catatan:** Nama dengan karakter khusus / banyak spasi beruntun mungkin perlu rumus tambahan (`TRIM`, ganda spasi, normalisasi aksen) atau kolom **slug** yang diisi manual agar cocok persis dengan yang dipakai app untuk `?to=`.
@@ -163,11 +163,17 @@ Urutan fungsional:
 
 ### `tipe === "keduanya"`
 
-Pilihan terpisah (akad / resepsi) — representasi di sheet harus disepakati (kolom ganda atau format komposit).
+Pilihan terpisah (akad / resepsi). **Implementasi saat ini** menyimpan satu nilai di kolom `konfirmasi` dengan format:
+
+```text
+akad:datang;resepsi:tidak
+```
+
+(nilai `datang` / `tidak` per segmen; huruf kecil.)
 
 ### `tipe === "akad"` atau `resepsi`
 
-Satu pilihan: `datang` | `tidak`.
+Satu nilai di kolom `konfirmasi`: `datang` | `tidak`.
 
 ---
 
@@ -180,18 +186,32 @@ Satu pilihan: `datang` | `tidak`.
 
 ### Payload (contoh)
 
+**Tipe satu acara (`akad` / `resepsi`):**
+
 ```json
 {
-  "nama": "budi-santoso",
+  "slug": "budi-santoso",
   "konfirmasi": "datang"
 }
 ```
+
+**Tipe `keduanya`:**
+
+```json
+{
+  "slug": "budi-santoso",
+  "konfirmasiAkad": "datang",
+  "konfirmasiResepsi": "tidak"
+}
+```
+
+Field identitas tamu memakai **`slug`** (bukan `nama`) agar konsisten dengan query `?to=`.
 
 ### Proses API
 
 1. Validasi payload.
 2. Cari baris tamu di sheet.
-3. Update `konfirmasi` (dan field terkait jika `keduanya`).
+3. Update kolom `konfirmasi` (satu nilai teks; untuk `keduanya` memakai format `akad:…;resepsi:…`).
 4. Overwrite jika sudah ada.
 5. Response JSON + status HTTP.
 
@@ -202,7 +222,7 @@ Satu pilihan: `datang` | `tidak`.
 ### Admin
 
 1. Input / edit data di Google Sheets.
-2. Isi **LINK undangan** dengan rumus (atau salin dari kolom formula); **tanpa** fitur generate di website.
+2. Isi kolom **`link`** dengan rumus (atau salin dari kolom formula); **tanpa** fitur generate di website.
 3. Kirim link ke tamu.
 
 ### Tamu

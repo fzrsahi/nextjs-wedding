@@ -1,65 +1,168 @@
-import Image from "next/image";
+import { DevSheetsBanner } from "@/components/DevSheetsBanner";
+import { RsvpForm } from "@/components/RsvpForm";
+import {
+  UI_GUEST_NOT_FOUND_DESC,
+  UI_GUEST_NOT_FOUND_TITLE,
+  UI_INVITE_LINK_INCOMPLETE_DESC,
+  UI_INVITE_LINK_INCOMPLETE_TITLE,
+} from "@/lib/constants/messages.id";
+import { getAssetUrl } from "@/lib/assets";
+import {
+  getAkadSchedule,
+  getCoupleDisplayHeading,
+  getGalleryAssetPaths,
+  getResepsiSchedule,
+} from "@/lib/event-config";
+import { isAkadSectionVisible, isResepsiSectionVisible } from "@/lib/guest";
+import { createLogger } from "@/lib/logger";
+import { getGuestsData } from "@/lib/sheets";
+import { normalizeInvitationQueryParam } from "@/lib/slug";
 
-export default function Home() {
+const log = createLogger("page:invitation");
+
+export const dynamic = "force-dynamic";
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ to?: string }>;
+}) {
+  const { to } = await searchParams;
+  const slug =
+    typeof to === "string" ? normalizeInvitationQueryParam(to) : "";
+
+  if (!slug) {
+    log.info("Invitation page opened without ?to=");
+    return (
+      <>
+        <DevSheetsBanner />
+        <main className="mx-auto max-w-xl p-6 font-sans text-sm text-neutral-800">
+          <h1 className="text-base font-medium">{UI_INVITE_LINK_INCOMPLETE_TITLE}</h1>
+          <p className="mt-2 text-neutral-600">{UI_INVITE_LINK_INCOMPLETE_DESC}</p>
+        </main>
+      </>
+    );
+  }
+
+  const { guests } = await getGuestsData();
+  const guest = guests.find((g) => g.slug === slug);
+
+  if (!guest) {
+    log.info("Guest not found for slug", { slug, guestCount: guests.length });
+    return (
+      <>
+        <DevSheetsBanner />
+        <main className="mx-auto max-w-xl p-6 font-sans text-sm text-neutral-800">
+          <h1 className="text-base font-medium">{UI_GUEST_NOT_FOUND_TITLE}</h1>
+          <p className="mt-2 text-neutral-600">{UI_GUEST_NOT_FOUND_DESC}</p>
+        </main>
+      </>
+    );
+  }
+
+  log.info("Invitation rendered", {
+    slug,
+    invitationKind: guest.invitationKind,
+  });
+
+  const akad = getAkadSchedule();
+  const resepsi = getResepsiSchedule();
+  const galleryPaths = getGalleryAssetPaths();
+  const heroPath = process.env.NEXT_PUBLIC_HERO_IMAGE_PATH?.trim();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <>
+      <DevSheetsBanner />
+      <main className="mx-auto min-h-screen max-w-xl space-y-8 p-6 font-sans text-sm text-neutral-800">
+        <header className="space-y-1">
+          <p className="text-xs uppercase tracking-wide text-neutral-500">
+            Undangan pernikahan
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+          <h1 className="text-lg font-medium">{getCoupleDisplayHeading()}</h1>
+          <p className="pt-2 text-neutral-600">
+            Kepada Yth.
+            <br />
+            <span className="font-medium text-neutral-900">
+              {guest.displayName}
+            </span>
+          </p>
+        </header>
+
+        {heroPath ? (
+          <div className="border border-neutral-200">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={getAssetUrl(heroPath)}
+              alt=""
+              className="aspect-video w-full object-cover"
+              fetchPriority="high"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+          </div>
+        ) : null}
+
+        <section aria-label="Backend data">
+          <h2 className="mb-2 text-xs font-semibold uppercase text-neutral-400">
+            Data tamu (sheet)
+          </h2>
+          <dl className="grid grid-cols-[8rem_1fr] gap-x-2 gap-y-1 text-xs">
+            <dt className="text-neutral-500">Slug</dt>
+            <dd>{guest.slug}</dd>
+            <dt className="text-neutral-500">Tipe</dt>
+            <dd>{guest.invitationKind}</dd>
+            <dt className="text-neutral-500">Grup</dt>
+            <dd>{guest.group || "—"}</dd>
+            <dt className="text-neutral-500">Ket</dt>
+            <dd>{guest.note || "—"}</dd>
+            <dt className="text-neutral-500">Konfirmasi (raw)</dt>
+            <dd className="break-all">{guest.rsvpRaw || "—"}</dd>
+            <dt className="text-neutral-500">Link</dt>
+            <dd className="break-all text-neutral-600">
+              {guest.invitationLink || "—"}
+            </dd>
+          </dl>
+        </section>
+
+        {isAkadSectionVisible(guest.invitationKind) ? (
+          <section>
+            <h2 className="mb-2 text-xs font-semibold uppercase text-neutral-400">
+              Akad
+            </h2>
+            <pre className="overflow-auto border border-neutral-200 bg-neutral-50 p-3 text-xs">
+              {JSON.stringify(akad, null, 2)}
+            </pre>
+          </section>
+        ) : null}
+
+        {isResepsiSectionVisible(guest.invitationKind) ? (
+          <section>
+            <h2 className="mb-2 text-xs font-semibold uppercase text-neutral-400">
+              Resepsi
+            </h2>
+            <pre className="overflow-auto border border-neutral-200 bg-neutral-50 p-3 text-xs">
+              {JSON.stringify(resepsi, null, 2)}
+            </pre>
+          </section>
+        ) : null}
+
+        {galleryPaths.length > 0 ? (
+          <section>
+            <h2 className="mb-2 text-xs font-semibold uppercase text-neutral-400">
+              Galeri (path)
+            </h2>
+            <ul className="list-inside list-disc text-xs text-neutral-600">
+              {galleryPaths.map((p) => (
+                <li key={p}>{p}</li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
+        <RsvpForm
+          slug={guest.slug}
+          invitationKind={guest.invitationKind}
+          initialRsvpRaw={guest.rsvpRaw}
+        />
       </main>
-    </div>
+    </>
   );
 }

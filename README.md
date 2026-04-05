@@ -78,9 +78,13 @@ Perintah lain yang tersedia:
 
 ## Variabel lingkungan & layanan luar
 
-Untuk RSVP dan pembacaan data dari Google Sheets, serta URL aset CDN, biasanya diperlukan **variabel lingkungan** (file `.env.local` di lokal, pengaturan di Vercel untuk produksi). Nama persis variabel dan langkah setup akan mengikuti implementasi; acuannya tetap [`docs/spesifikasi-proyek.md`](docs/spesifikasi-proyek.md).
+Salin [`.env.example`](.env.example) ke `.env.local`, lalu isi nilai Google Sheets dan (opsional) `NEXT_PUBLIC_*` untuk teks acara, galeri, hero, dan CDN. Untuk tab yang namanya rumit (`|`, `&`, dll.), set **`GOOGLE_SHEETS_SHEET_GID`** dari URL (`#gid=...`). Detail kolom sheet dan format RSVP ada di [`docs/spesifikasi-proyek.md`](docs/spesifikasi-proyek.md).
+
+**Logging (server):** [Pino](https://getpino.io/) lewat `lib/logger.ts` — JSON di production (Vercel / log drain), `pino-pretty` di development. Atur `LOG_LEVEL`.
 
 **Penting:** jangan mengunggah kunci rahasia ke repositori publik.
+
+**Rute utama:** halaman undangan `/?to={slug}` · `POST /api/rsvp` (body JSON memakai field `slug`).
 
 ---
 
@@ -92,11 +96,14 @@ Cara umum untuk Next.js di **Vercel**: hubungkan repositori Git, tentukan perint
 
 ## Struktur repositori (orientasi)
 
-- `app/` — rute, halaman, dan API Route sesuai App Router Next.js.
+- `app/` — halaman undangan (`page.tsx`), `app/api/rsvp` (handler tipis).
+- `components/` — UI minimal (RSVP form, banner dev Sheets).
+- `lib/constants/` — cache tag, keys sheet/RSVP, teks UI/API bahasa Indonesia (`messages.id.ts`).
+- `lib/types/` — tipe `T*` (guest, sheet, RSVP, event).
+- `lib/services/` — logika domain (mis. `rsvp.service.ts`).
+- `lib/` — slug, event config, aset, Google Sheets, logger (Pino).
 - `public/` — aset statis lokal (fallback dan pengembangan).
-- `docs/` — dokumentasi proyek undangan (indeks: [`docs/README.md`](docs/README.md)).
-
-Struktur pasti akan berkembang seiring fitur (komponen UI, utilitas integrasi Sheets, dll.).
+- `docs/` — dokumentasi proyek (indeks: [`docs/README.md`](docs/README.md)).
 
 ---
 
