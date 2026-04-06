@@ -12,7 +12,8 @@ Dokumen di sini **melengkapi** [README utama di root](../README.md): README root
 |--------|----------------|-------------|
 | [**panduan-penggunaan.md**](panduan-penggunaan.md) | **Panitia**, keluarga yang urus data tamu, dan **tamu** yang hanya perlu tahu cara pakai undangan | Penjelasan sederhana: arti kolom spreadsheet, cara tambah tamu, cara kirim tautan (termasuk konsep rumus di sheet, **tanpa** fitur generate link di website), cara RSVP, dan apa yang dilakukan jika muncul “undangan tidak ditemukan”. **Tidak** mengandalkan istilah pemrograman. |
 | [**spesifikasi-proyek.md**](spesifikasi-proyek.md) | **Pengembang** dan orang yang urus integrasi (Sheets, hosting, CDN) | Spesifikasi teknis: stack, struktur kolom Google Sheets, format URL `?to=`, logika tipe undangan (akad / resepsi / keduanya), kontrak API RSVP, alur admin–tamu–sistem, strategi aset (dev lokal, produksi CDN + fallback `public/`), performa, validasi, contoh rumus spreadsheet untuk kolom tautan, serta roadmap (misalnya fitur komentar yang masih dipertimbangkan). |
-| [**desain-undangan.md**](desain-undangan.md) | **Desainer**, **penulis konten**, dan pengembang front-end | Dokumen hidup untuk **tampilan dan pengalaman**: mood, warna, font, urutan section halaman, hero, galeri, form RSVP dari sisi copy dan layout. Spesifikasi teknis dan cara isi sheet **tidak** diulang di sini; dirujuk ke `spesifikasi-proyek.md`. |
+| [**brief-desain-klien.md**](brief-desain-klien.md) | **Klien**, **PM**, **konten** | **Brief dari klien**: jawaban non-teknis (tema, warna, referensi, musik, daftar section) + alur singkat + catatan tim. |
+| [**desain-undangan-teknis.md**](desain-undangan-teknis.md) | **Pengembang**, **desainer UI** | **Spesifikasi desain teknis**: token warna, tipografi, pemetaan section → komponen, motion, audio, responsif, status vs roadmap implementasi. |
 
 ---
 
@@ -27,14 +28,16 @@ Dokumen di sini **melengkapi** [README utama di root](../README.md): README root
 
 1. [README di root](../README.md) — prasyarat, `npm run dev`, gambaran teknologi.  
 2. [spesifikasi-proyek.md](spesifikasi-proyek.md) — sumber kebenaran untuk implementasi.  
-3. [desain-undangan.md](desain-undangan.md) — supaya UI mengikuti keputusan desain dan konten.  
-4. [panduan-penggunaan.md](panduan-penggunaan.md) — berguna agar fitur yang dibuat **masuk akal** untuk user non-teknis (misalnya teks error, alur isi sheet).
+3. [brief-desain-klien.md](brief-desain-klien.md) — kebutuhan dari klien.  
+4. [desain-undangan-teknis.md](desain-undangan-teknis.md) — cara menerjemahkan ke UI di kode.  
+5. [panduan-penggunaan.md](panduan-penggunaan.md) — berguna agar fitur yang dibuat **masuk akal** untuk user non-teknis (misalnya teks error, alur isi sheet).
 
 ### Saya desainer / konten
 
-1. [desain-undangan.md](desain-undangan.md) — tempat utama mengisi brief visual dan copy.  
-2. [spesifikasi-proyek.md](spesifikasi-proyek.md) — bagian struktur section dan conditional akad/resepsi agar desain **selaras** dengan data `tipe` undangan.  
-3. [panduan-penggunaan.md](panduan-penggunaan.md) — memahami apa yang panitia dan tamu alami di lapangan.
+1. [brief-desain-klien.md](brief-desain-klien.md) — apa yang diminta klien.  
+2. [desain-undangan-teknis.md](desain-undangan-teknis.md) — token, struktur halaman, dan batasan teknis (audio, motion).  
+3. [spesifikasi-proyek.md](spesifikasi-proyek.md) — struktur section dan conditional akad/resepsi agar desain **selaras** dengan data `tipe` undangan.  
+4. [panduan-penggunaan.md](panduan-penggunaan.md) — memahami apa yang panitia dan tamu alami di lapangan.
 
 ---
 
@@ -42,7 +45,7 @@ Dokumen di sini **melengkapi** [README utama di root](../README.md): README root
 
 - **Tautan undangan** selalu dijelaskan sebagai: spreadsheet + rumus (atau salin manual), **bukan** tombol di aplikasi.  
 - **Bahasa Indonesia** dipakai di seluruh dokumen di folder ini; istilah teknis global (Next.js, API, CDN) tetap dipakai jika sudah umum di industri, dengan penjelasan singkat di panduan pengguna bila perlu.  
-- Jika ada perubahan besar alur (misalnya kolom sheet tambahan atau RSVP dua jalur untuk “keduanya”), **perbarui** `spesifikasi-proyek.md` terlebih dahulu, lalu sesuaikan `panduan-penggunaan.md` dan bagian relevan di `desain-undangan.md`.
+- Jika ada perubahan besar alur (misalnya kolom sheet tambahan atau RSVP dua jalur untuk “keduanya”), **perbarui** `spesifikasi-proyek.md` terlebih dahulu, lalu sesuaikan `panduan-penggunaan.md`, `brief-desain-klien.md` (jika mengubah kebutuhan), dan `desain-undangan-teknis.md` (jika mengubah UI).
 
 ---
 

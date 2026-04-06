@@ -12,6 +12,7 @@ import {
 import {
   buildHeaderIndexMap,
   mapGuestFromSheetRow,
+  parseInvitationKindOrDefault,
   type TGuest,
 } from "@/lib/guest";
 import { createLogger } from "@/lib/logger";
@@ -27,6 +28,59 @@ export function isSheetsConfigured(): boolean {
       process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL &&
       process.env.GOOGLE_PRIVATE_KEY,
   );
+}
+
+function isDevLocalGuestsEnabled(): boolean {
+  if (process.env.NODE_ENV !== "development") return false;
+  const raw = process.env.DEV_USE_LOCAL_GUESTS?.trim().toLowerCase();
+  if (!raw) return true;
+  return raw !== "0" && raw !== "false" && raw !== "off" && raw !== "no";
+}
+
+function buildDevGuestsData(sheetTabTitle: string): TGuestsSheetData {
+  const rawList = process.env.DEV_LOCAL_GUESTS?.trim();
+  const defaultItems = [
+    "Tamu Demo Utama|keduanya",
+    "Keluarga Pria|akad",
+    "Keluarga Wanita|resepsi",
+  ];
+  const items = rawList
+    ? rawList
+        .split(",")
+        .map((v) => v.trim())
+        .filter(Boolean)
+    : defaultItems;
+
+  const guests: TGuest[] = items
+    .map((item, idx) => {
+      const [nameRaw, kindRaw] = item.split("|").map((v) => v?.trim() ?? "");
+      if (!nameRaw) return null;
+      const invitationKind = parseInvitationKindOrDefault(kindRaw);
+      if (!invitationKind) return null;
+
+      return {
+        sheetRowIndex: idx + 2,
+        indexNo: String(idx + 1),
+        group: "DEV",
+        displayName: nameRaw,
+        note: "Local development guest",
+        invitationKind,
+        invitationLink: "",
+        rsvpRaw: "",
+        slug: nameRaw
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, ""),
+      } satisfies TGuest;
+    })
+    .filter((g): g is TGuest => Boolean(g));
+
+  return {
+    guests,
+    konfirmasiColumnIndex: -1,
+    sheetTabTitle,
+    sheetId: -1,
+  };
 }
 
 function createSheetsClient() {
@@ -126,6 +180,11 @@ async function readGridValues(
 async function loadGuestsDataUncached(): Promise<TGuestsSheetData> {
   const fallbackTitle =
     process.env.GOOGLE_SHEETS_TAB_NAME?.trim() || DEFAULT_SHEET_TAB_NAME;
+
+  if (isDevLocalGuestsEnabled()) {
+    log.info("Using local dev guest data; skipping Google Sheets read");
+    return buildDevGuestsData(fallbackTitle);
+  }
 
   if (!isSheetsConfigured()) {
     return {

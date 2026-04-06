@@ -26,7 +26,8 @@ Semua panduan proyek undangan ditulis dalam **Bahasa Indonesia**. Ringkasan isi 
 | **[`docs/README.md`](docs/README.md)** | **Indeks dokumentasi** — penjelasan tiap berkas, untuk siapa, dan urutan baca yang disarankan. Mulai dari sini jika Anda mencari dokumen yang tepat. |
 | [`docs/panduan-penggunaan.md`](docs/panduan-penggunaan.md) | Panduan untuk **panitia dan tamu** tanpa istilah teknis berat. |
 | [`docs/spesifikasi-proyek.md`](docs/spesifikasi-proyek.md) | **Spesifikasi teknis**: struktur sheet, API RSVP, strategi aset, performa, contoh rumus tautan. |
-| [`docs/desain-undangan.md`](docs/desain-undangan.md) | **Desain undangan**: visual, tipografi, section, copy; diisi bertahap bersama tim desain. |
+| [`docs/brief-desain-klien.md`](docs/brief-desain-klien.md) | **Brief dari klien** (jawaban + alur singkat). |
+| [`docs/desain-undangan-teknis.md`](docs/desain-undangan-teknis.md) | **Desain teknis** (token, tipografi, section, motion, audio). |
 
 ---
 

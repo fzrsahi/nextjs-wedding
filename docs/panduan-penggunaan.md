@@ -143,7 +143,7 @@ Jika perlu laporan ke keluarga, Anda bisa **menyaring / mengurutkan** baris di s
 
 ## Butuh bantuan teknis?
 
-Hal teknis (pasang situs, koneksi spreadsheet, unggah foto) biasanya ditangani orang yang mengurus **website / IT**. Panduan untuk mereka ada di **[spesifikasi proyek](./spesifikasi-proyek.md)**. Desain tampilan secara visual dibahas di **[desain undangan](./desain-undangan.md)**.
+Hal teknis (pasang situs, koneksi spreadsheet, unggah foto) biasanya ditangani orang yang mengurus **website / IT**. Panduan untuk mereka ada di **[spesifikasi proyek](./spesifikasi-proyek.md)**. Tampilan undangan secara teknis di **[desain undangan teknis](./desain-undangan-teknis.md)**; kebutuhan dari klien di **[brief desain klien](./brief-desain-klien.md)**.
 
 ---
 

@@ -1,6 +1,6 @@
 # Spesifikasi Proyek & Arsitektur — Undangan Pernikahan
 
-Dokumen ini adalah **spesifikasi teknis** (data, API, alur, performa). Urutan section dan copy UI-level **tidak** dijabarkan di sini; hal itu dibahas lebih lengkap di **[desain undangan](./desain-undangan.md)**.
+Dokumen ini adalah **spesifikasi teknis** (data, API, alur, performa). Urutan section, token visual, motion, dan audio dibahas di **[desain undangan teknis](./desain-undangan-teknis.md)**; kebutuhan dari klien di **[brief desain klien](./brief-desain-klien.md)**.
 
 Untuk **panduan pemakaian** yang mudah dibaca panitia dan tamu (non-programmer), lihat **[panduan penggunaan](./panduan-pengguna.md)**.
 
@@ -147,7 +147,7 @@ showResepsi = tipe === "resepsi" || tipe === "keduanya"
 
 ## Struktur Halaman (tingkat section)
 
-Detail visual, tipografi, dan microcopy: **[desain undangan](./desain-undangan.md)**.
+Detail visual, tipografi, dan microcopy: **[desain undangan teknis](./desain-undangan-teknis.md)** (dan teks UI di `lib/constants/messages.id.ts`).
 
 Urutan fungsional:
 
