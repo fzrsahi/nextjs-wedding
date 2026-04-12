@@ -51,7 +51,7 @@ export function CountdownSection({ targetIso }: TCountdownSectionProps) {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className="relative flex min-h-screen snap-start items-center justify-center overflow-hidden px-4 py-10"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,#f8f9f9_0%,#eef2f2_54%,#e4e8eb_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(168deg,rgb(248_249_248/0.48)_0%,rgb(236_241_239/0.42)_55%,rgb(228_235_232/0.4)_100%)]" />
       <div className="relative z-10 w-full max-w-3xl rounded-[2rem] border border-[var(--inv-silver)]/65 bg-white/88 px-4 py-8 shadow-[0_16px_38px_rgb(var(--inv-primary-rgb)/0.14)]">
         <div className="text-center">
         <p className="text-[10px] uppercase tracking-[0.28em] text-[var(--inv-ink-muted)]/80">

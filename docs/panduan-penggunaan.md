@@ -98,7 +98,7 @@ Cara kirim bebas: WhatsApp, email, SMS, dll. Yang penting tamu membuka **tautan 
 ## Peran: Anda sebagai tamu
 
 1. Buka **tautan** yang dikirim panitia (biasanya dari chat).
-2. Anda akan melihat undangan yang menyapa **nama Anda** (atau nama yang panitia tulis di spreadsheet).
+2. Gulir halaman mengikuti alur undangan: biasanya **pembuka (opening)** → **quotes/ayat** → **pengenalan pengantin** (visual) → **detail acara dan hitung mundur** → **RSVP** → **gift** (jika ada) → **penutup (closing)**. Nama Anda biasanya muncul di bagian pengenalan; jadwal yang tampil mengikuti jenis undangan Anda.
 3. Baca bagian **jadwal / lokasi** yang tampil — jumlahnya tergantung undangan Anda (hanya akad, hanya resepsi, atau keduanya).
 4. Gulir ke bagian **RSVP** (konfirmasi kehadiran).
 5. Pilih opsi yang tersedia, lalu kirim sesuai petunjuk di layar.

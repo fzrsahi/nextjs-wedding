@@ -1,9 +1,17 @@
+import { CoupleStorySection } from "@/components/CoupleStorySection";
 import { DetailAcaraSection } from "@/components/DetailAcaraSection";
+import { DresscodeSection } from "@/components/DresscodeSection";
+import { RsvpForm } from "@/components/RsvpForm";
 import { DevSheetsBanner } from "@/components/DevSheetsBanner";
 import { FloralScrollFrame } from "@/components/FloralScrollFrame";
 import { OpeningGate } from "@/components/OpeningGate";
 import { QuotesSection } from "@/components/QuotesSection";
+import { ClosingSection } from "@/components/ClosingSection";
+import { GallerySection } from "@/components/GallerySection";
+import { GiftSection } from "@/components/GiftSection";
 import { VisualBlessingSection } from "@/components/VisualBlessingSection";
+import { getCoupleStorySentence } from "@/lib/couple-story";
+import { getResolvedGalleryPaths } from "@/lib/gallery";
 import {
   UI_GUEST_NOT_FOUND_DESC,
   UI_GUEST_NOT_FOUND_TITLE,
@@ -63,6 +71,8 @@ export default async function Home({
 
   const akad = getAkadSchedule();
   const resepsi = getResepsiSchedule();
+  const coupleStorySentence = getCoupleStorySentence();
+  const galleryImagePaths = getResolvedGalleryPaths();
 
   return (
     <>
@@ -74,6 +84,7 @@ export default async function Home({
         <div className="relative scroll-smooth">
           <FloralScrollFrame />
           <QuotesSection />
+          <CoupleStorySection story={coupleStorySentence} />
           <VisualBlessingSection />
           <DetailAcaraSection
             showAkad={isAkadSectionVisible(guest.invitationKind)}
@@ -81,6 +92,15 @@ export default async function Home({
             akad={akad}
             resepsi={resepsi}
           />
+          <DresscodeSection />
+          <RsvpForm
+            slug={guest.slug}
+            invitationKind={guest.invitationKind}
+            initialRsvpRaw={guest.rsvpRaw}
+          />
+          <GallerySection imagePaths={galleryImagePaths} />
+          <GiftSection />
+          <ClosingSection coupleHeading={getCoupleDisplayHeading()} />
         </div>
       </OpeningGate>
     </>

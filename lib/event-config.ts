@@ -35,5 +35,12 @@ export function getCoupleDisplayHeading(): string {
 export function getGalleryAssetPaths(): string[] {
   const raw = process.env.NEXT_PUBLIC_GALLERY_PATHS?.trim();
   if (!raw) return [];
-  return raw.split(",").map((s) => s.trim()).filter(Boolean);
+  return raw
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .map((s) => {
+      if (/^https?:\/\//i.test(s)) return s;
+      return s.startsWith("/") ? s : `/${s.replace(/^\.\//, "")}`;
+    });
 }

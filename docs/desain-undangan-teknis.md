@@ -60,18 +60,15 @@ Implementasi: impor via `next/font/google`, terapkan ke `body` dan utility headi
 
 ## 5. Arsitektur informasi & pemetaan section
 
-Urutan **target** (selaras brief + [struktur halaman di spesifikasi](./spesifikasi-proyek.md)):
+Urutan **target** (selaras [brief klien](./brief-desain-klien.md) + [struktur halaman di spesifikasi](./spesifikasi-proyek.md)):
 
 1. **Opening** — layar pembuka / reveal ke konten (animasi sesuai referensi; `prefers-reduced-motion` harus mengurangi atau mematikan gerak berlebihan).
-2. **Hero** — gambar besar pasangan; sumber: `NEXT_PUBLIC_HERO_IMAGE_PATH` (+ `getAssetUrl`).
-3. **Sapaan tamu** — nama dari data sheet (sudah ada di alur halaman).
-4. **Countdown** — hitung mundur ke tanggal acara dari `lib/event-config.ts` (komponen client + `useEffect` / library tanggal).
-5. **Story pasangan** — konten statis (disarankan: blok teks dari env, JSON di `lib/`, atau MDX jika nanti ditambah).
-6. **Detail acara** — Akad / Resepsi **conditional** menurut `invitationKind` (`lib/guest.ts`); tampilan akhir menggantikan `pre` JSON debug.
-7. **Peta / lokasi** — embed peta atau tombol “Buka di Google Maps” (URL dari `event-config`).
-8. **Gallery** — banyak gambar: grid responsif, `loading="lazy"`, aspect ratio konsisten; daftar path dari `getGalleryAssetPaths()`.
-9. **RSVP** — `RsvpForm` (sudah ada).
-10. **Gift / amplop digital** — section baru: teks dari konfig, QR/rekening (gambar QR dari aset); **butuh konten final dari klien**.
+2. **Quotes / ayat** — ayat Al-Qur’an atau kutipan singkat; konten statis / env / konfig terpusat; tipografi elegan, tidak ramai.
+3. **Visual panel (pengenalan pengantin)** — panel aesthetic (ornamen floral ringan, referensi TikTok = mood saja): mis. **hero** gambar besar (`NEXT_PUBLIC_HERO_IMAGE_PATH` + `getAssetUrl`), **sapaan nama tamu** dari sheet, **story pasangan** (teks dari env / `lib/` / MDX jika nanti), dan **galeri** banyak foto (`getGalleryAssetPaths()`, grid + `loading="lazy"`, aspect ratio konsisten) jika dipetakan di blok ini — satu kesatuan visual “kenalan” dengan pasangan.
+4. **Detail acara + countdown** — **Akad** / **Resepsi** **conditional** menurut `invitationKind` (`lib/guest.ts`); **countdown** ke tanggal acara (`lib/event-config.ts`, komponen client); **peta / lokasi** (embed atau tombol “Buka di Google Maps” dari `event-config`). Tampilan akhir menggantikan `pre` JSON debug.
+5. **RSVP** — `RsvpForm` (sudah ada).
+6. **Gift / amplop digital** — teks dari konfig, QR/rekening (gambar QR dari aset); **butuh konten final dari klien**.
+7. **Closing** — penutup: ucapan terima kasih / salam, baris nama atau doa singkat, ornamen minimal; tidak memerlukan interaksi berat.
 
 **Status implementasi saat ini:** `app/page.tsx` masih **placeholder** (debug sheet, JSON jadwal). Dokumen ini menjadi acuan saat **refactor UI** ke layout di atas.
 
@@ -103,7 +100,7 @@ Konsep: layar penuh pertama kali yang muncul sebelum konten undangan utama.
 4. Teks “Anda Dijemput” dan tombol/indikator “Scroll untuk melihat undangan” fade-in setelah flap terbuka.
 5. Setelah animasi selesai, user bisa:
    - scroll ke bawah untuk melihat konten utama, atau
-   - klik tombol kecil “Lihat undangan” yang melakukan scroll ke section hero.
+   - klik tombol kecil “Lihat undangan” yang melakukan scroll ke **section quotes/ayat** (konten pertama setelah opening).
 
 Catatan implementasi:
 
@@ -135,7 +132,7 @@ Catatan implementasi:
 - **Mobile-first adalah prioritas utama**; baseline desain, spacing, tipografi, dan alur interaksi ditetapkan dari viewport HP terlebih dahulu.
 - `max-w-xl` atau sedikit lebih lebar jika desain membutuhkan — tetap nyaman dibaca satu tangan.
 - Gambar: lebar adaptif, `sizes` untuk `next/image` jika migrasi dari `<img>`.
-- **Core Web Vitals:** LCP utama biasanya hero pertama; prioritas load tinggi untuk hero.
+- **Core Web Vitals:** LCP utama biasanya elemen visual besar pertama di **visual panel (pengenalan pengantin)**; prioritas load tinggi untuk hero / foto utama di blok tersebut.
 
 ---
 
@@ -144,13 +141,17 @@ Catatan implementasi:
 | Komponen | Tanggung jawab |
 |----------|----------------|
 | `OpeningGate` atau sejenis | Overlay pembuka + animasi + lanjut ke konten |
-| `InvitationHero` | Hero image + optional judul |
-| `CountdownSection` | Client-only countdown |
-| `CoupleStory` | Teks story |
+| `QuotesSection` | Ayat / kutipan setelah opening |
+| `CoupleIntroPanel` (visual panel) | Ornamen + hero, sapaan tamu, story, galeri (sesuai desain final) |
+| `InvitationHero` | Hero image + optional judul *(bisa hidup di dalam `CoupleIntroPanel`)* |
+| `CoupleStory` | Teks story *(bisa hidup di dalam `CoupleIntroPanel`)* |
+| `GalleryGrid` | Grid banyak foto *(bisa hidup di dalam `CoupleIntroPanel`)* |
 | `EventSchedule` | Akad/resepsi terformat (bukan JSON mentah) |
+| `CountdownSection` | Client-only countdown |
 | `VenueMap` | Link / embed peta |
-| `GalleryGrid` | Grid banyak foto |
+| `RsvpForm` / wrapper section | RSVP |
 | `GiftSection` | Rekening / QR / copy |
+| `ClosingSection` | Penutup halaman (terima kasih, salam, footer ringan) |
 
 Pisahkan **server vs client** jelas: data tamu tetap di server component; countdown, audio, dan opening interaktif di client (`"use client"`).
 

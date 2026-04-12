@@ -149,13 +149,15 @@ showResepsi = tipe === "resepsi" || tipe === "keduanya"
 
 Detail visual, tipografi, dan microcopy: **[desain undangan teknis](./desain-undangan-teknis.md)** (dan teks UI di `lib/constants/messages.id.ts`).
 
-Urutan fungsional:
+Urutan fungsional (selaras [brief klien](./brief-desain-klien.md) dan [desain teknis](./desain-undangan-teknis.md)):
 
-1. Opening (nama tamu)
-2. Hero / cover
-3. Informasi acara — Akad (conditional), Resepsi (conditional)
-4. Gallery
-5. RSVP
+1. **Opening** — layar pembuka / transisi ke konten utama.  
+2. **Quotes / ayat** — kutipan atau ayat (konten statis / konfig).  
+3. **Visual panel (pengenalan pengantin)** — blok visual pengenalan (mis. hero, ornamen, **sapaan nama tamu** dari sheet, story singkat, **galeri** bila dipetakan di sini — detail layout di desain teknis).  
+4. **Detail acara + countdown** — jadwal **Akad** / **Resepsi** **conditional** menurut `tipe`; countdown ke tanggal acara; peta / lokasi bila ada.  
+5. **RSVP** — formulir konfirmasi kehadiran.  
+6. **Gift** — amplop digital / rekening / QR (konten dari klien).  
+7. **Closing** — penutup halaman (ucapan terima kasih, salam, footer dekoratif ringan).
 
 ---
 

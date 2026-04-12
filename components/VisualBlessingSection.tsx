@@ -3,7 +3,11 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 
+import { SectionScrollBlend } from "@/components/SectionScrollBlend";
+import { SECTION_SCROLL_BLEND } from "@/lib/section-scroll-blends";
+
 export function VisualBlessingSection() {
+  const blend = SECTION_SCROLL_BLEND.visual;
   return (
     <motion.section
       aria-label="Visual panel undangan"
@@ -14,6 +18,7 @@ export function VisualBlessingSection() {
       className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[linear-gradient(165deg,#edf2ee_0%,#f3efec_48%,#e8f0ea_100%)] px-4 py-10 text-[var(--inv-ink)]"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_10%,rgb(var(--inv-primary-rgb)/0.1),transparent_40%),radial-gradient(circle_at_85%_85%,rgb(var(--inv-accent-rgb)/0.12),transparent_42%)]" />
+      <SectionScrollBlend top={blend.top} bottom={blend.bottom} />
       <div className="pointer-events-none absolute -left-6 top-8 h-20 w-20 opacity-70">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/assets/flowers/24.png" alt="" className="h-full w-full object-contain" />

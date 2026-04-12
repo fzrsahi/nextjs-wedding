@@ -9,7 +9,10 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+
+import { SectionScrollBlend } from "@/components/SectionScrollBlend";
 import type { TEventScheduleBlock } from "@/lib/types/event.types";
+import { SECTION_SCROLL_BLEND } from "@/lib/section-scroll-blends";
 
 type TDetailAcaraSectionProps = {
   showAkad: boolean;
@@ -161,6 +164,7 @@ export function DetailAcaraSection({
   const showMapInAkad = showAkad;
   const showMapInResepsi = !showAkad && showResepsi;
   const [timeLeft, setTimeLeft] = useState(getTimeLeft);
+  const blend = SECTION_SCROLL_BLEND.detailAcara;
   const countdownItems = useMemo(
     () => [
       { label: "Hari", value: timeLeft.days },
@@ -198,6 +202,8 @@ export function DetailAcaraSection({
         />
           <div className="absolute inset-0 bg-[linear-gradient(165deg,rgb(var(--inv-surface-rgb)/0.54),rgb(var(--inv-surface-rgb)/0.46)_50%,rgb(var(--inv-surface-rgb)/0.58))]" />
       </div>
+
+      <SectionScrollBlend top={blend.top} bottom={blend.bottom} />
 
       <div className="relative z-10 min-h-screen px-5 py-10 sm:px-8">
         <div className="pointer-events-none absolute inset-0">

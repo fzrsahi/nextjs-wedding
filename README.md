@@ -1,6 +1,6 @@
 # nextjs-wedding — Situs Undangan Pernikahan
 
-Aplikasi web **undangan pernikahan digital** berbasis **Next.js**. Setiap tamu membuka **tautan pribadi** (alamat situs + kode nama); halaman menampilkan sapaan dengan nama mereka, informasi acara sesuai jenis undangan, galeri, dan formulir **RSVP**. Data tamu dan jawaban konfirmasi dikelola lewat **Google Sheets**; aset gambar di lingkungan produksi dapat dilayani lewat **CDN** (misalnya Cloudinary), dengan cadangan aset lokal di folder `public/`.
+Aplikasi web **undangan pernikahan digital** berbasis **Next.js**. Setiap tamu membuka **tautan pribadi** (alamat situs + kode nama); alur halaman mengikuti urutan dokumentasi: **opening**, **quotes/ayat**, **visual panel (pengenalan pengantin)** termasuk sapaan nama, **detail acara + countdown** sesuai jenis undangan, **RSVP**, **gift**, dan **closing**. Data tamu dan jawaban konfirmasi dikelola lewat **Google Sheets**; aset gambar di lingkungan produksi dapat dilayani lewat **CDN** (misalnya Cloudinary), dengan cadangan aset lokal di folder `public/`.
 
 ---
 

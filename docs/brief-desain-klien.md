@@ -36,13 +36,14 @@ Yang **sudah otomatis** dari sistem: nama tamu per link, undangan akad/resepsi s
 
 - Opening screen  
 - Section quotes / ayat Al-Qur’an *(simple, elegan)*  
-- Section visual seperti contoh referensi *(ornamen floral + panel/kaart aesthetic)*  
+- Visual panel — **pengenalan pengantin** *(ornamen floral + panel/kartu aesthetic seperti referensi; bisa mencakup foto, nama tamu, story singkat, galeri sesuai desain final)*  
 - Detail acara + **countdown**  
 - RSVP / konfirmasi kehadiran tamu *(form)*  
 - Gift / amplop digital *(butuh copy teks + data rekening/QR dari klien saat implementasi)*  
+- **Closing** — penutup *(ucapan terima kasih / salam penutup, dekor ringan)*  
 
 Urutan flow yang diinginkan:
-1) Opening → 2) Quotes/ayat → 3) Visual panel → 4) Detail acara + countdown → 5) RSVP → 6) Gift
+1) Opening → 2) Quotes/ayat → 3) Visual panel (pengenalan pengantin) → 4) Detail acara + countdown → 5) RSVP → 6) Gift → 7) Closing
 
 ---
 

@@ -23,7 +23,10 @@ export const API_RSVP_SINGLE_FIELD_REQUIRED =
   "Field konfirmasi wajib: datang atau tidak.";
 export const API_RSVP_SHEET_WRITE_FAILED = "Gagal menulis ke spreadsheet.";
 
+export const UI_RSVP_SECTION_KICKER = "RSVP";
 export const UI_RSVP_FORM_TITLE = "Konfirmasi kehadiran";
+export const UI_RSVP_SECTION_INTRO =
+  "Kami berharap dapat berbagi momen istimewa bersama Bapak/Ibu/Saudara/i. Mohon konfirmasi kehadiran melalui pilihan di bawah ini.";
 export const UI_RSVP_AKAD_LABEL = "Kehadiran di akad";
 export const UI_RSVP_RESEPSI_LABEL = "Kehadiran di resepsi";
 export const UI_RSVP_ATTENDING = "Datang";
@@ -37,3 +40,44 @@ export const UI_RSVP_ERROR_NETWORK = "Jaringan bermasalah. Coba lagi.";
 
 export const UI_DEV_SHEETS_BANNER =
   "Mode dev: Google Sheets belum dikonfigurasi. Isi .env.local (lihat .env.example).";
+
+export const UI_STORY_ROADMAP_KICKER = "Perjalanan kami";
+export const UI_STORY_ROADMAP_TITLE = "Cerita awal kami";
+
+export const UI_DRESSCODE_TITLE = "Dresscode";
+export const UI_DRESSCODE_DO_LABEL = "Disarankan";
+export const UI_DRESSCODE_DO_BODY_BEFORE = "Mohon hadir dengan busana berwarna ";
+export const UI_DRESSCODE_DO_EMPHASIS = "gelap atau netral gelap";
+export const UI_DRESSCODE_DO_BODY_AFTER = ".";
+export const UI_DRESSCODE_DONT_LABEL = "Hindari";
+export const UI_DRESSCODE_DONT_BODY =
+  "Pakaian dominan putih tidak disarankan agar suasana tetap selaras dengan rangkaian acara.";
+
+export const UI_GALLERY_KICKER = "Momen";
+export const UI_GALLERY_TITLE = "Galeri foto";
+export const UI_GALLERY_INTRO =
+  "Beberapa potret yang kami kenang bersama—dengan penuh sukacita kami ingin berbagi kehangatannya dengan Anda.";
+export const UI_GALLERY_LIGHTBOX_CLOSE = "Tutup";
+export const UI_GALLERY_LIGHTBOX_PREV = "Foto sebelumnya";
+export const UI_GALLERY_LIGHTBOX_NEXT = "Foto berikutnya";
+export const UI_GALLERY_TAP_TO_EXPAND = "Ketuk foto untuk tampilan layar penuh";
+export const UI_GALLERY_HOVER_HINT = "Layar penuh";
+
+export const UI_GIFT_KICKER = "Amplop digital";
+export const UI_GIFT_TITLE = "Hadiah & angpao";
+export const UI_GIFT_INTRO =
+  "Kehadiran Anda adalah berkah terindah. Bila berkenan menyisihkan tanda kasih, kami menyediakan rekening berikut—tanpa ada paksaan.";
+export const UI_GIFT_BANK_LABEL = "Bank";
+export const UI_GIFT_ACCOUNT_NAME_LABEL = "Atas nama";
+export const UI_GIFT_ACCOUNT_NUMBER_LABEL = "Nomor rekening";
+export const UI_GIFT_COPY_NUMBER = "Salin nomor";
+export const UI_GIFT_COPIED = "Tersalin";
+export const UI_GIFT_COPY_FAILED = "Gagal menyalin — coba pilih manual";
+
+export const UI_CLOSING_KICKER = "Penutup";
+export const UI_CLOSING_HEADLINE = "Terima kasih";
+export const UI_CLOSING_BODY =
+  "Atas segala doa, restu, dan kehadiran yang telah Anda persiapkan, kami ucapkan terima kasih yang tulus. Semoga Allah membalas kebaikan Anda berlipat ganda.";
+export const UI_CLOSING_NAMES_PREFIX = "Kami yang berbahagia,";
+export const UI_CLOSING_WASSALAM =
+  "Wassalamu'alaikum warahmatullahi wabarakatuh";
