@@ -11,6 +11,32 @@ export const UI_GUEST_NOT_FOUND_TITLE = "Undangan tidak ditemukan";
 export const UI_GUEST_NOT_FOUND_DESC =
   "Periksa kembali tautan atau hubungi panitia jika menurut Anda ini kesalahan.";
 
+/** Layar awal sementara gambar & font undangan disiapkan */
+export const UI_INVITE_INITIAL_LOADING = "Loading...";
+
+/** Pratinjau tautan (Open Graph / WhatsApp, iMessage, dll.) */
+export const UI_OG_SITE_NAME = "Undangan Pernikahan";
+
+/** Judul & deskripsi bila tautan dibuka tanpa `?to=` (pratinjau tanpa konteks tamu) */
+export const UI_OG_INCOMPLETE_TITLE = "Undangan pernikahan";
+export const UI_OG_INCOMPLETE_DESCRIPTION =
+  "Mohon buka tautan lengkap dari pesan undangan Anda (WhatsApp, email, atau undangan cetak). Pratinjau ini tidak menampilkan detail acara.";
+
+/** Pratinjau bila slug tamu tidak dikenal */
+export const UI_OG_NOT_FOUND_TITLE = "Undangan tidak ditemukan";
+export const UI_OG_NOT_FOUND_DESCRIPTION =
+  "Tautan ini tidak cocok dengan daftar tamu. Periksa penulisan alamat atau minta tautan terbaru kepada mempelai.";
+
+/** Judul pratinjau undangan valid — `coupleHeading` dari env (mis. nama mempelai) */
+export function uiOgInviteTitle(coupleHeading: string): string {
+  return `${coupleHeading} · Undangan Pernikahan`;
+}
+
+/** Deskripsi pratinjau undangan personal — `guestDisplayName` dari spreadsheet */
+export function uiOgInviteDescription(guestDisplayName: string): string {
+  return `Dengan penuh hormat kami mengundang ${guestDisplayName}. Satu tautan untuk jadwal acara, lokasi, dan konfirmasi kehadiran — kami sangat menanti kehadiran Bapak/Ibu/Saudara/i.`;
+}
+
 export const API_RSVP_SHEETS_NOT_READY =
   "RSVP belum dikonfigurasi (Google Sheets).";
 export const API_RSVP_INVALID_JSON = "Body JSON tidak valid.";

@@ -1,6 +1,18 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Geist, Geist_Mono } from "next/font/google";
+
+import { UI_OG_INCOMPLETE_DESCRIPTION, UI_OG_INCOMPLETE_TITLE, UI_OG_SITE_NAME } from "@/lib/constants/messages.id";
+
 import "./globals.css";
+
+/** Untuk `og:image` & URL absolut; set `NEXT_PUBLIC_SITE_URL` di produksi (mis. https://undangan.domain.com). */
+function resolveMetadataBase(): URL {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (explicit) return new URL(explicit);
+  const vercel = process.env.VERCEL_URL?.trim();
+  if (vercel) return new URL(`https://${vercel}`);
+  return new URL("http://localhost:3000");
+}
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,8 +31,14 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Undangan Pernikahan",
-  description: "Undangan digital — konfirmasi kehadiran online.",
+  metadataBase: resolveMetadataBase(),
+  title: UI_OG_INCOMPLETE_TITLE,
+  description: UI_OG_INCOMPLETE_DESCRIPTION,
+  openGraph: {
+    siteName: UI_OG_SITE_NAME,
+    locale: "id_ID",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

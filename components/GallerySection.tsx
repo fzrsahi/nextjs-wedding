@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import {
   AnimatePresence,
@@ -33,6 +34,11 @@ import { SECTION_SCROLL_BLEND } from "@/lib/section-scroll-blends";
 type TGallerySectionProps = {
   imagePaths: string[];
 };
+
+/** Path `/...` di `public/` — bisa dioptimalkan `next/image`. URL absolut tetap `<img>`. */
+function isPublicStaticImage(src: string) {
+  return src.startsWith("/") && !src.startsWith("//");
+}
 
 /** Bunga ringan di sudut lightbox — kecil, satu jenis per sudut */
 const LIGHTBOX_FLOWERS = [
@@ -243,15 +249,28 @@ function GalleryLightbox({
                   animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                   exit={{ opacity: 0, x: reduceMotion ? 0 : -14, filter: "blur(4px)" }}
                   transition={{ duration: reduceMotion ? 0 : 0.32, ease: [0.22, 1, 0.36, 1] }}
-                  className="flex max-h-[min(76vh,640px)] w-full items-center justify-center"
+                  className="relative flex h-[min(76vh,640px)] min-h-[200px] w-full max-w-full items-center justify-center"
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={src}
-                    alt=""
-                    className="max-h-[min(76vh,640px)] w-full max-w-full object-contain"
-                    decoding="async"
-                  />
+                  {isPublicStaticImage(src) ? (
+                    <Image
+                      src={src}
+                      alt=""
+                      fill
+                      priority
+                      sizes="min(96vw, 900px)"
+                      className="object-contain"
+                      decoding="async"
+                    />
+                  ) : (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={src}
+                      alt=""
+                      className="max-h-[min(76vh,640px)] w-full max-w-full object-contain"
+                      decoding="async"
+                      fetchPriority="high"
+                    />
+                  )}
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -335,14 +354,27 @@ function WallPhotoSlot({
               .filter(Boolean)
               .join(" ")}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={src}
-              alt=""
-              className="h-full w-full object-cover object-center transition duration-[1s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
-              loading={globalIndex < 6 ? "eager" : "lazy"}
-              decoding="async"
-            />
+            {isPublicStaticImage(src) ? (
+              <Image
+                src={src}
+                alt=""
+                fill
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 45vw, 400px"
+                className="object-cover object-center transition duration-[1s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+                loading={globalIndex < 6 ? "eager" : "lazy"}
+                decoding="async"
+              />
+            ) : (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={src}
+                alt=""
+                className="h-full w-full object-cover object-center transition duration-[1s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+                loading={globalIndex < 6 ? "eager" : "lazy"}
+                decoding="async"
+                referrerPolicy="no-referrer"
+              />
+            )}
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,transparent_40%,rgba(255,255,255,0.12)_50%,transparent_60%)] opacity-0 transition duration-700 group-hover:opacity-100" />
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.18)_0%,transparent_45%)]" />
           </div>
