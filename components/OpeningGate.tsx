@@ -11,19 +11,49 @@ type TOpeningGateProps = {
 };
 
 const FLOWERS = [
-  { src: "/assets/flowers/17.png", size: 84, left: "-3%", top: "8%", delay: 0, rotate: -12 },
-  { src: "/assets/flowers/28.png", size: 92, left: "-8%", top: "28%", delay: 0.08, rotate: -10 },
-  { src: "/assets/flowers/21.png", size: 102, left: "-7%", top: "52%", delay: 0.16, rotate: -8 },
-  { src: "/assets/flowers/30.png", size: 90, left: "-6%", top: "74%", delay: 0.24, rotate: -7 },
-  { src: "/assets/flowers/29.png", size: 66, left: "12%", top: "4%", delay: 0.3, rotate: -7 },
-  { src: "/assets/flowers/31.png", size: 62, left: "14%", top: "88%", delay: 0.38, rotate: -5 },
+  // atas (rapat, saling overlap)
+  { src: "/assets/flowers/29.png", size: 84, left: "-2%", top: "-7%", delay: 0, rotate: -10 },
+  { src: "/assets/flowers/24.png", size: 78, left: "8%", top: "-9%", delay: 0.03, rotate: -6 },
+  { src: "/assets/flowers/31.png", size: 86, left: "19%", top: "-8%", delay: 0.06, rotate: -4 },
+  { src: "/assets/flowers/25.png", size: 80, left: "31%", top: "-9%", delay: 0.09, rotate: -2 },
+  { src: "/assets/flowers/28.png", size: 92, left: "43%", top: "-8%", delay: 0.12, rotate: 0 },
+  { src: "/assets/flowers/21.png", size: 98, left: "56%", top: "-9%", delay: 0.15, rotate: 3 },
+  { src: "/assets/flowers/22.png", size: 90, left: "69%", top: "-8%", delay: 0.18, rotate: 6 },
+  { src: "/assets/flowers/30.png", size: 86, left: "82%", top: "-9%", delay: 0.21, rotate: 10 },
 
-  { src: "/assets/flowers/18.png", size: 84, left: "83%", top: "8%", delay: 0.02, rotate: 12 },
-  { src: "/assets/flowers/32.png", size: 92, left: "86%", top: "28%", delay: 0.1, rotate: 10 },
-  { src: "/assets/flowers/22.png", size: 102, left: "85%", top: "52%", delay: 0.18, rotate: 8 },
-  { src: "/assets/flowers/26.png", size: 90, left: "84%", top: "74%", delay: 0.26, rotate: 7 },
-  { src: "/assets/flowers/24.png", size: 66, left: "74%", top: "4%", delay: 0.34, rotate: 6 },
-  { src: "/assets/flowers/25.png", size: 62, left: "74%", top: "88%", delay: 0.42, rotate: 5 },
+  // kiri (rapat)
+  { src: "/assets/flowers/17.png", size: 108, left: "-13%", top: "5%", delay: 0.24, rotate: -14 },
+  { src: "/assets/flowers/24.png", size: 78, left: "0%", top: "12%", delay: 0.27, rotate: -10 },
+  { src: "/assets/flowers/28.png", size: 116, left: "-14%", top: "20%", delay: 0.3, rotate: -10 },
+  { src: "/assets/flowers/25.png", size: 78, left: "0%", top: "28%", delay: 0.33, rotate: -8 },
+  { src: "/assets/flowers/21.png", size: 124, left: "-13%", top: "37%", delay: 0.36, rotate: -8 },
+  { src: "/assets/flowers/18.png", size: 74, left: "1%", top: "45%", delay: 0.39, rotate: -6 },
+  { src: "/assets/flowers/26.png", size: 110, left: "-12%", top: "54%", delay: 0.42, rotate: -7 },
+  { src: "/assets/flowers/22.png", size: 82, left: "0%", top: "63%", delay: 0.45, rotate: -5 },
+  { src: "/assets/flowers/30.png", size: 110, left: "-11%", top: "72%", delay: 0.48, rotate: -7 },
+  { src: "/assets/flowers/31.png", size: 84, left: "1%", top: "80%", delay: 0.51, rotate: -4 },
+
+  // kanan (rapat)
+  { src: "/assets/flowers/18.png", size: 108, left: "87%", top: "5%", delay: 0.26, rotate: 14 },
+  { src: "/assets/flowers/29.png", size: 78, left: "95%", top: "12%", delay: 0.29, rotate: 10 },
+  { src: "/assets/flowers/32.png", size: 116, left: "88%", top: "20%", delay: 0.32, rotate: 10 },
+  { src: "/assets/flowers/31.png", size: 78, left: "95%", top: "28%", delay: 0.35, rotate: 8 },
+  { src: "/assets/flowers/22.png", size: 124, left: "87%", top: "37%", delay: 0.38, rotate: 8 },
+  { src: "/assets/flowers/28.png", size: 74, left: "78%", top: "45%", delay: 0.41, rotate: 6 },
+  { src: "/assets/flowers/21.png", size: 110, left: "88%", top: "54%", delay: 0.44, rotate: 7 },
+  { src: "/assets/flowers/25.png", size: 82, left: "79%", top: "63%", delay: 0.47, rotate: 5 },
+  { src: "/assets/flowers/26.png", size: 110, left: "87%", top: "72%", delay: 0.5, rotate: 7 },
+  { src: "/assets/flowers/17.png", size: 84, left: "79%", top: "80%", delay: 0.53, rotate: 6 },
+
+  // bawah (rapat, nutup frame)
+  { src: "/assets/flowers/24.png", size: 84, left: "-1%", top: "88%", delay: 0.56, rotate: -8 },
+  { src: "/assets/flowers/31.png", size: 78, left: "11%", top: "90%", delay: 0.59, rotate: -6 },
+  { src: "/assets/flowers/25.png", size: 84, left: "24%", top: "89%", delay: 0.62, rotate: -3 },
+  { src: "/assets/flowers/28.png", size: 94, left: "38%", top: "90%", delay: 0.65, rotate: -1 },
+  { src: "/assets/flowers/21.png", size: 98, left: "52%", top: "89%", delay: 0.68, rotate: 2 },
+  { src: "/assets/flowers/22.png", size: 90, left: "66%", top: "90%", delay: 0.71, rotate: 5 },
+  { src: "/assets/flowers/30.png", size: 86, left: "79%", top: "89%", delay: 0.74, rotate: 8 },
+  { src: "/assets/flowers/29.png", size: 82, left: "91%", top: "88%", delay: 0.77, rotate: 10 },
 ] as const;
 
 export function OpeningGate({
@@ -37,7 +67,9 @@ export function OpeningGate({
   const openTimerRef = useRef<number | null>(null);
   const particleTimerRef = useRef<number | null>(null);
   const coupleTimerRef = useRef<number | null>(null);
+  const backFabTimerRef = useRef<number | null>(null);
   const reduceMotion = useReducedMotion();
+  const [isBackFabExpanded, setIsBackFabExpanded] = useState(false);
 
   const isOpen = phase === "opened";
   const isAnimating = phase === "opening";
@@ -57,8 +89,20 @@ export function OpeningGate({
       if (particleTimerRef.current) {
         window.clearTimeout(particleTimerRef.current);
       }
+      if (backFabTimerRef.current) {
+        window.clearTimeout(backFabTimerRef.current);
+      }
     };
   }, []);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setIsBackFabExpanded(false);
+      if (backFabTimerRef.current) {
+        window.clearTimeout(backFabTimerRef.current);
+      }
+    }
+  }, [isOpen]);
 
   const handleOpen = () => {
     if (phase === "couple") {
@@ -85,6 +129,20 @@ export function OpeningGate({
     window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
   };
 
+  const handleBackFabClick = () => {
+    if (!isBackFabExpanded) {
+      setIsBackFabExpanded(true);
+      if (backFabTimerRef.current) {
+        window.clearTimeout(backFabTimerRef.current);
+      }
+      backFabTimerRef.current = window.setTimeout(() => {
+        setIsBackFabExpanded(false);
+      }, 2400);
+      return;
+    }
+    handleBackToOpening();
+  };
+
   return (
     <>
       <main
@@ -99,18 +157,27 @@ export function OpeningGate({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: reduceMotion ? 0 : 0.42, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {children}
+      >
+        {children}
         </motion.div>
 
         <div className="fixed bottom-5 right-4 z-40 sm:right-6">
-          <button
+          <motion.button
             type="button"
-            onClick={handleBackToOpening}
-            className="inline-flex min-w-40 items-center justify-center rounded-full border border-[var(--inv-primary)] bg-white/85 px-6 py-3 text-xs font-medium uppercase tracking-[0.12em] text-[var(--inv-primary)] shadow-[0_10px_24px_rgba(16,24,40,0.18)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-[var(--inv-primary)] hover:text-white"
+            onClick={handleBackFabClick}
+            animate={isBackFabExpanded ? { width: 176 } : { width: 46 }}
+            transition={{ duration: reduceMotion ? 0 : 0.26, ease: [0.22, 1, 0.36, 1] }}
+            className="inline-flex h-11 items-center justify-center overflow-hidden rounded-full border border-[var(--inv-primary)] bg-white/88 px-3 text-xs font-medium uppercase tracking-[0.12em] text-[var(--inv-primary)] shadow-[0_10px_24px_rgba(16,24,40,0.18)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-[var(--inv-primary)] hover:text-white"
           >
-            Kembali ke Opening
-          </button>
+            <span className="text-base leading-none">⌂</span>
+            <motion.span
+              animate={isBackFabExpanded ? { opacity: 1, x: 0 } : { opacity: 0, x: 10 }}
+              transition={{ duration: reduceMotion ? 0 : 0.2 }}
+              className="ml-2 whitespace-nowrap"
+            >
+              Kembali ke Opening
+            </motion.span>
+          </motion.button>
         </div>
       </main>
 
@@ -123,16 +190,12 @@ export function OpeningGate({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: reduceMotion ? 0 : 0.35 } }}
           >
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,#ffffff_0%,#f1f3f3_34%,#e2e6e8_70%,#d6dbe0_100%)]" />
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_18%,rgb(var(--inv-accent-rgb)/0.23),transparent_48%)]" />
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_84%_18%,rgb(var(--inv-primary-rgb)/0.24),transparent_46%)]" />
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_76%_84%,rgb(var(--inv-accent-rgb)/0.14),transparent_42%)]" />
-          <div className="pointer-events-none absolute inset-0 opacity-18 mix-blend-multiply [background-image:radial-gradient(rgb(var(--inv-primary-rgb)/0.22)_0.6px,transparent_0.6px)] [background-size:6px_6px]" />
+          <div className="pointer-events-none absolute inset-0 bg-white" />
 
-          <div className="pointer-events-none absolute inset-0 z-20">
-            {FLOWERS.map((flower) => (
+          <div className="pointer-events-none absolute inset-0 z-40 [mask-image:linear-gradient(to_bottom,black_0%,black_74%,transparent_100%)]">
+            {FLOWERS.map((flower, idx) => (
               <motion.div
-                key={flower.src}
+                key={`${flower.src}-${idx}`}
                 className="absolute"
                 style={{
                   left: flower.left,
@@ -208,9 +271,9 @@ export function OpeningGate({
                         <span className="h-px w-10 bg-gradient-to-r from-transparent via-[var(--inv-accent)]/70 to-transparent" />
                       </motion.div>
 
-              <div className="relative mx-auto mt-3 h-[430px] w-full max-w-[390px]">
+              <div className="relative mx-auto mt-2 h-[402px] w-full max-w-[390px]">
                 <motion.div
-                  className="absolute inset-x-0 top-4 h-[360px]"
+                  className="absolute inset-x-0 top-3 h-[336px]"
                   initial={false}
                   animate={showEnvelope ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0 }}
                   transition={{ duration: reduceMotion ? 0 : 0.4 }}
@@ -247,7 +310,7 @@ export function OpeningGate({
                     className="absolute inset-0"
                     initial={false}
                     animate={
-                      phase === "opening" || phase === "particles"
+                      phase === "opening" || phase === "particles" || phase === "couple"
                         ? {
                             y: 0,
                             scale: 1,
@@ -270,14 +333,131 @@ export function OpeningGate({
                     }}
                   >
                     {phase === "opening" || phase === "particles" ? (
-                      <div className="pointer-events-none absolute left-1/2 top-[6.35rem] z-10 h-[146px] w-[162px] -translate-x-1/2 overflow-hidden rounded-[3px]">
-                        <Image
-                          src="/assets/opening/foto-berdua.jpeg"
-                          alt="Foto berdua mempelai"
-                          fill
-                          className="object-cover object-center"
-                          priority
-                        />
+                      <div className="pointer-events-none absolute left-1/2 top-[5.95rem] z-10 h-[172px] w-[194px] -translate-x-1/2">
+                        {/* floral frame */}
+                        <motion.div
+                          aria-hidden
+                          initial={{ opacity: 0, scale: 0.9, rotate: -4 }}
+                          animate={{
+                            opacity: 1,
+                            scale: 1,
+                            rotate: 0,
+                          }}
+                          transition={{
+                            duration: reduceMotion ? 0 : 0.6,
+                            delay: reduceMotion ? 0 : 0.1,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
+                          className="absolute inset-[-18px] z-20"
+                        >
+                          <motion.div
+                            aria-hidden
+                            animate={reduceMotion ? undefined : { y: [0, -4, 0], rotate: [-2, 2, -2] }}
+                            transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut" }}
+                            className="pointer-events-none absolute -left-7 -top-7 h-18 w-18"
+                          >
+                            <Image
+                              src="/assets/flowers/28.png"
+                              alt=""
+                              fill
+                              className="object-contain drop-shadow-[0_10px_18px_rgba(16,24,40,0.25)]"
+                              aria-hidden
+                            />
+                          </motion.div>
+                          <motion.div
+                            aria-hidden
+                            animate={reduceMotion ? undefined : { y: [0, 5, 0], rotate: [2, -2, 2] }}
+                            transition={{ duration: 7.1, repeat: Infinity, ease: "easeInOut", delay: 0.25 }}
+                            className="pointer-events-none absolute -right-7 -top-6 h-18 w-18"
+                          >
+                            <Image
+                              src="/assets/flowers/32.png"
+                              alt=""
+                              fill
+                              className="object-contain drop-shadow-[0_10px_18px_rgba(16,24,40,0.25)]"
+                              aria-hidden
+                            />
+                          </motion.div>
+                          <motion.div
+                            aria-hidden
+                            animate={reduceMotion ? undefined : { y: [0, 4, 0], rotate: [-2, 2, -2] }}
+                            transition={{ duration: 6.6, repeat: Infinity, ease: "easeInOut", delay: 0.15 }}
+                            className="pointer-events-none absolute -left-6 -bottom-7 h-18 w-18"
+                          >
+                            <Image
+                              src="/assets/flowers/21.png"
+                              alt=""
+                              fill
+                              className="object-contain drop-shadow-[0_10px_18px_rgba(16,24,40,0.25)]"
+                              aria-hidden
+                            />
+                          </motion.div>
+                          <motion.div
+                            aria-hidden
+                            animate={reduceMotion ? undefined : { y: [0, -4, 0], rotate: [2, -2, 2] }}
+                            transition={{ duration: 7.4, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+                            className="pointer-events-none absolute -right-6 -bottom-7 h-18 w-18"
+                          >
+                            <Image
+                              src="/assets/flowers/22.png"
+                              alt=""
+                              fill
+                              className="object-contain drop-shadow-[0_10px_18px_rgba(16,24,40,0.25)]"
+                              aria-hidden
+                            />
+                          </motion.div>
+
+                          {/* tambahan bunga kecil biar rapat mengelilingi */}
+                          <div className="pointer-events-none absolute left-1/2 -top-8 h-14 w-14 -translate-x-1/2 rotate-6 opacity-95">
+                            <Image
+                              src="/assets/flowers/29.png"
+                              alt=""
+                              fill
+                              className="object-contain drop-shadow-[0_10px_18px_rgba(16,24,40,0.22)]"
+                              aria-hidden
+                            />
+                          </div>
+                          <div className="pointer-events-none absolute left-1/2 -bottom-8 h-14 w-14 -translate-x-1/2 -rotate-6 opacity-95">
+                            <Image
+                              src="/assets/flowers/24.png"
+                              alt=""
+                              fill
+                              className="object-contain drop-shadow-[0_10px_18px_rgba(16,24,40,0.22)]"
+                              aria-hidden
+                            />
+                          </div>
+                          <div className="pointer-events-none absolute -left-8 top-1/2 h-14 w-14 -translate-y-1/2 -rotate-12 opacity-90">
+                            <Image
+                              src="/assets/flowers/31.png"
+                              alt=""
+                              fill
+                              className="object-contain drop-shadow-[0_10px_18px_rgba(16,24,40,0.22)]"
+                              aria-hidden
+                            />
+                          </div>
+                          <div className="pointer-events-none absolute -right-8 top-1/2 h-14 w-14 -translate-y-1/2 rotate-12 opacity-90">
+                            <Image
+                              src="/assets/flowers/25.png"
+                              alt=""
+                              fill
+                              className="object-contain drop-shadow-[0_10px_18px_rgba(16,24,40,0.22)]"
+                              aria-hidden
+                            />
+                          </div>
+
+                          <div className="pointer-events-none absolute inset-0 rounded-[12px] border border-[rgba(255,255,255,0.72)] bg-[radial-gradient(circle_at_0%_0%,rgba(255,255,255,0.55),transparent_45%),radial-gradient(circle_at_100%_100%,rgba(255,255,255,0.5),transparent_50%)]" />
+                        </motion.div>
+
+                        <div className="relative h-full w-full overflow-hidden rounded-[10px]">
+                          <Image
+                            src="/assets/opening/foto-berdua-2.jpeg"
+                            alt="Foto berdua mempelai"
+                            fill
+                            sizes="200px"
+                            className="object-cover object-center"
+                            priority
+                          />
+                        </div>
                       </div>
                     ) : null}
                     <Image
@@ -292,56 +472,78 @@ export function OpeningGate({
                   <AnimatePresence>
                     {showEmergingCouple ? (
                       <motion.div
-                        className="pointer-events-none absolute left-1/2 top-[1.2rem] z-50 h-[390px] w-[320px] -translate-x-1/2"
-                        initial={{ opacity: 0, y: 80, scale: 0.9 }}
+                        className="pointer-events-none absolute left-1/2 top-[1.35rem] z-50 h-[332px] w-[320px] -translate-x-1/2"
+                        initial={{ opacity: 0, y: 88, scale: 0.9, filter: "blur(6px)" }}
                         animate={{
                           opacity: 1,
-                          y: isCoupleHighlight ? -6 : 0,
-                          scale: isCoupleHighlight ? 1.16 : 1,
+                          y: isCoupleHighlight ? -10 : 0,
+                          scale: isCoupleHighlight ? 1.06 : 1,
+                          filter: "blur(0px)",
                         }}
-                        exit={{ opacity: 0, y: 20 }}
+                        exit={{ opacity: 0, y: 18, filter: "blur(4px)" }}
                         transition={{
-                          duration: reduceMotion ? 0 : 0.85,
+                          duration: reduceMotion ? 0 : 0.9,
                           ease: [0.22, 1, 0.36, 1],
                         }}
                       >
+                        {/* bubble/spotlight di belakang frame (lebih soft) */}
                         <motion.div
-                          className="absolute bottom-0 left-0 z-30 h-[372px] w-[202px]"
-                          initial={{ opacity: 0, y: 64, x: -18, scale: 0.94 }}
-                          animate={{ opacity: 1, y: 0, x: -2, scale: 1 }}
-                          transition={{
-                            duration: reduceMotion ? 0 : 0.64,
-                            delay: reduceMotion ? 0 : 0.08,
-                            ease: [0.22, 1, 0.36, 1],
-                          }}
+                          aria-hidden
+                          initial={{ opacity: 0, scale: 0.92 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: reduceMotion ? 0 : 0.55, delay: reduceMotion ? 0 : 0.04 }}
+                          className="pointer-events-none absolute inset-x-3 bottom-0 z-0"
                         >
-                          <Image
-                            src="/assets/opening/woman.png"
-                            alt=""
-                            fill
-                            className="object-contain drop-shadow-[0_14px_20px_rgba(16,24,40,0.26)]"
-                            aria-hidden
-                            priority
-                          />
+                          <div className="relative aspect-[3/4] w-full">
+                            <div className="absolute inset-[-18px] rounded-[2rem] bg-[radial-gradient(circle_at_35%_16%,rgba(255,255,255,0.88)_0%,rgba(255,255,255,0.42)_56%,transparent_78%)]" />
+                            <div className="absolute inset-[-26px] rounded-[2.1rem] bg-[radial-gradient(circle_at_60%_22%,rgb(var(--inv-primary-rgb)/0.16)_0%,rgb(var(--inv-primary-rgb)/0.05)_42%,transparent_72%)] blur-xl" />
+                          </div>
                         </motion.div>
+
+                        {/* FOTO paling bawah (di dalam bingkai) */}
+                        <div className="absolute inset-x-4 bottom-0 z-10 overflow-hidden rounded-[1.6rem] border border-white/75 bg-white/18 shadow-[0_26px_50px_rgba(16,24,40,0.26)]">
+                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(255,255,255,0.5),transparent_42%),radial-gradient(circle_at_80%_90%,rgb(var(--inv-primary-rgb)/0.12),transparent_58%)]" />
+                          <div className="relative aspect-[3/4] w-full overflow-hidden rounded-[1.6rem]">
+                            <Image
+                              src="/assets/opening/foto-berdua-2.jpeg"
+                              alt="Foto berdua mempelai"
+                              fill
+                              sizes="(max-width: 480px) 78vw, 320px"
+                              className="object-cover object-center"
+                              priority
+                            />
+                          </div>
+                        </div>
+
+                        {/* BINGKAI + bunga overlay di atas foto */}
                         <motion.div
-                          className="absolute bottom-0 right-0 z-40 h-[378px] w-[212px]"
-                          initial={{ opacity: 0, y: 64, x: 24, scale: 0.94 }}
-                          animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
-                          transition={{
-                            duration: reduceMotion ? 0 : 0.68,
-                            delay: reduceMotion ? 0 : 0.56,
-                            ease: [0.22, 1, 0.36, 1],
-                          }}
+                          aria-hidden
+                          initial={{ opacity: 0, scale: 0.94 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: reduceMotion ? 0 : 0.65, delay: reduceMotion ? 0 : 0.08 }}
+                          className="pointer-events-none absolute inset-x-4 bottom-0 z-20"
                         >
-                          <Image
-                            src="/assets/opening/man.png"
-                            alt=""
-                            fill
-                            className="object-contain drop-shadow-[0_14px_20px_rgba(16,24,40,0.26)]"
-                            aria-hidden
-                            priority
-                          />
+                          <div className="relative aspect-[3/4] w-full">
+                            <div className="absolute inset-[-10px] rounded-[1.9rem] border border-white/70" />
+                            <div className="absolute -left-10 -top-10 h-22 w-22">
+                              <Image src="/assets/flowers/28.png" alt="" fill sizes="96px" className="object-contain drop-shadow-[0_14px_24px_rgba(16,24,40,0.24)]" aria-hidden />
+                            </div>
+                            <div className="absolute -right-10 -top-9 h-22 w-22">
+                              <Image src="/assets/flowers/32.png" alt="" fill sizes="96px" className="object-contain drop-shadow-[0_14px_24px_rgba(16,24,40,0.24)]" aria-hidden />
+                            </div>
+                            <div className="absolute -left-9 -bottom-11 h-22 w-22">
+                              <Image src="/assets/flowers/21.png" alt="" fill sizes="96px" className="object-contain drop-shadow-[0_14px_24px_rgba(16,24,40,0.24)]" aria-hidden />
+                            </div>
+                            <div className="absolute -right-9 -bottom-11 h-22 w-22">
+                              <Image src="/assets/flowers/22.png" alt="" fill sizes="96px" className="object-contain drop-shadow-[0_14px_24px_rgba(16,24,40,0.24)]" aria-hidden />
+                            </div>
+                            <div className="absolute left-1/2 -top-9 h-16 w-16 -translate-x-1/2 opacity-95">
+                              <Image src="/assets/flowers/29.png" alt="" fill className="object-contain drop-shadow-[0_12px_22px_rgba(16,24,40,0.22)]" aria-hidden />
+                            </div>
+                            <div className="absolute left-1/2 -bottom-10 h-16 w-16 -translate-x-1/2 opacity-95">
+                              <Image src="/assets/flowers/24.png" alt="" fill className="object-contain drop-shadow-[0_12px_22px_rgba(16,24,40,0.22)]" aria-hidden />
+                            </div>
+                          </div>
                         </motion.div>
                       </motion.div>
                     ) : null}
@@ -384,34 +586,14 @@ export function OpeningGate({
 
                   {isCoupleHighlight ? (
                     <>
-                      <motion.div
-                        className="pointer-events-none absolute left-1/2 top-[2.2rem] z-20 h-[360px] w-[360px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.96)_0%,rgba(255,255,255,0.42)_56%,transparent_100%)]"
-                        initial={{ opacity: 0, scale: 0.2 }}
-                        animate={{
-                          opacity: reduceMotion ? 0.8 : 0.88,
-                          scale: reduceMotion ? 1 : 1,
-                        }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: reduceMotion ? 0 : 0.45 }}
-                      />
-                      <motion.div
-                        className="pointer-events-none absolute left-1/2 top-[2.8rem] z-20 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgb(var(--inv-primary-rgb)/0.15)_0%,rgb(var(--inv-primary-rgb)/0.04)_45%,transparent_72%)] blur-xl"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: reduceMotion ? 0.45 : [0.15, 0.35, 0.22] }}
-                        exit={{ opacity: 0 }}
-                        transition={{
-                          duration: reduceMotion ? 0 : 2.6,
-                          repeat: reduceMotion ? 0 : Infinity,
-                          ease: "easeInOut",
-                        }}
-                      />
+                      {/* spotlight sekarang mengikuti ukuran foto (dipindah ke wrapper foto) */}
                     </>
                   ) : null}
                 </AnimatePresence>
 
               </div>
 
-              <div className="relative mt-1 min-h-[6.2rem]">
+              <div className="relative mt-0.5 min-h-[5.6rem]">
                 <AnimatePresence mode="wait" initial={false}>
                   {phase === "closed" ? (
                     <motion.div
@@ -503,7 +685,7 @@ export function OpeningGate({
                         className="pointer-events-none absolute left-1/2 top-1/2 h-16 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgb(var(--inv-primary-rgb)/0.24)_0%,transparent_72%)] blur-lg"
                       />
                       <p className="relative text-5xl italic text-[var(--inv-primary)] [font-family:serif] drop-shadow-[0_8px_22px_rgb(var(--inv-primary-rgb)/0.22)]">
-                        {coupleHeading}
+                {coupleHeading}
                       </p>
                       <p className="mt-2 text-sm text-[var(--inv-ink-muted)]">
                         Please proceed to open your invitation

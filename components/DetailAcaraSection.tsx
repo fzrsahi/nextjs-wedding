@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import {
   CalendarDays,
   Clock3,
@@ -8,7 +8,7 @@ import {
   MapPin,
   Sparkles,
 } from "lucide-react";
-import { useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { TEventScheduleBlock } from "@/lib/types/event.types";
 
 type TDetailAcaraSectionProps = {
@@ -18,13 +18,33 @@ type TDetailAcaraSectionProps = {
   resepsi: TEventScheduleBlock;
 };
 
+function getTimeLeft() {
+  const target = process.env.NEXT_PUBLIC_COUNTDOWN_TARGET?.trim() || "2026-12-12T09:00:00+07:00";
+  const targetMs = new Date(target).getTime();
+  const now = Date.now();
+  const diff = Math.max(0, targetMs - now);
+
+  return {
+    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((diff / (1000 * 60)) % 60),
+    seconds: Math.floor((diff / 1000) % 60),
+  };
+}
+
 function EventLine({
   schedule,
   order,
+  mapUrl,
+  enableMapDetail,
 }: {
   schedule: TEventScheduleBlock;
   order: string;
+  mapUrl?: string;
+  enableMapDetail: boolean;
 }) {
+  const [showMapDetail, setShowMapDetail] = useState(false);
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 32, filter: "blur(5px)" }}
@@ -73,21 +93,49 @@ function EventLine({
                 Lokasi
               </p>
               <p className="whitespace-pre-line font-medium">{schedule.venue || "—"}</p>
+              {enableMapDetail && mapUrl ? (
+                <button
+                  type="button"
+                  onClick={() => setShowMapDetail((prev) => !prev)}
+                  className="mt-1 inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--inv-accent)] underline decoration-[var(--inv-accent)]/65 underline-offset-3 transition hover:text-[var(--inv-primary)]"
+                >
+                  {showMapDetail ? "Tutup detail lokasi" : "Click me - lihat detail lokasi"}
+                </button>
+              ) : null}
             </div>
           </div>
         </div>
 
-        {schedule.mapUrl ? (
-          <a
-            href={schedule.mapUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-[var(--inv-primary)] underline decoration-[var(--inv-accent)]/70 underline-offset-4 transition hover:text-[var(--inv-accent)]"
-          >
-            Buka peta
-            <ExternalLink className="h-3.5 w-3.5" strokeWidth={2} />
-          </a>
-        ) : null}
+        <AnimatePresence initial={false}>
+          {enableMapDetail && showMapDetail && mapUrl ? (
+            <motion.div
+              key={`map-detail-${order}`}
+              initial={{ opacity: 0, y: 12, clipPath: "inset(0 0 100% 0 round 0.9rem)" }}
+              animate={{ opacity: 1, y: 0, clipPath: "inset(0 0 0% 0 round 0.9rem)" }}
+              exit={{ opacity: 0, y: -8, clipPath: "inset(0 0 100% 0 round 0.9rem)" }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-4 overflow-hidden rounded-[0.95rem] border border-[var(--inv-silver)]/75 bg-white/78 p-2"
+            >
+              <div className="overflow-hidden rounded-[0.7rem] border border-[var(--inv-silver)]/60">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/assets/detail-acara/maps.png"
+                  alt="Peta lokasi acara pernikahan"
+                  className="w-full object-cover"
+                />
+              </div>
+              <a
+                href={mapUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-[var(--inv-primary)] underline decoration-[var(--inv-accent)]/70 underline-offset-4 transition hover:text-[var(--inv-accent)]"
+              >
+                Buka lokasi di maps
+                <ExternalLink className="h-3.5 w-3.5" strokeWidth={2} />
+              </a>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
       </div>
       <div className="mt-4 h-px w-full bg-gradient-to-r from-transparent via-[var(--inv-primary)]/30 to-transparent" />
     </motion.article>
@@ -109,6 +157,26 @@ export function DetailAcaraSection({
   const bgScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.16, 1.09, 1.02]);
   const bgY = useTransform(scrollYProgress, [0, 1], ["-4%", "6%"]);
   const bgOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.22, 0.34, 0.28]);
+  const sharedMapUrlForBoth = akad.mapUrl || resepsi.mapUrl;
+  const showMapInAkad = showAkad;
+  const showMapInResepsi = !showAkad && showResepsi;
+  const [timeLeft, setTimeLeft] = useState(getTimeLeft);
+  const countdownItems = useMemo(
+    () => [
+      { label: "Hari", value: timeLeft.days },
+      { label: "Jam", value: timeLeft.hours },
+      { label: "Menit", value: timeLeft.minutes },
+      { label: "Detik", value: timeLeft.seconds },
+    ],
+    [timeLeft.days, timeLeft.hours, timeLeft.minutes, timeLeft.seconds],
+  );
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setTimeLeft(getTimeLeft());
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   return (
     <section
@@ -116,53 +184,7 @@ export function DetailAcaraSection({
       aria-label="Detail acara"
       className="relative min-h-screen w-full overflow-hidden"
     >
-      <motion.div
-        aria-hidden
-        animate={{ y: [0, -10, 0], rotate: [0, -3, 0] }}
-        transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-        className="pointer-events-none absolute -left-6 top-8 z-20 h-28 w-28 opacity-42"
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/flowers/17.png" alt="" className="h-full w-full object-contain" />
-      </motion.div>
-      <motion.div
-        aria-hidden
-        animate={{ y: [0, 9, 0], rotate: [0, 2.5, 0] }}
-        transition={{ duration: 7, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 0.5 }}
-        className="pointer-events-none absolute -right-6 top-16 z-20 h-28 w-28 opacity-40"
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/flowers/30.png" alt="" className="h-full w-full object-contain" />
-      </motion.div>
-      <motion.div
-        aria-hidden
-        animate={{ y: [0, -8, 0], rotate: [0, -2, 0] }}
-        transition={{ duration: 9, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 0.8 }}
-        className="pointer-events-none absolute -right-3 bottom-10 z-20 h-24 w-24 opacity-36"
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/flowers/22.png" alt="" className="h-full w-full object-contain" />
-      </motion.div>
-      <motion.div
-        aria-hidden
-        animate={{ y: [0, -8, 0], rotate: [0, 3, 0] }}
-        transition={{ duration: 10, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 0.4 }}
-        className="pointer-events-none absolute -left-4 bottom-16 z-20 h-24 w-24 opacity-36"
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/flowers/19.png" alt="" className="h-full w-full object-contain" />
-      </motion.div>
-      <motion.div
-        aria-hidden
-        animate={{ y: [0, 7, 0], rotate: [0, -2, 0] }}
-        transition={{ duration: 8.5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 1.2 }}
-        className="pointer-events-none absolute right-8 top-4 z-20 h-18 w-18 opacity-32"
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/flowers/26.png" alt="" className="h-full w-full object-contain" />
-      </motion.div>
-
-      <div className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(160deg,#f8f9f9_0%,#eef2f2_54%,#e4e8eb_100%)]" />
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(160deg,#f8f9f9_0%,#eaf2ee_42%,#e0ece6_74%,#e6eceb_100%)]" />
       <div className="pointer-events-none absolute inset-0 z-0">
         <motion.img
           src="/assets/opening/foto-berdua.jpeg"
@@ -179,40 +201,13 @@ export function DetailAcaraSection({
 
       <div className="relative z-10 min-h-screen px-5 py-10 sm:px-8">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_16%,rgb(var(--inv-accent-rgb)/0.14),transparent_30%),radial-gradient(circle_at_86%_18%,rgb(var(--inv-primary-rgb)/0.16),transparent_32%),radial-gradient(circle_at_50%_88%,rgb(var(--inv-primary-rgb)/0.1),transparent_35%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_16%,rgb(var(--inv-primary-rgb)/0.16),transparent_30%),radial-gradient(circle_at_86%_18%,rgb(var(--inv-primary-rgb)/0.2),transparent_34%),radial-gradient(circle_at_50%_88%,rgb(var(--inv-primary-rgb)/0.14),transparent_38%)]" />
         </div>
 
-        <motion.div
-          aria-hidden
-          animate={{ y: [0, -8, 0], rotate: [0, -2, 0] }}
-          transition={{ duration: 7, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-          className="pointer-events-none absolute -left-11 top-6 h-28 w-28 opacity-50"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/flowers/28.png" alt="" className="h-full w-full object-contain" />
-        </motion.div>
-        <motion.div
-          aria-hidden
-          animate={{ y: [0, 10, 0], rotate: [0, 2.5, 0] }}
-          transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 0.6 }}
-          className="pointer-events-none absolute -right-10 bottom-8 h-28 w-28 opacity-45"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/flowers/32.png" alt="" className="h-full w-full object-contain" />
-        </motion.div>
-        <motion.div
-          aria-hidden
-          animate={{ y: [0, -6, 0], rotate: [0, -2, 0] }}
-          transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 1.1 }}
-          className="pointer-events-none absolute right-6 top-5 h-20 w-20 opacity-35"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/flowers/31.png" alt="" className="h-full w-full object-contain" />
-        </motion.div>
         <div className="pointer-events-none absolute left-1/2 top-16 h-52 w-52 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgb(var(--inv-primary-rgb)/0.12),transparent_72%)]" />
         <div className="pointer-events-none absolute left-6 right-6 top-[10rem] h-px bg-gradient-to-r from-transparent via-[var(--inv-accent)]/42 to-transparent" />
 
-        <div className="relative z-10 mx-auto w-full max-w-3xl">
+        <div className="relative z-10 w-full">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -233,9 +228,50 @@ export function DetailAcaraSection({
             </div>
           </motion.div>
 
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.45 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-5"
+          >
+            <div className="rounded-[1.4rem] border border-[var(--inv-silver)]/65 bg-white/72 p-2 shadow-[0_12px_28px_rgb(var(--inv-primary-rgb)/0.1)] backdrop-blur-[2px]">
+              <div className="grid grid-cols-4 gap-2">
+                {countdownItems.map((item) => (
+                  <div
+                    key={item.label}
+                    className="relative overflow-hidden rounded-[1rem] border border-[var(--inv-silver)]/60 bg-[linear-gradient(155deg,rgb(var(--inv-surface-rgb)/0.94),rgb(var(--inv-surface-rgb)/0.82)_55%,rgb(var(--inv-surface-rgb)/0.94))] px-2 py-3 text-center"
+                  >
+                    <div className="pointer-events-none absolute inset-x-0 top-0 h-7 bg-[radial-gradient(circle_at_50%_0%,rgb(var(--inv-accent-rgb)/0.18),transparent_70%)]" />
+                    <p className="relative text-[1.35rem] leading-none font-semibold text-[var(--inv-primary)] [font-family:var(--font-display)]">
+                      {String(item.value).padStart(2, "0")}
+                    </p>
+                    <p className="relative mt-1 text-[10px] uppercase tracking-[0.14em] text-[var(--inv-ink-muted)]/80">
+                      {item.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
           <div className="space-y-4">
-            {showAkad ? <EventLine schedule={akad} order="01" /> : null}
-            {showResepsi ? <EventLine schedule={resepsi} order="02" /> : null}
+            {showAkad ? (
+              <EventLine
+                schedule={akad}
+                order="01"
+                enableMapDetail={showMapInAkad}
+                mapUrl={showResepsi ? sharedMapUrlForBoth : akad.mapUrl}
+              />
+            ) : null}
+            {showResepsi ? (
+              <EventLine
+                schedule={resepsi}
+                order="02"
+                enableMapDetail={showMapInResepsi}
+                mapUrl={showAkad ? sharedMapUrlForBoth : resepsi.mapUrl}
+              />
+            ) : null}
           </div>
 
           <motion.div

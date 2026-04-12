@@ -1,6 +1,9 @@
 import { DetailAcaraSection } from "@/components/DetailAcaraSection";
 import { DevSheetsBanner } from "@/components/DevSheetsBanner";
+import { FloralScrollFrame } from "@/components/FloralScrollFrame";
 import { OpeningGate } from "@/components/OpeningGate";
+import { QuotesSection } from "@/components/QuotesSection";
+import { VisualBlessingSection } from "@/components/VisualBlessingSection";
 import {
   UI_GUEST_NOT_FOUND_DESC,
   UI_GUEST_NOT_FOUND_TITLE,
@@ -68,12 +71,17 @@ export default async function Home({
         guestName={guest.displayName}
         coupleHeading={getCoupleDisplayHeading()}
       >
-        <DetailAcaraSection
-          showAkad={isAkadSectionVisible(guest.invitationKind)}
-          showResepsi={isResepsiSectionVisible(guest.invitationKind)}
-          akad={akad}
-          resepsi={resepsi}
-        />
+        <div className="relative scroll-smooth">
+          <FloralScrollFrame />
+          <QuotesSection />
+          <VisualBlessingSection />
+          <DetailAcaraSection
+            showAkad={isAkadSectionVisible(guest.invitationKind)}
+            showResepsi={isResepsiSectionVisible(guest.invitationKind)}
+            akad={akad}
+            resepsi={resepsi}
+          />
+        </div>
       </OpeningGate>
     </>
   );
