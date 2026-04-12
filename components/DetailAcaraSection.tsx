@@ -35,6 +35,59 @@ function getTimeLeft() {
   };
 }
 
+const STATIC_TIME_LEFT = { days: 0, hours: 0, minutes: 0, seconds: 0 };
+
+/** Timer 1 detik di sini supaya parent tidak re-render → latar foto tidak kedip. */
+function DetailAcaraCountdown() {
+  const [timeLeft, setTimeLeft] = useState(STATIC_TIME_LEFT);
+  useEffect(() => {
+    setTimeLeft(getTimeLeft());
+    const timer = window.setInterval(() => {
+      setTimeLeft(getTimeLeft());
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const items = useMemo(
+    () => [
+      { label: "Hari", value: timeLeft.days },
+      { label: "Jam", value: timeLeft.hours },
+      { label: "Menit", value: timeLeft.minutes },
+      { label: "Detik", value: timeLeft.seconds },
+    ],
+    [timeLeft.days, timeLeft.hours, timeLeft.minutes, timeLeft.seconds],
+  );
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.45 }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      className="mb-5"
+    >
+      <div className="rounded-[1.4rem] border border-[var(--inv-silver)]/65 bg-white/72 p-2 shadow-[0_12px_28px_rgb(var(--inv-primary-rgb)/0.1)] backdrop-blur-[2px]">
+        <div className="grid grid-cols-4 gap-2">
+          {items.map((item) => (
+            <div
+              key={item.label}
+              className="relative overflow-hidden rounded-[1rem] border border-[var(--inv-silver)]/60 bg-[linear-gradient(155deg,rgb(var(--inv-surface-rgb)/0.94),rgb(var(--inv-surface-rgb)/0.82)_55%,rgb(var(--inv-surface-rgb)/0.94))] px-2 py-3 text-center"
+            >
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-7 bg-[radial-gradient(circle_at_50%_0%,rgb(var(--inv-accent-rgb)/0.18),transparent_70%)]" />
+              <p className="relative text-[1.35rem] leading-none font-semibold text-[var(--inv-primary)] [font-family:var(--font-display)]">
+                {String(item.value).padStart(2, "0")}
+              </p>
+              <p className="relative mt-1 text-[10px] uppercase tracking-[0.14em] text-[var(--inv-ink-muted)]/80">
+                {item.label}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 function EventLine({
   schedule,
   order,
@@ -157,30 +210,12 @@ export function DetailAcaraSection({
     target: sectionRef,
     offset: ["start end", "end start"],
   });
-  const bgScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.16, 1.09, 1.02]);
-  const bgY = useTransform(scrollYProgress, [0, 1], ["-4%", "6%"]);
-  const bgOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.22, 0.34, 0.28]);
+  const bgScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.12, 1.06, 1.02]);
+  const bgY = useTransform(scrollYProgress, [0, 1], ["-3%", "4%"]);
   const sharedMapUrlForBoth = akad.mapUrl || resepsi.mapUrl;
   const showMapInAkad = showAkad;
   const showMapInResepsi = !showAkad && showResepsi;
-  const [timeLeft, setTimeLeft] = useState(getTimeLeft);
   const blend = SECTION_SCROLL_BLEND.detailAcara;
-  const countdownItems = useMemo(
-    () => [
-      { label: "Hari", value: timeLeft.days },
-      { label: "Jam", value: timeLeft.hours },
-      { label: "Menit", value: timeLeft.minutes },
-      { label: "Detik", value: timeLeft.seconds },
-    ],
-    [timeLeft.days, timeLeft.hours, timeLeft.minutes, timeLeft.seconds],
-  );
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setTimeLeft(getTimeLeft());
-    }, 1000);
-    return () => window.clearInterval(timer);
-  }, []);
 
   return (
     <section
@@ -188,19 +223,27 @@ export function DetailAcaraSection({
       aria-label="Detail acara"
       className="relative min-h-screen w-full overflow-hidden"
     >
-      <div className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(160deg,#f8f9f9_0%,#eaf2ee_42%,#e0ece6_74%,#e6eceb_100%)]" />
-      <div className="pointer-events-none absolute inset-0 z-0">
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(162deg,#f2f6f4_0%,#e2ebe6_38%,#d5e4dc_68%,#cadbd4_100%)]" />
+      {/*
+        Satu lapisan foto: hanya scale+y dari scroll (tanpa opacity anim ganda) + overlay statis
+        supaya tidak bentrok whileInView vs useTransform (kedip). overflow-hidden + min size stabilkan crop.
+      */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <motion.img
           src="/assets/opening/foto-berdua.jpeg"
           alt=""
-          initial={{ opacity: 0, scale: 1.22 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 1.35, ease: [0.22, 1, 0.36, 1] }}
-          style={{ scale: bgScale, y: bgY, opacity: bgOpacity }}
-          className="h-full w-full object-cover object-center grayscale-[10%] saturate-[0.82] contrast-[0.9] sepia-[4%]"
+          width={1920}
+          height={1080}
+          decoding="async"
+          draggable={false}
+          style={{
+            scale: bgScale,
+            y: bgY,
+            willChange: "transform",
+          }}
+          className="absolute left-1/2 top-1/2 h-[min(140%,120vh)] w-full min-w-full max-w-none -translate-x-1/2 -translate-y-1/2 object-cover object-center grayscale-[10%] saturate-[0.82] contrast-[0.9] sepia-[4%]"
         />
-          <div className="absolute inset-0 bg-[linear-gradient(165deg,rgb(var(--inv-surface-rgb)/0.54),rgb(var(--inv-surface-rgb)/0.46)_50%,rgb(var(--inv-surface-rgb)/0.58))]" />
+        <div className="absolute inset-0 bg-[linear-gradient(165deg,rgb(var(--inv-surface-rgb)/0.52),rgb(var(--inv-surface-rgb)/0.44)_50%,rgb(var(--inv-surface-rgb)/0.56))]" />
       </div>
 
       <SectionScrollBlend top={blend.top} bottom={blend.bottom} />
@@ -234,32 +277,7 @@ export function DetailAcaraSection({
             </div>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.45 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-5"
-          >
-            <div className="rounded-[1.4rem] border border-[var(--inv-silver)]/65 bg-white/72 p-2 shadow-[0_12px_28px_rgb(var(--inv-primary-rgb)/0.1)] backdrop-blur-[2px]">
-              <div className="grid grid-cols-4 gap-2">
-                {countdownItems.map((item) => (
-                  <div
-                    key={item.label}
-                    className="relative overflow-hidden rounded-[1rem] border border-[var(--inv-silver)]/60 bg-[linear-gradient(155deg,rgb(var(--inv-surface-rgb)/0.94),rgb(var(--inv-surface-rgb)/0.82)_55%,rgb(var(--inv-surface-rgb)/0.94))] px-2 py-3 text-center"
-                  >
-                    <div className="pointer-events-none absolute inset-x-0 top-0 h-7 bg-[radial-gradient(circle_at_50%_0%,rgb(var(--inv-accent-rgb)/0.18),transparent_70%)]" />
-                    <p className="relative text-[1.35rem] leading-none font-semibold text-[var(--inv-primary)] [font-family:var(--font-display)]">
-                      {String(item.value).padStart(2, "0")}
-                    </p>
-                    <p className="relative mt-1 text-[10px] uppercase tracking-[0.14em] text-[var(--inv-ink-muted)]/80">
-                      {item.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
+          <DetailAcaraCountdown />
 
           <div className="space-y-4">
             {showAkad ? (

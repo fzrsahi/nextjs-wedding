@@ -81,8 +81,12 @@ export default async function Home({
         guestName={guest.displayName}
         coupleHeading={getCoupleDisplayHeading()}
       >
-        <div className="relative scroll-smooth">
-          <FloralScrollFrame />
+        <div className="relative scroll-smooth bg-[linear-gradient(185deg,#e8ece9_0%,#f4f1ee_18%,#eef3f0_42%,#f7f5f2_62%,#e9f0ec_88%,#e2eae6_100%)]">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_55%_at_50%_-8%,rgb(var(--inv-primary-rgb)/0.09),transparent_50%),radial-gradient(ellipse_90%_40%_at_100%_30%,rgb(var(--inv-accent-rgb)/0.06),transparent_45%),radial-gradient(ellipse_70%_50%_at_0%_70%,rgb(var(--inv-silver-rgb)/0.14),transparent_42%)]"
+          />
+          <div className="relative">
           <QuotesSection />
           <CoupleStorySection story={coupleStorySentence} />
           <VisualBlessingSection />
@@ -101,6 +105,12 @@ export default async function Home({
           <GallerySection imagePaths={galleryImagePaths} />
           <GiftSection />
           <ClosingSection coupleHeading={getCoupleDisplayHeading()} />
+          {/*
+            Di atas konten (z-28) supaya bunga mengelilingi section; pointer-events-none.
+            Harus setelah section agar stacking benar; tanpa transform di parent OpeningGate.
+          */}
+          <FloralScrollFrame />
+          </div>
         </div>
       </OpeningGate>
     </>

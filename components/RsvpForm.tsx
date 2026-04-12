@@ -143,12 +143,13 @@ export function RsvpForm({
       transition={{ duration: reduceMotion ? 0 : 0.68, ease: [0.16, 1, 0.3, 1] }}
       className="relative overflow-hidden px-5 py-16 sm:px-8 sm:py-20"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[#fdfbf8]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(172deg,#faf7f4_0%,#f0ebe6_38%,#e8f0ea_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgb(var(--inv-accent-rgb)/0.1),transparent_42%),radial-gradient(circle_at_85%_80%,rgb(var(--inv-primary-rgb)/0.09),transparent_48%)]" />
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.38]"
+        className="pointer-events-none absolute inset-0 opacity-[0.4]"
         style={{
           backgroundImage:
-            "radial-gradient(rgb(123 35 50 / 0.04) 1px, transparent 1px)",
+            "radial-gradient(rgb(123 35 50 / 0.045) 1px, transparent 1px)",
           backgroundSize: "18px 18px",
         }}
       />

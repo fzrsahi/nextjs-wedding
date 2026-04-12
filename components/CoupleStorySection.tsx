@@ -15,7 +15,6 @@ type TCoupleStorySectionProps = {
   story: string;
 };
 
-/** Ornamen tengah: simetris, hijau + aksen maroon, untuk highlight di atas / bawah kalimat */
 function StoryFlourish({ flipped }: { flipped?: boolean }) {
   const rid = useId().replace(/:/g, "");
   const gidStroke = `${rid}-sf-stroke`;
@@ -121,17 +120,17 @@ export function CoupleStorySection({ story }: TCoupleStorySectionProps) {
       transition={{ duration: reduceMotion ? 0 : 0.6, ease: [0.16, 1, 0.3, 1] }}
       className="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-20"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[#faf7f2]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(168deg,#faf8f4_0%,#f3efe8_35%,#ebe4dc_70%,#e5ddd4_100%)]" />
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.32]"
+        className="pointer-events-none absolute inset-0 opacity-[0.38]"
         style={{
           backgroundImage:
-            "radial-gradient(rgb(36 92 72 / 0.04) 1px, transparent 1px)",
+            "radial-gradient(rgb(36 92 72 / 0.045) 1px, transparent 1px)",
           backgroundSize: "15px 15px",
         }}
       />
       <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_65%_at_50%_42%,rgb(255_253_249_/_0.94)_0%,transparent_62%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_70%_at_50%_38%,rgb(255_253_249_/_0.88)_0%,transparent_58%),radial-gradient(circle_at_8%_25%,rgb(123_35_50_/_0.06),transparent_38%),radial-gradient(circle_at_92%_60%,rgb(36_92_72_/_0.07),transparent_40%)]"
         aria-hidden
       />
       <div

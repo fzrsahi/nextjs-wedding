@@ -15,9 +15,9 @@ export function VisualBlessingSection() {
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.35 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[linear-gradient(165deg,#edf2ee_0%,#f3efec_48%,#e8f0ea_100%)] px-4 py-10 text-[var(--inv-ink)]"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[linear-gradient(168deg,#e8f0eb_0%,#f2ebe6_40%,#e5ebe7_78%,#dbe5e0_100%)] px-4 py-10 text-[var(--inv-ink)]"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_10%,rgb(var(--inv-primary-rgb)/0.1),transparent_40%),radial-gradient(circle_at_85%_85%,rgb(var(--inv-accent-rgb)/0.12),transparent_42%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_12%,rgb(var(--inv-primary-rgb)/0.14),transparent_38%),radial-gradient(circle_at_86%_82%,rgb(var(--inv-accent-rgb)/0.14),transparent_40%),radial-gradient(ellipse_80%_50%_at_50%_0%,rgb(var(--inv-silver-rgb)/0.2),transparent_55%)]" />
       <SectionScrollBlend top={blend.top} bottom={blend.bottom} />
       <div className="pointer-events-none absolute -left-6 top-8 h-20 w-20 opacity-70">
         {/* eslint-disable-next-line @next/next/no-img-element */}

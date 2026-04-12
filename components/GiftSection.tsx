@@ -73,7 +73,8 @@ export function GiftSection() {
       transition={{ duration: reduceMotion ? 0 : 0.65, ease: [0.16, 1, 0.3, 1] }}
       className="relative overflow-hidden px-5 py-16 sm:px-8 sm:py-20"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(170deg,#f0ebe6_0%,#faf7f4_48%,#e8f0ea_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(168deg,#ebe6e0_0%,#f5f1ec_42%,#e6efe8_82%,#dce8e2_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_75%_20%,rgb(var(--inv-accent-rgb)/0.09),transparent_45%),radial-gradient(circle_at_10%_85%,rgb(var(--inv-primary-rgb)/0.08),transparent_48%)]" />
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.35]"
         style={{

@@ -21,10 +21,13 @@ function getTimeLeft(targetIso?: string) {
   return { days, hours, minutes, seconds };
 }
 
+const STATIC_TIME_LEFT = { days: 0, hours: 0, minutes: 0, seconds: 0 };
+
 export function CountdownSection({ targetIso }: TCountdownSectionProps) {
-  const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(targetIso));
+  const [timeLeft, setTimeLeft] = useState(STATIC_TIME_LEFT);
 
   useEffect(() => {
+    setTimeLeft(getTimeLeft(targetIso));
     const timer = window.setInterval(() => {
       setTimeLeft(getTimeLeft(targetIso));
     }, 1000);

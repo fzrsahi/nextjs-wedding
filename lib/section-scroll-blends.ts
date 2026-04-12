@@ -1,40 +1,37 @@
-/**
- * Warna feather vertikal antar-section (scroll A → B terasa halus).
- * Nilai rgba: ujung strip lebih pekat, lalu transparan ke tengah section.
- */
+
 export const SECTION_SCROLL_BLEND = {
   quotes: {
-    bottom: "rgba(250, 247, 242, 0.9)",
+    bottom: "rgba(232, 240, 235, 0.92)",
   },
   couple: {
-    top: "rgba(232, 242, 237, 0.55)",
-    bottom: "rgba(226, 236, 230, 0.82)",
+    top: "rgba(245, 242, 237, 0.75)",
+    bottom: "rgba(228, 236, 230, 0.88)",
   },
   visual: {
-    top: "rgba(249, 246, 242, 0.65)",
-    bottom: "rgba(218, 230, 224, 0.75)",
+    top: "rgba(236, 242, 237, 0.72)",
+    bottom: "rgba(218, 228, 222, 0.82)",
   },
   detailAcara: {
-    top: "rgba(232, 238, 233, 0.55)",
-    bottom: "rgba(232, 234, 231, 0.78)",
+    top: "rgba(232, 238, 234, 0.68)",
+    bottom: "rgba(248, 246, 242, 0.9)",
   },
   dresscode: {
-    top: "rgba(220, 228, 223, 0.7)",
-    bottom: "rgba(253, 251, 248, 0.92)",
+    top: "rgba(253, 251, 248, 0.82)",
+    bottom: "rgba(240, 234, 228, 0.88)",
   },
   rsvp: {
-    top: "rgba(253, 251, 248, 0.88)",
-    bottom: "rgba(232, 238, 234, 0.8)",
+    top: "rgba(242, 236, 230, 0.78)",
+    bottom: "rgba(228, 236, 232, 0.85)",
   },
   gallery: {
-    top: "rgba(252, 249, 246, 0.65)",
-    bottom: "rgba(242, 236, 229, 0.88)",
+    top: "rgba(232, 238, 234, 0.75)",
+    bottom: "rgba(244, 238, 230, 0.9)",
   },
   gift: {
-    top: "rgba(234, 238, 234, 0.6)",
-    bottom: "rgba(198, 215, 208, 0.5)",
+    top: "rgba(240, 236, 230, 0.8)",
+    bottom: "rgba(210, 224, 216, 0.55)",
   },
   closing: {
-    top: "rgba(236, 230, 223, 0.5)",
+    top: "rgba(232, 228, 222, 0.62)",
   },
 } as const;

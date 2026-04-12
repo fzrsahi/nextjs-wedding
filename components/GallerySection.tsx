@@ -600,7 +600,8 @@ export function GallerySection({ imagePaths }: TGallerySectionProps) {
       transition={{ duration: reduceMotion ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }}
       className="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-20"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(172deg,#dfe8e2_0%,#ebe6e0_38%,#f4f1ec_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(175deg,#d8e5de_0%,#e8e2da_32%,#f0ebe4_65%,#f6f2ec_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_100%,rgb(var(--inv-primary-rgb)/0.08),transparent_50%)]" />
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.45]"
         style={{

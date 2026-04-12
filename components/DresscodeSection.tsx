@@ -54,12 +54,13 @@ export function DresscodeSection() {
       transition={{ duration: reduceMotion ? 0 : 0.65, ease: [0.16, 1, 0.3, 1] }}
       className="relative overflow-hidden px-5 py-14 sm:px-8 sm:py-16"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[#fdfbf8]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(175deg,#fffefb_0%,#f8f3ed_45%,#efe8e0_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_50%_0%,rgb(var(--inv-accent-rgb)/0.08),transparent_50%)]" />
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.4]"
+        className="pointer-events-none absolute inset-0 opacity-[0.42]"
         style={{
           backgroundImage:
-            "radial-gradient(rgb(36 92 72 / 0.028) 1px, transparent 1px)",
+            "radial-gradient(rgb(36 92 72 / 0.032) 1px, transparent 1px)",
           backgroundSize: "16px 16px",
         }}
       />

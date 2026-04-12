@@ -55,7 +55,7 @@ export function FloralScrollFrame() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-10 overflow-hidden [mask-image:radial-gradient(ellipse_at_center,transparent_0%,transparent_66%,black_82%,black_100%)]"
+      className="pointer-events-none fixed inset-0 z-[28] overflow-hidden [mask-image:radial-gradient(ellipse_at_center,transparent_0%,transparent_66%,black_82%,black_100%)]"
     >
       {FRAME_FLOWERS.map((flower, idx) => (
         <motion.div
