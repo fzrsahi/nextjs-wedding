@@ -5,7 +5,7 @@ import { DetailAcaraSection } from "@/components/DetailAcaraSection";
 import { DresscodeSection } from "@/components/DresscodeSection";
 import { RsvpForm } from "@/components/RsvpForm";
 import { DevSheetsBanner } from "@/components/DevSheetsBanner";
-import { FloralScrollFrame } from "@/components/FloralScrollFrame";
+
 import { InviteCriticalLoadGate } from "@/components/InviteCriticalLoadGate";
 import { OpeningGate } from "@/components/OpeningGate";
 import { QuotesSection } from "@/components/QuotesSection";
@@ -205,11 +205,7 @@ export default async function Home({
           <GallerySection imagePaths={galleryImagePaths} />
           <GiftSection />
           <ClosingSection coupleHeading={getCoupleDisplayHeading()} />
-          {/*
-            Di atas konten (z-28) supaya bunga mengelilingi section; pointer-events-none.
-            Harus setelah section agar stacking benar; tanpa transform di parent OpeningGate.
-          */}
-          <FloralScrollFrame />
+
           </div>
         </div>
         </OpeningGate>
