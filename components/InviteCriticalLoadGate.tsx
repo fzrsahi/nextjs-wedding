@@ -1,19 +1,41 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { UI_INVITE_INITIAL_LOADING } from "@/lib/constants/messages.id";
 import { CRITICAL_INVITE_PREFETCH_URLS } from "@/lib/critical-invite-assets";
 
-const MAX_WAIT_MS = 16_000;
+const MAX_WAIT_MS = 20000;
 const OVERLAY_FADE_MS = 420;
 
-function preloadImage(url: string): Promise<void> {
+function preloadAsset(url: string, onComplete: () => void): Promise<void> {
   return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => resolve();
-    img.onerror = () => resolve();
-    img.src = url;
+    if (url.match(/\.(mp3|webm|wav|ogg)$/)) {
+      const audio = new window.Audio();
+      audio.oncanplaythrough = () => {
+        onComplete();
+        resolve();
+      };
+      audio.onerror = () => {
+        onComplete();
+        resolve();
+      };
+      audio.src = url;
+      audio.load();
+    } else {
+      const img = new window.Image();
+      img.onload = () => {
+        onComplete();
+        resolve();
+      };
+      img.onerror = () => {
+        onComplete();
+        resolve();
+      };
+      img.src = url;
+    }
   });
 }
 
@@ -21,33 +43,56 @@ type TInviteCriticalLoadGateProps = {
   children: React.ReactNode;
 };
 
-/**
- * Menahan tampilan undangan sampai font + gambar pembuka/prefetch utama ada di cache,
- * dengan overlay minimal di awal.
- */
 export function InviteCriticalLoadGate({ children }: TInviteCriticalLoadGateProps) {
   const [assetsReady, setAssetsReady] = useState(false);
   const [overlayGone, setOverlayGone] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
+    let loadedCount = 0;
+    const total = CRITICAL_INVITE_PREFETCH_URLS.length;
+    
+    if (!cancelled) setProgress(5);
 
-    const fontsReady =
-      typeof document !== "undefined" && "fonts" in document
-        ? document.fonts.ready.then(() => undefined).catch(() => undefined)
-        : Promise.resolve();
+    const onAssetComplete = () => {
+      loadedCount++;
+      if (!cancelled) {
+        const actualProgress = Math.floor((loadedCount / total) * 95);
+        setProgress((prev) => Math.max(prev, actualProgress));
+      }
+    };
 
     const load = async () => {
-      await Promise.race([
-        Promise.all([
-          fontsReady,
-          ...CRITICAL_INVITE_PREFETCH_URLS.map((url) => preloadImage(url)),
-        ]),
-        new Promise<void>((r) => {
-          window.setTimeout(r, MAX_WAIT_MS);
-        }),
-      ]);
-      if (!cancelled) setAssetsReady(true);
+      try {
+        await Promise.race([
+          Promise.all(CRITICAL_INVITE_PREFETCH_URLS.map((url) => preloadAsset(url, onAssetComplete))),
+          new Promise<void>((r) => {
+            const crawlInterval = window.setInterval(() => {
+              if (!cancelled) {
+                setProgress(prev => {
+                  if (prev < 90) return prev + 0.5;
+                  return prev;
+                });
+              }
+            }, 500);
+            
+            window.setTimeout(() => {
+              window.clearInterval(crawlInterval);
+              r();
+            }, MAX_WAIT_MS);
+          }),
+        ]);
+      } catch (e) {
+        console.error("[Preload] error:", e);
+      } finally {
+        if (!cancelled) {
+          setProgress(100);
+          window.setTimeout(() => {
+            if (!cancelled) setAssetsReady(true);
+          }, 600);
+        }
+      }
     };
 
     void load();
@@ -65,33 +110,63 @@ export function InviteCriticalLoadGate({ children }: TInviteCriticalLoadGateProp
   return (
     <>
       {assetsReady ? children : null}
-      {!overlayGone ? (
-        <div
-          role="status"
-          aria-live="polite"
-          aria-busy={!assetsReady}
-          className={[
-            "fixed inset-0 z-[100000] flex flex-col items-center justify-center",
-            "bg-[#eef3f0] transition-opacity ease-out",
-            assetsReady ? "pointer-events-none opacity-0" : "opacity-100",
-          ].join(" ")}
-          style={{ transitionDuration: `${OVERLAY_FADE_MS}ms` }}
-        >
-          <div className="flex flex-col items-center gap-6">
-            <div className="h-[2px] w-14 overflow-hidden rounded-full bg-[rgb(36_92_72_/0.12)]">
-              <div
-                className={[
-                  "h-full w-2/5 rounded-full bg-[rgb(36_92_72_/0.42)]",
-                  assetsReady ? "" : "motion-safe:animate-pulse",
-                ].join(" ")}
-              />
+      <AnimatePresence>
+        {!overlayGone && (
+          <motion.div
+            key="loading-overlay"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            role="status"
+            aria-live="polite"
+            aria-busy={!assetsReady}
+            className="fixed inset-0 z-[100000] flex flex-col items-center justify-center bg-[#fbfbfa]"
+            suppressHydrationWarning
+          >
+            <div className="relative flex flex-col items-center gap-8 w-full max-w-[280px]">
+              {/* Animated Flower */}
+              <div className="relative w-24 h-24 animate-zoom-in-out">
+                <Image 
+                  src="/assets/opening/flower-1.png" 
+                  alt="" 
+                  fill 
+                  priority
+                  sizes="96px"
+                  className="object-contain opacity-80"
+                />
+              </div>
+
+              {/* Aesthetic Loading Text & Progress */}
+              <div className="flex flex-col items-center gap-5 w-full">
+                <div className="flex flex-col items-center gap-2">
+                  <p 
+                    className="text-base text-[var(--inv-primary)] opacity-60"
+                    style={{ fontFamily: "serif", letterSpacing: "0.4em" }}
+                  >
+                    Loading Resource...
+                  </p>
+                </div>
+
+                {/* Progress Bar Container */}
+                <div className="w-full space-y-2 px-8">
+                  <div className="h-[2px] w-full overflow-hidden rounded-full bg-neutral-200">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${progress}%` }}
+                      className="h-full bg-[var(--inv-primary)]"
+                      transition={{ duration: 0.5, ease: "easeOut" }}
+                    />
+                  </div>
+                  <p className="text-[10px] font-bold tracking-widest text-[var(--inv-primary)] opacity-50 text-center">
+                    {progress}%
+                  </p>
+                </div>
+              </div>
             </div>
-            <p className="text-[0.62rem] font-medium uppercase tracking-[0.42em] text-[rgb(36_92_72_/0.48)]">
-              {UI_INVITE_INITIAL_LOADING}
-            </p>
-          </div>
-        </div>
-      ) : null}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
+

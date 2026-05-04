@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { CoupleStorySection } from "@/components/CoupleStorySection";
+
 import { DetailAcaraSection } from "@/components/DetailAcaraSection";
 import { DresscodeSection } from "@/components/DresscodeSection";
 import { RsvpForm } from "@/components/RsvpForm";
@@ -8,7 +8,6 @@ import { DevSheetsBanner } from "@/components/DevSheetsBanner";
 
 import { InviteCriticalLoadGate } from "@/components/InviteCriticalLoadGate";
 import { OpeningGate } from "@/components/OpeningGate";
-import { QuotesSection } from "@/components/QuotesSection";
 import { ClosingSection } from "@/components/ClosingSection";
 import { GallerySection } from "@/components/GallerySection";
 import { GiftSection } from "@/components/GiftSection";
@@ -180,6 +179,11 @@ export default async function Home({
         <OpeningGate
           guestName={guest.displayName}
           coupleHeading={getCoupleDisplayHeading()}
+          coupleStory={coupleStorySentence}
+          akad={akad}
+          resepsi={resepsi}
+          showAkad={isAkadSectionVisible(guest.invitationKind)}
+          showResepsi={isResepsiSectionVisible(guest.invitationKind)}
         >
         <div className="relative scroll-smooth bg-[linear-gradient(185deg,#e8ece9_0%,#f4f1ee_18%,#eef3f0_42%,#f7f5f2_62%,#e9f0ec_88%,#e2eae6_100%)]">
           <div
@@ -187,8 +191,6 @@ export default async function Home({
             className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_55%_at_50%_-8%,rgb(var(--inv-primary-rgb)/0.09),transparent_50%),radial-gradient(ellipse_90%_40%_at_100%_30%,rgb(var(--inv-accent-rgb)/0.06),transparent_45%),radial-gradient(ellipse_70%_50%_at_0%_70%,rgb(var(--inv-silver-rgb)/0.14),transparent_42%)]"
           />
           <div className="relative">
-          <QuotesSection />
-          <CoupleStorySection story={coupleStorySentence} />
           <VisualBlessingSection />
           <DetailAcaraSection
             showAkad={isAkadSectionVisible(guest.invitationKind)}

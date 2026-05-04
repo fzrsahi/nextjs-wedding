@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
     imageSizes: [32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
+  allowedDevOrigins: [
+    "localhost:3000",
+    "*.ngrok-free.app",
+    "07ea-2001-448a-7065-1323-e4ea-433f-dd77-f8d9.ngrok-free.app",
+  ],
 };
 
 export default nextConfig;
