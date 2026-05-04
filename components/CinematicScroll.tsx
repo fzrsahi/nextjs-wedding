@@ -141,41 +141,8 @@ export function CinematicScrollContainer({
         });
       }
 
-      // ─── Particle burst helper ───
-      const spawnParticles = (count = 12) => {
-        const el = containerRef.current;
-        if (!el) return;
-        const colors = ["#fbfbfa", "#c3c9cf", "#7b2332", "#245c48", "#d4af37", "#f0d9c8"];
-        Array.from({ length: count }).forEach((_, i) => {
-          const dot = document.createElement("div");
-          const size = 4 + Math.random() * 7;
-          const isSquare = Math.random() > 0.55;
-          dot.style.cssText = `
-            position:fixed;width:${size}px;height:${size}px;
-            background:${colors[i % colors.length]};
-            border-radius:${isSquare ? "2px" : "50%"};
-            left:50%;top:50%;
-            margin-left:${-size / 2}px;margin-top:${-size / 2}px;
-            pointer-events:none;z-index:9999;
-          `;
-          el.appendChild(dot);
-          const angle = (i / count) * Math.PI * 2 + Math.random() * 0.6;
-          const dist = 70 + Math.random() * 160;
-          gsap.fromTo(dot,
-            { x: 0, y: 0, opacity: 1, scale: 1, rotation: Math.random() * 180 },
-            {
-              x: Math.cos(angle) * dist,
-              y: Math.sin(angle) * dist,
-              opacity: 0, scale: 0,
-              rotation: Math.random() * 720 - 360,
-              duration: 0.65 + Math.random() * 0.5,
-              delay: Math.random() * 0.15,
-              ease: "power2.out",
-              onComplete: () => dot.remove(),
-            }
-          );
-        });
-      };
+      // Particle burst dimatikan untuk menurunkan beban GPU/memori di iOS Safari.
+      const spawnParticles = () => {};
 
       // ─── Shared animation builder ───
       const STAGGER = 0.08;
@@ -386,7 +353,7 @@ export function CinematicScrollContainer({
         }
 
         // Particle burst as frame settles
-        tl.call(() => spawnParticles(14), [], enterStart + 0.42);
+        tl.call(() => spawnParticles(), [], enterStart + 0.42);
 
         // ── Phase 5: decos explode in ──
         const allDecoEnters = enterSlide.enterOrder.filter(a =>

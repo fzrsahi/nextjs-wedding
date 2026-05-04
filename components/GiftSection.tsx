@@ -1,8 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { Check, Copy, Landmark, MapPin, Wallet } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
-import { useCallback, useId, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 
 import type { SlideConfig } from "./CinematicScroll";
 
@@ -58,19 +59,45 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
   const liveId = useId();
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [liveMessage, setLiveMessage] = useState("");
+  const clearCopiedTimerRef = useRef<number | null>(null);
+  const clearLiveMessageTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (clearCopiedTimerRef.current !== null) {
+        window.clearTimeout(clearCopiedTimerRef.current);
+      }
+      if (clearLiveMessageTimerRef.current !== null) {
+        window.clearTimeout(clearLiveMessageTimerRef.current);
+      }
+    };
+  }, []);
 
   const onCopy = useCallback(async (id: string, number: string) => {
+    if (clearCopiedTimerRef.current !== null) {
+      window.clearTimeout(clearCopiedTimerRef.current);
+      clearCopiedTimerRef.current = null;
+    }
+    if (clearLiveMessageTimerRef.current !== null) {
+      window.clearTimeout(clearLiveMessageTimerRef.current);
+      clearLiveMessageTimerRef.current = null;
+    }
+
     const ok = await copyToClipboard(number.replace(/\s/g, ""));
     if (ok) {
       setCopiedId(id);
       setLiveMessage(EN_GIFT.copiedToast);
-      window.setTimeout(() => {
+      clearCopiedTimerRef.current = window.setTimeout(() => {
         setCopiedId((cur) => (cur === id ? null : cur));
         setLiveMessage("");
+        clearCopiedTimerRef.current = null;
       }, 2200);
     } else {
       setLiveMessage(EN_GIFT.copyFailToast);
-      window.setTimeout(() => setLiveMessage(""), 3200);
+      clearLiveMessageTimerRef.current = window.setTimeout(() => {
+        setLiveMessage("");
+        clearLiveMessageTimerRef.current = null;
+      }, 3200);
     }
   }, []);
 
@@ -91,22 +118,26 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
         ref={(el) => {
           refs[0]?.(el);
         }}
-        className="relative w-full max-w-[360px] origin-center animate-float"
+        className="relative w-full max-w-[360px] origin-center"
       >
         <div className="pointer-events-none absolute -left-6 top-8 z-[2] h-20 w-20 opacity-72">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src="/assets/opening/flower-1.png"
             alt=""
-            className="h-full w-full object-contain animate-zoom-in-out"
+            fill
+            sizes="80px"
+            className="object-contain animate-zoom-in-out"
+            loading="lazy"
           />
         </div>
         <div className="pointer-events-none absolute -right-6 top-8 z-[2] h-20 w-20 opacity-72">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src="/assets/opening/flower-2.png"
             alt=""
-            className="h-full w-full object-contain animate-zoom-in-out-delayed"
+            fill
+            sizes="80px"
+            className="object-contain animate-zoom-in-out-delayed"
+            loading="lazy"
           />
         </div>
 
@@ -114,7 +145,7 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
         <header className="text-center">
           <p
             data-cinematic-line
-            className="text-[1.2rem] leading-none text-[#8a2b3e]"
+            className="text-[1.2rem] leading-none text-[#8a2b3e] animate-sway"
             style={{
               fontFamily: "'Brittany Signature', serif",
               textShadow: "0 2px 10px rgba(0,0,0,0.46)",
@@ -125,7 +156,7 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
           <h2
             id={headingId}
             data-cinematic-line
-            className="mt-0.5 text-[0.9rem] font-semibold leading-tight tracking-[0.14em] uppercase text-[#f1dfcf]"
+            className="mt-0.5 text-[0.9rem] font-semibold leading-tight tracking-[0.14em] uppercase text-[#f1dfcf] animate-glow-text"
             style={{
               fontFamily: "var(--font-cormorant), serif",
               textShadow: "0 2px 10px rgba(0,0,0,0.45)",
@@ -136,7 +167,7 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
           <div className="mx-auto mt-1 h-px w-20 bg-[linear-gradient(90deg,transparent,rgba(240,226,212,0.6),transparent)]" />
           <p
             data-cinematic-line
-            className="mx-auto mt-1 max-w-[30ch] text-[0.54rem] leading-relaxed text-[#e7d8cb]/90"
+            className="mx-auto mt-1 max-w-[30ch] text-[0.54rem] leading-relaxed text-[#e7d8cb]/90 animate-drift"
             style={{
               fontFamily: "var(--font-cormorant), serif",
               textShadow: "0 1px 8px rgba(0,0,0,0.4)",

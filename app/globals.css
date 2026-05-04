@@ -39,10 +39,10 @@ body {
 
 @layer utilities {
   .animate-float {
-    animation: float 4s ease-in-out infinite;
+    animation: float 3.6s ease-in-out infinite;
   }
   .animate-float-delayed {
-    animation: float 4s ease-in-out 2s infinite;
+    animation: float 3.6s ease-in-out 1.2s infinite;
   }
   .animate-slow-pan {
     animation: slow-pan 15s linear alternate infinite;
@@ -52,26 +52,26 @@ body {
   }
   /* Flowers — aggressive zoom + rotation */
   .animate-zoom-in-out {
-    animation: zoom-in-out 4s ease-in-out infinite alternate;
+    animation: zoom-in-out 4.8s ease-in-out infinite alternate;
   }
   .animate-zoom-in-out-delayed {
-    animation: zoom-in-out 4s ease-in-out 2s infinite alternate;
+    animation: zoom-in-out 4.8s ease-in-out 1.2s infinite alternate;
   }
   /* Short headings — noticeable sway */
   .animate-sway {
-    animation: sway 3s ease-in-out infinite;
+    animation: sway 3.2s ease-in-out infinite;
   }
   /* Long paragraphs — barely-there drift */
   .animate-drift {
-    animation: drift 6s ease-in-out infinite;
+    animation: drift 3.4s ease-in-out infinite;
   }
   /* Frame border — subtle glow pulse */
   .animate-frame-pulse {
-    animation: frame-pulse 4s ease-in-out infinite;
+    animation: frame-pulse 3.8s ease-in-out infinite;
   }
   /* Building / large assets — deep breathe */
   .animate-breathe-deep {
-    animation: breathe-deep 5s ease-in-out infinite;
+    animation: breathe-deep 4.2s ease-in-out infinite;
   }
   /* Big numbers / hero text — scale pulse */
   .animate-pulse-text {
@@ -87,7 +87,7 @@ body {
   }
   /* Floating with slight rotation */
   .animate-float-rotate {
-    animation: float-rotate 5s ease-in-out infinite;
+    animation: float-rotate 3.8s ease-in-out infinite;
   }
   /* Divider lines — width pulse */
   .animate-sparkle-line {
@@ -104,8 +104,8 @@ body {
 
 @keyframes float {
   0%, 100% { transform: translateY(0) rotate(0deg); }
-  30% { transform: translateY(-14px) rotate(1.5deg); }
-  70% { transform: translateY(-10px) rotate(-1deg); }
+  30% { transform: translateY(-8px) rotate(0.9deg); }
+  70% { transform: translateY(-6px) rotate(-0.7deg); }
 }
 
 @keyframes slow-pan {
@@ -120,43 +120,37 @@ body {
 
 /* Flowers: aggressive zoom + tilt + bounce */
 @keyframes zoom-in-out {
-  0%   { transform: scale(0.78) rotate(-5deg); }
-  40%  { transform: scale(1.22) rotate(4deg); }
-  70%  { transform: scale(1.08) rotate(-2deg); }
-  100% { transform: scale(0.78) rotate(-5deg); }
+  0%   { transform: scale(0.92) rotate(-2.3deg); }
+  40%  { transform: scale(1.08) rotate(1.9deg); }
+  70%  { transform: scale(1.03) rotate(-1.5deg); }
+  100% { transform: scale(0.92) rotate(-2.3deg); }
 }
 
 /* Short headings: energetic sway with bounce */
 @keyframes sway {
   0%, 100% { transform: translateX(0) rotate(0deg); }
-  20%  { transform: translateX(-6px) rotate(-2.5deg); }
-  40%  { transform: translateX(6px) rotate(2deg); }
-  60%  { transform: translateX(-4px) rotate(-1.5deg); }
-  80%  { transform: translateX(4px) rotate(1deg); }
+  20%  { transform: translateX(-4px) rotate(-1.7deg); }
+  40%  { transform: translateX(4px) rotate(1.4deg); }
+  60%  { transform: translateX(-3px) rotate(-1deg); }
+  80%  { transform: translateX(3px) rotate(0.8deg); }
 }
 
 /* Long text: barely-there vertical drift */
 @keyframes drift {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
+  50% { transform: translateY(-5px); }
 }
 
 /* Frame: glow shadow + scale pulse */
 @keyframes frame-pulse {
-  0%, 100% { 
-    filter: drop-shadow(0 18px 38px rgba(0,0,0,0.28));
-    transform: scale(1);
-  }
-  50% { 
-    filter: drop-shadow(0 30px 60px rgba(0,0,0,0.52)) drop-shadow(0 0 20px rgba(123,35,50,0.18));
-    transform: scale(1.013);
-  }
+  0%, 100% { transform: scale(1); opacity: 0.95; }
+  50% { transform: scale(1.018); opacity: 1; }
 }
 
 /* Building / large assets: breathe deeply */
 @keyframes breathe-deep {
-  0%, 100% { transform: scale(1); opacity: 0.9; }
-  50% { transform: scale(1.04); opacity: 1; }
+  0%, 100% { transform: scale(1); opacity: 0.92; }
+  50% { transform: scale(1.025); opacity: 1; }
 }
 
 /* Big numbers: scale pulse */
@@ -177,15 +171,15 @@ body {
 
 /* Text glow: pulsing text shadow */
 @keyframes glow-text {
-  0%, 100% { text-shadow: 0 0 4px rgba(251, 251, 250, 0.2); }
-  50% { text-shadow: 0 0 20px rgba(251, 251, 250, 0.6), 0 0 40px rgba(251, 251, 250, 0.2); }
+  0%, 100% { transform: translateY(0); opacity: 0.82; }
+  50% { transform: translateY(-3px); opacity: 1; }
 }
 
 /* Floating with slight rotation */
 @keyframes float-rotate {
   0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-5px) rotate(1deg); }
-  75% { transform: translateY(5px) rotate(-1deg); }
+  25% { transform: translateY(-4px) rotate(1deg); }
+  75% { transform: translateY(4px) rotate(-1deg); }
 }
 
 /* Divider lines: width pulse / shimmer */
@@ -202,8 +196,52 @@ body {
 /* Spin + float: for extra variety on small decorative elements */
 @keyframes spin-float {
   0%   { transform: translateY(0)    rotate(0deg)   scale(1); }
-  25%  { transform: translateY(-10px) rotate(8deg)   scale(1.08); }
-  50%  { transform: translateY(-4px)  rotate(-5deg)  scale(0.95); }
-  75%  { transform: translateY(-12px) rotate(10deg)  scale(1.1); }
+  25%  { transform: translateY(-3px) rotate(2deg)   scale(1.02); }
+  50%  { transform: translateY(-1px)  rotate(-1.5deg)  scale(0.99); }
+  75%  { transform: translateY(-4px) rotate(2.3deg)  scale(1.03); }
   100% { transform: translateY(0)    rotate(0deg)   scale(1); }
+}
+
+/* Mobile Safari stabilization: disable most looping animations on touch devices. */
+@media (hover: none) and (pointer: coarse) {
+  /* Keep aggressive feel on phone, but run slightly slower for stability. */
+  .animate-float,
+  .animate-float-delayed { animation-duration: 4.4s !important; }
+  .animate-breathe-deep { animation-duration: 4.8s !important; }
+  .animate-zoom-in-out,
+  .animate-zoom-in-out-delayed { animation-duration: 5.2s !important; }
+  .animate-sway { animation-duration: 3.8s !important; }
+  .animate-drift { animation-duration: 4s !important; }
+  .animate-glow-text { animation-duration: 3.2s !important; }
+  .animate-float-rotate { animation-duration: 4.2s !important; }
+  .animate-pulse-text { animation-duration: 3s !important; }
+  .animate-frame-pulse { animation-duration: 4.6s !important; }
+  .animate-wiggle { animation-duration: 2.4s !important; }
+  .animate-sparkle-line { animation-duration: 2.8s !important; }
+
+  .animate-slow-pan {
+    animation: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-float-delayed,
+  .animate-slow-pan,
+  .animate-breathe,
+  .animate-zoom-in-out,
+  .animate-zoom-in-out-delayed,
+  .animate-sway,
+  .animate-drift,
+  .animate-frame-pulse,
+  .animate-breathe-deep,
+  .animate-pulse-text,
+  .animate-wiggle,
+  .animate-glow-text,
+  .animate-float-rotate,
+  .animate-sparkle-line,
+  .animate-bounce-subtle,
+  .animate-spin-float {
+    animation: none !important;
+  }
 }

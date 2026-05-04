@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Home, Volume2, VolumeX } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -19,9 +20,6 @@ import {
   CDN_AMPL_CLOSED,
   CDN_AMPL_OPEN,
   CDN_AYAT_FRAME,
-  FALLBACK_AMPL_CLOSED,
-  FALLBACK_AMPL_OPEN,
-  FALLBACK_AYAT_FRAME,
 } from "@/lib/critical-invite-assets";
 
 type TOpeningGateProps = {
@@ -183,31 +181,36 @@ export function OpeningGate({
             </div>
           </div>
 
-          {/* Closed Envelope — ref pada node yang pakai animate-float supaya GSAP tidak berlawanan dengan keyframes */}
+          {/* Closed Envelope — statis, kurangi beban animasi di mobile Safari */}
           <div className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center">
-            <div ref={refs[1]} className="relative mx-auto w-[90%] origin-bottom scale-110 animate-float">
-              <img
+            <div ref={refs[1]} className="relative mx-auto w-[90%] origin-bottom scale-110">
+              <Image
                 src={CDN_AMPL_CLOSED}
                 alt=""
-                onError={(e) => {
-                  e.currentTarget.src = FALLBACK_AMPL_CLOSED;
-                }}
-                className="h-auto w-full drop-shadow-[0_28px_40px_rgba(16,24,40,0.36)] animate-breathe-deep"
+                width={828}
+                height={748}
+                sizes="90vw"
+                className="h-auto w-full drop-shadow-[0_28px_40px_rgba(16,24,40,0.36)]"
+                priority
               />
               <div ref={refs[2]} className="absolute bottom-[22%] left-[14%] z-10 aspect-square w-[35%] -translate-x-1/4 md:w-[30%]">
-                <img 
-                  src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857769/flower-1_lyminu.png" 
-                  alt="" 
-                  onError={(e) => { e.currentTarget.src = "/assets/opening/flower-1.png"; }}
-                  className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out" 
+                <Image
+                  src="/assets/opening/flower-1.png"
+                  alt=""
+                  fill
+                  sizes="(max-width: 768px) 32vw, 180px"
+                  className="object-contain animate-zoom-in-out"
+                  loading="lazy"
                 />
               </div>
               <div ref={refs[3]} className="absolute right-[14%] top-[24%] z-10 aspect-square w-[35%] translate-x-1/4 md:w-[30%]">
-                <img 
-                  src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857841/flower-2_nwx2ki.png" 
-                  alt="" 
-                  onError={(e) => { e.currentTarget.src = "/assets/opening/flower-2.png"; }}
-                  className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed" 
+                <Image
+                  src="/assets/opening/flower-2.png"
+                  alt=""
+                  fill
+                  sizes="(max-width: 768px) 32vw, 180px"
+                  className="object-contain animate-zoom-in-out-delayed"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -234,19 +237,20 @@ export function OpeningGate({
       ],
       render: (refs) => (
         <div className="absolute inset-0 z-30 flex flex-col items-center justify-center">
-          <div ref={refs[0]} className="relative mx-auto w-[95%] origin-center scale-[1.15] animate-float">
-            <img
+          <div ref={refs[0]} className="relative mx-auto w-[95%] origin-center scale-[1.15]">
+            <Image
               src={CDN_AMPL_OPEN}
               alt="Open invitation"
-              onError={(e) => {
-                e.currentTarget.src = FALLBACK_AMPL_OPEN;
-              }}
-              className="h-auto w-full drop-shadow-[0_30px_42px_rgba(16,24,40,0.4)] animate-breathe-deep"
+              width={828}
+              height={1124}
+              sizes="95vw"
+              className="h-auto w-full drop-shadow-[0_30px_42px_rgba(16,24,40,0.4)]"
+              priority
             />
             <div ref={refs[1]} className="absolute inset-x-0 top-[20%] z-20 flex items-center justify-center px-4">
               <div className="flex flex-col items-center justify-center w-full">
                 <h2
-                  className="text-[length:7.5cqw] text-[#2b2b2b] flex flex-col items-center justify-center animate-sway"
+                  className="text-[length:7.5cqw] text-[#2b2b2b] flex flex-col items-center justify-center"
                   style={{ fontFamily: "'Brittany Signature', serif", lineHeight: 1.1 }}
                 >
                   {coupleHeading.includes("&") ? (
@@ -274,19 +278,23 @@ export function OpeningGate({
               </div>
             </div>
             <div ref={refs[2]} className="absolute left-[14%] top-[45%] z-10 aspect-square w-[35%] -translate-x-1/4 -translate-y-1/2 md:w-[30%] origin-center">
-              <img 
-                src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857769/flower-1_lyminu.png" 
-                alt="" 
-                onError={(e) => { e.currentTarget.src = "/assets/opening/flower-1.png"; }}
-                className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out" 
+              <Image
+                src="/assets/opening/flower-1.png"
+                alt=""
+                fill
+                sizes="(max-width: 768px) 32vw, 180px"
+                className="object-contain animate-zoom-in-out"
+                loading="lazy"
               />
             </div>
             <div ref={refs[3]} className="absolute bottom-[20%] right-[14%] z-10 aspect-square w-[35%] translate-x-1/4 md:w-[30%] origin-center">
-              <img 
-                src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857841/flower-2_nwx2ki.png" 
-                alt="" 
-                onError={(e) => { e.currentTarget.src = "/assets/opening/flower-2.png"; }}
-                className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed" 
+              <Image
+                src="/assets/opening/flower-2.png"
+                alt=""
+                fill
+                sizes="(max-width: 768px) 32vw, 180px"
+                className="object-contain animate-zoom-in-out-delayed"
+                loading="lazy"
               />
             </div>
           </div>
@@ -311,12 +319,12 @@ export function OpeningGate({
       render: (refs) => (
         <div className="absolute inset-0 z-30 flex flex-col items-center justify-center">
           <div ref={refs[0]} className="relative mx-auto w-[75%] origin-center animate-float">
-            <img
+            <Image
               src={CDN_AYAT_FRAME}
               alt="Frame Ayat"
-              onError={(e) => {
-                e.currentTarget.src = FALLBACK_AYAT_FRAME;
-              }}
+              width={800}
+              height={1200}
+              sizes="75vw"
               className="h-auto w-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
             />
             <div className="absolute inset-0 flex flex-col items-center justify-center px-14 text-center">
@@ -343,19 +351,23 @@ export function OpeningGate({
               </p>
             </div>
             <div ref={refs[1]} className="absolute -left-[35%] -top-[25%] z-10 aspect-square w-[110%] origin-center pointer-events-none">
-              <img 
-                src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png" 
-                alt="" 
-                onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.png"; }}
-                className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out" 
+              <Image
+                src="/assets/flowers/bunga-ayat.png"
+                alt=""
+                fill
+                sizes="(max-width: 768px) 62vw, 420px"
+                className="object-contain animate-zoom-in-out"
+                loading="lazy"
               />
             </div>
             <div ref={refs[2]} className="absolute -right-[35%] -bottom-[25%] z-10 aspect-square w-[110%] origin-center pointer-events-none">
-              <img 
-                src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png" 
-                alt="" 
-                onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.png"; }}
-                className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed" 
+              <Image
+                src="/assets/flowers/bunga-ayat.png"
+                alt=""
+                fill
+                sizes="(max-width: 768px) 62vw, 420px"
+                className="object-contain animate-zoom-in-out-delayed"
+                loading="lazy"
               />
             </div>
           </div>
@@ -412,8 +424,8 @@ export function OpeningGate({
           className="absolute inset-x-0 bottom-[6vh] z-40 flex flex-col items-center pointer-events-none"
         >
           <motion.div
-            animate={{ y: [15, -15], opacity: [0, 1, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+            animate={{ y: [6, -6], opacity: [0.15, 0.9, 0.15] }}
+            transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
             className="flex justify-center"
           >
             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">

@@ -1,10 +1,8 @@
 /** CDN utama untuk frame ayat & amplop pembuka; fallback ke `public/` di `onError` pada komponen. */
-export const CDN_AYAT_FRAME =
-  "https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777858641/ayat_g9nnbm.png";
-export const CDN_AMPL_OPEN =
-  "https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777858621/amplop-open_vaotz6.png";
-export const CDN_AMPL_CLOSED =
-  "https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777858611/amplop-closed_aprxvh.png";
+export const CDN_AYAT_FRAME = "/assets/frame/ayat.png";
+/** Amplop gunakan aset lokal agar render lebih stabil di Safari iOS. */
+export const CDN_AMPL_OPEN = "/assets/opening/amplop-open.png";
+export const CDN_AMPL_CLOSED = "/assets/opening/amplop-closed.png";
 
 export const FALLBACK_AYAT_FRAME = "/assets/frame/ayat.png";
 export const FALLBACK_AMPL_OPEN = "/assets/opening/amplop-open.png";

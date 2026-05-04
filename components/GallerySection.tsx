@@ -189,14 +189,6 @@ function GalleryCinematicSlide({
   const safeActiveIndex = paths.length > 0 ? activeIndex % paths.length : 0;
   const sideCount = Math.max(0, Math.min(4, paths.length - 1));
 
-  useEffect(() => {
-    if (reduceMotion || paths.length <= 1) return;
-    const id = window.setInterval(() => {
-      setActiveIndex((cur) => (cur + 1) % paths.length);
-    }, 3800);
-    return () => window.clearInterval(id);
-  }, [paths.length, reduceMotion]);
-
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (openIndex === null) return;
@@ -228,25 +220,29 @@ function GalleryCinematicSlide({
         ref={(el) => {
           mountCallbacks[0]?.(el);
         }}
-        className="relative w-full max-w-[460px] origin-center animate-float"
+        className="relative w-full max-w-[460px] origin-center"
         style={{ width: "100%" }}
       >
         <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,rgba(0,0,0,0.7)_0%,rgba(0,0,0,0.38)_55%,transparent_100%)]" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_55%_at_50%_0%,rgba(255,255,255,0.12),transparent_62%)]" />
         <div className="pointer-events-none absolute -left-8 top-8 z-[2] h-28 w-28 opacity-80">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src="/assets/opening/flower-1.png"
             alt=""
-            className="h-full w-full object-contain animate-zoom-in-out"
+            fill
+            sizes="112px"
+            className="object-contain animate-zoom-in-out"
+            loading="lazy"
           />
         </div>
         <div className="pointer-events-none absolute -right-8 top-8 z-[2] h-28 w-28 opacity-80">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src="/assets/opening/flower-2.png"
             alt=""
-            className="h-full w-full object-contain animate-zoom-in-out-delayed"
+            fill
+            sizes="112px"
+            className="object-contain animate-zoom-in-out-delayed"
+            loading="lazy"
           />
         </div>
 
@@ -254,7 +250,7 @@ function GalleryCinematicSlide({
           <header className="px-1 text-center">
             <p
               data-cinematic-line
-              className="text-[1.95rem] leading-none text-[#7b2233]"
+              className="text-[1.95rem] leading-none text-[#7b2233] animate-sway"
               style={{
                 fontFamily: "'Brittany Signature', serif",
                 textShadow: "0 2px 12px rgba(0,0,0,0.42)",
@@ -265,7 +261,7 @@ function GalleryCinematicSlide({
             <h2
               id={headingId}
               data-cinematic-line
-              className="mt-1 text-[1.3rem] font-semibold leading-[1.03] tracking-[0.12em] uppercase text-[#f4e6d8]"
+              className="mt-1 text-[1.3rem] font-semibold leading-[1.03] tracking-[0.12em] uppercase text-[#f4e6d8] animate-glow-text"
               style={{
                 fontFamily: "var(--font-cormorant), serif",
                 textShadow: "0 2px 12px rgba(0,0,0,0.5)",
@@ -276,7 +272,7 @@ function GalleryCinematicSlide({
             <div className="mx-auto mt-1 h-px w-36 bg-[linear-gradient(90deg,transparent,rgba(240,226,212,0.65),transparent)]" />
             <p
               data-cinematic-line
-              className="mx-auto mt-1.5 max-w-[34ch] text-[0.74rem] leading-relaxed text-[#f3e8de]/95"
+              className="mx-auto mt-1.5 max-w-[34ch] text-[0.74rem] leading-relaxed text-[#f3e8de]/95 animate-drift"
               style={{
                 fontFamily: "var(--font-cormorant), serif",
                 textShadow: "0 2px 12px rgba(0,0,0,0.4)",
