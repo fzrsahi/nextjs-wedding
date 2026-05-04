@@ -12,19 +12,11 @@ export const SECTION_SCROLL_BLEND = {
     bottom: "rgba(218, 228, 222, 0.82)",
   },
   detailAcara: {
-    top: "rgba(232, 238, 234, 0.68)",
+    top: "rgba(40, 24, 30, 0.78)",
     bottom: "rgba(248, 246, 242, 0.9)",
   },
-  dresscode: {
-    top: "rgba(253, 251, 248, 0.82)",
-    bottom: "rgba(240, 234, 228, 0.88)",
-  },
-  rsvp: {
-    top: "rgba(242, 236, 230, 0.78)",
-    bottom: "rgba(228, 236, 232, 0.85)",
-  },
   gallery: {
-    top: "rgba(232, 238, 234, 0.75)",
+    top: "rgba(228, 236, 232, 0.88)",
     bottom: "rgba(244, 238, 230, 0.9)",
   },
   gift: {

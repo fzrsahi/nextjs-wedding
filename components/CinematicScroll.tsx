@@ -10,6 +10,21 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 const CLOUDINARY_BG =
   "https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good,w_1080/v1777856768/background3_lks3ez.webp";
 
+// --- Text-line stagger (optional per slide via `data-cinematic-line`) ---
+const CINEMATIC_LINE_SEL = "[data-cinematic-line]";
+const LINE_STAGGER_TEXT = 0.05;
+const LINE_EXIT_DUR = 0.38;
+const LINE_ENTER_DUR = 0.44;
+/** Frame mulai naik sebelum baris teks selesai — transisi terasa satu aliran, tidak “diam dulu”. */
+const FRAME_LINE_OVERLAP = 0.2;
+/** Frame exit sedikit lebih awal di akhir fase deco (mengurangi jeda kaku sebelum bingkai jalan). */
+const DECO_TO_FRAME_OVERLAP = 0.08;
+
+function getCinematicLines(el: HTMLElement | null): HTMLElement[] {
+  if (!el) return [];
+  return Array.from(el.querySelectorAll<HTMLElement>(`:scope ${CINEMATIC_LINE_SEL}`));
+}
+
 // --- Types ---
 
 export type ElementType = "content" | "flower" | "frame";
@@ -164,7 +179,7 @@ export function CinematicScrollContainer({
 
       // ─── Shared animation builder ───
       const STAGGER = 0.08;
-      const BG_DUR = 0.6;
+      const BG_DUR = 0.52;
 
       const buildExitEnter = (
         tl: gsap.core.Timeline,
@@ -179,13 +194,18 @@ export function CinematicScrollContainer({
         const vh = window.innerHeight;
         const vw = window.innerWidth;
 
+        /** Bunga: img pakai keyframes zoom — matikan saat GSAP menggerakkan wrapper supaya tidak rebut transform/composite. */
+        const flowerImg = (container: HTMLDivElement | null) =>
+          container?.querySelector<HTMLImageElement>(":scope > img") ?? null;
+
         // ── Phase 1: deco exit — flowers spin out wildly, text tilts away ──
         const decoExits = exitSlide.exitOrder.filter(a => a.type !== "frame");
+        let decoExitEnd = 0;
         decoExits.forEach(({ refIndex, type }, i) => {
           const el = exitEls?.[refIndex];
           if (!el) return;
           const t = i * STAGGER;
-          if (type === "flower") {
+            if (type === "flower") {
             const xDir = i % 2 === 0 ? -1 : 1;
             tl.to(el, {
               y: up ? -vh * 0.85 : vh * 0.85,
@@ -194,24 +214,46 @@ export function CinematicScrollContainer({
               rotation: up ? -720 : 720,
               opacity: 0,
               duration: 0.45,
-              ease: "power3.in",
+              ease: "power2.inOut",
+              force3D: true,
+              onStart: () => {
+                const img = flowerImg(el);
+                if (img) img.style.animation = "none";
+              },
             }, t);
+            decoExitEnd = Math.max(decoExitEnd, t + 0.45);
           } else {
-            const tilt = i % 2 === 0 ? -5 : 5;
-            tl.to(el, {
-              y: up ? -80 : 80,
-              rotation: tilt,
-              opacity: 0,
-              scale: 0.88,
-              duration: 0.3,
-              ease: "power2.in",
-            }, t);
+            const lines = getCinematicLines(el);
+            const lineY = Math.min(vh * 0.13, 110);
+            if (lines.length > 0) {
+              lines.forEach((line, li) => {
+                tl.to(line, {
+                  y: up ? -lineY : lineY,
+                  opacity: 0,
+                  duration: LINE_EXIT_DUR,
+                  ease: "sine.in",
+                  force3D: true,
+                }, t + li * LINE_STAGGER_TEXT);
+              });
+              const afterLines = t + (lines.length - 1) * LINE_STAGGER_TEXT + LINE_EXIT_DUR;
+              tl.to(el, { opacity: 0, duration: 0.12 }, afterLines);
+              decoExitEnd = Math.max(decoExitEnd, afterLines + 0.12);
+            } else {
+              const tilt = i % 2 === 0 ? -5 : 5;
+              tl.to(el, {
+                y: up ? -80 : 80,
+                rotation: tilt,
+                opacity: 0,
+                scale: 0.88,
+                duration: 0.3,
+                ease: "power2.in",
+                force3D: true,
+              }, t);
+              decoExitEnd = Math.max(decoExitEnd, t + 0.3);
+            }
           }
         });
-
-        const decoExitEnd = decoExits.length > 0
-          ? (decoExits.length - 1) * STAGGER + 0.45 + 0.03
-          : 0;
+        if (decoExits.length > 0) decoExitEnd += 0.03;
 
         // ── Phase 2: frame exit — kill CSS anim conflict, then dramatic slide ──
         const frameExits = exitSlide.exitOrder.filter(a => a.type === "frame");
@@ -219,23 +261,54 @@ export function CinematicScrollContainer({
           ? frameExits
           : exitSlide.exitOrder.filter(a => a.type === "content");
 
+        const lastDeco = decoExits[decoExits.length - 1];
+        const decoFrameNudge =
+          lastDeco?.type === "content" ? DECO_TO_FRAME_OVERLAP : DECO_TO_FRAME_OVERLAP * 0.45;
+        const frameExitBase = Math.max(0, decoExitEnd - decoFrameNudge);
+
+        let frameExitEnd = decoExitEnd;
         frameExitItems.forEach(({ refIndex }, i) => {
           const el = exitEls?.[refIndex];
           if (!el) return;
-          const t0 = decoExitEnd + i * 0.06;
-          // Kill CSS animation so GSAP transform isn't overridden
-          tl.call(() => { el.style.animation = "none"; }, [], t0);
+          const t0 = frameExitBase + i * 0.05;
+          const lines = getCinematicLines(el);
+          const lineY = Math.min(vh * 0.13, 110);
+          let frameMoveStart = t0;
+          if (lines.length > 0) {
+            const lineBlockEnd = t0 + (lines.length - 1) * LINE_STAGGER_TEXT + LINE_EXIT_DUR;
+            frameMoveStart = Math.max(
+              t0,
+              lineBlockEnd - FRAME_LINE_OVERLAP + 0.02
+            );
+            lines.forEach((line, li) => {
+              tl.to(line, {
+                y: up ? -lineY : lineY,
+                opacity: 0,
+                duration: LINE_EXIT_DUR,
+                ease: "sine.in",
+                force3D: true,
+              }, t0 + li * LINE_STAGGER_TEXT);
+            });
+          }
           tl.to(el, {
             y: up ? -vh * 0.9 : vh * 0.9,
-            rotation: up ? -6 : 6,
+            rotation: up ? -5 : 5,
             opacity: 0,
-            scale: 0.87,
-            duration: 0.5,
-            ease: "power3.in",
-          }, t0 + 0.01);
+            scale: 0.9,
+            duration: 0.58,
+            ease: "sine.inOut",
+            force3D: true,
+            onStart: () => {
+              el.style.animation = "none";
+            },
+          }, frameMoveStart);
+          const thisEnd = frameMoveStart + 0.58 + 0.02;
+          frameExitEnd = Math.max(frameExitEnd, thisEnd);
         });
 
-        const frameExitEnd = decoExitEnd + frameExitItems.length * 0.06 + 0.5 + 0.02;
+        if (frameExitItems.length === 0) {
+          frameExitEnd = decoExitEnd;
+        }
 
         // ── Phase 3: bg transitions AFTER all assets are gone ──
         if (bgRef.current) {
@@ -255,31 +328,67 @@ export function CinematicScrollContainer({
           ? frameEnters
           : enterSlide.enterOrder.filter(a => a.type === "content");
 
+        let frameEnterEnd = enterStart;
+
         frameEnterItems.forEach(({ refIndex }, i) => {
           const el = enterEls?.[refIndex];
           if (!el) return;
-          // Kill CSS animation so GSAP y transform isn't overridden by animate-float
           const savedAnimation = el.style.animation || "";
-          tl.call(() => { el.style.animation = "none"; }, [], enterStart + i * 0.06);
+          const lines = getCinematicLines(el);
+          const tFrame = enterStart + i * 0.05;
+          const enterFromY = Math.min(48, vh * 0.07);
+
           tl.fromTo(el,
-            { y: up ? vh * 0.95 : -vh * 0.95, opacity: 0, scale: 0.82, rotation: up ? 9 : -9 },
+            { y: up ? vh * 0.92 : -vh * 0.92, opacity: 0, scale: 0.9, rotation: up ? 5 : -5, force3D: true },
             {
-              y: 0, opacity: 1, scale: 1, rotation: 0, duration: 0.75, ease: "back.out(2.5)",
+              y: 0, opacity: 1, scale: 1, rotation: 0, duration: 0.68, ease: "power2.out",
+              force3D: true,
+              onStart: () => {
+                el.style.animation = "none";
+                if (lines.length > 0) {
+                  gsap.set(lines, {
+                    opacity: 0,
+                    y: up ? enterFromY : -enterFromY,
+                  });
+                }
+              },
               onComplete: () => {
-                // Restore CSS animation after GSAP is done
                 el.style.animation = savedAnimation;
                 gsap.set(el, { clearProps: "y,x,rotation,scale" });
-              }
+              },
             },
-            enterStart + i * 0.06 + 0.01
+            tFrame
           );
+
+          const landAt = tFrame + 0.68;
+          if (lines.length > 0) {
+            tl.to(lines, {
+              opacity: 1,
+              y: 0,
+              duration: LINE_ENTER_DUR,
+              stagger: LINE_STAGGER_TEXT,
+              ease: "power3.out",
+              force3D: true,
+              onComplete: () => {
+                gsap.set(lines, { clearProps: "transform,opacity" });
+              },
+            }, landAt);
+          }
+          const lineRevealEnd = lines.length > 0
+            ? landAt + LINE_ENTER_DUR + (lines.length - 1) * LINE_STAGGER_TEXT
+            : landAt;
+          frameEnterEnd = Math.max(frameEnterEnd, lineRevealEnd);
         });
 
+        frameEnterEnd += 0.03;
+        if (frameEnterItems.length === 0) {
+          frameEnterEnd = enterStart + 0.71 + 0.03;
+        }
+
         // Particle burst as frame settles
-        tl.call(() => spawnParticles(14), [], enterStart + 0.35);
+        tl.call(() => spawnParticles(14), [], enterStart + 0.42);
 
         // ── Phase 5: decos explode in ──
-        const frameEnterEnd = enterStart + frameEnterItems.length * 0.06 + 0.75 + 0.03;
         const allDecoEnters = enterSlide.enterOrder.filter(a =>
           frameEnters.length > 0 ? a.type !== "frame" : a.type !== "content"
         );
@@ -291,16 +400,51 @@ export function CinematicScrollContainer({
           if (type === "flower") {
             const xDir = i % 2 === 0 ? -1 : 1;
             tl.fromTo(el,
-              { y: up ? vh * 0.5 : -vh * 0.5, x: xDir * vw * 0.2, scale: 0.05, rotation: up ? 540 : -540, opacity: 0 },
-              { y: 0, x: 0, scale: 1, rotation: 0, opacity: 1, duration: 0.8, ease: "back.out(1.8)" },
+              { y: up ? vh * 0.5 : -vh * 0.5, x: xDir * vw * 0.2, scale: 0.05, rotation: up ? 540 : -540, opacity: 0, force3D: true },
+              {
+                y: 0, x: 0, scale: 1, rotation: 0, opacity: 1, duration: 0.72, ease: "power2.out",
+                force3D: true,
+                onStart: () => {
+                  const img = flowerImg(el);
+                  if (img) img.style.animation = "none";
+                },
+                onComplete: () => {
+                  const img = flowerImg(el);
+                  if (img) img.style.removeProperty("animation");
+                },
+              },
               t
             );
           } else {
-            tl.fromTo(el,
-              { y: up ? 70 : -70, opacity: 0, scale: 0.85, rotation: i % 2 === 0 ? -3 : 3 },
-              { y: 0, opacity: 1, scale: 1, rotation: 0, duration: 0.5, ease: "back.out(1.5)" },
-              t
-            );
+            const lines = getCinematicLines(el);
+            const enterFromY = Math.min(56, window.innerHeight * 0.08);
+            if (lines.length > 0) {
+              tl.call(() => {
+                /** Parent kept opacity 0 after init/hideSlide; children cannot show otherwise. */
+                gsap.set(el, { opacity: 1 });
+                gsap.set(lines, {
+                  opacity: 0,
+                  y: up ? enterFromY : -enterFromY,
+                });
+              }, [], t);
+              tl.to(lines, {
+                opacity: 1,
+                y: 0,
+                duration: LINE_ENTER_DUR,
+                stagger: LINE_STAGGER_TEXT,
+                ease: "power3.out",
+                force3D: true,
+                onComplete: () => {
+                  gsap.set(lines, { clearProps: "transform,opacity" });
+                },
+              }, t + 0.02);
+            } else {
+              tl.fromTo(el,
+                { y: up ? 70 : -70, opacity: 0, scale: 0.85, rotation: i % 2 === 0 ? -3 : 3, force3D: true },
+                { y: 0, opacity: 1, scale: 1, rotation: 0, duration: 0.5, ease: "back.out(1.5)", force3D: true },
+                t
+              );
+            }
           }
         });
       };
@@ -379,12 +523,30 @@ export function CinematicScrollContainer({
       // Scroll observer
       const observer = ScrollTrigger.observe({
         target: window,
-        type: "wheel,touch,pointer",
+        /** Tanpa `pointer`: alur klik mouse tidak di-hijack Observer (masalah tombol RSVP). */
+        type: "wheel,touch",
         onUp: () => { onInteractionRef.current?.(); gotoNext(); },
         onDown: () => { onInteractionRef.current?.(); gotoPrev(); },
         tolerance: 20,
         preventDefault: true,
+        allowClicks: true,
         wheelSpeed: 1,
+        /**
+         * Lebih andal dari `ignore` selector: GSAP memanggil ini untuk wheel/touch/press.
+         * `closest` menangkap target di dalam teks/ikon di dalam zona RSVP.
+         */
+        ignoreCheck: (ev: Event) => {
+          const t = ev.target;
+          if (!t || !(t instanceof Element)) return false;
+          return Boolean(
+            t.closest("[data-cinematic-observe-ignore]") ||
+              t.closest("button") ||
+              t.closest("a") ||
+              t.closest("input") ||
+              t.closest("textarea") ||
+              t.closest("select"),
+          );
+        },
       });
 
       return () => { observer.kill(); };
@@ -405,7 +567,7 @@ export function CinematicScrollContainer({
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-50 overflow-hidden touch-none"
+      className="fixed inset-0 z-50 overflow-hidden touch-pan-y"
       style={{ overscrollBehavior: "none" }}
     >
       {/* 
@@ -434,7 +596,7 @@ export function CinematicScrollContainer({
       </div>
 
       {/* All slides layered */}
-      <div className="relative z-30 mx-auto flex h-full w-full flex-col items-center justify-center py-4">
+      <div className="relative z-30 mx-auto flex h-full w-full max-w-full flex-col items-center justify-center touch-manipulation py-4">
         <div className="relative h-full w-full max-w-full text-center">
           {slides.map((slide, si) => (
             <div key={slide.id}>

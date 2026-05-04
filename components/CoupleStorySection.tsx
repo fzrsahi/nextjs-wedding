@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { SlideConfig } from "./CinematicScroll";
 
 /**
@@ -10,7 +9,7 @@ import type { SlideConfig } from "./CinematicScroll";
  * rendered container matches the visible oval, then flowers position
  * relative to the real frame edges.
  */
-export function createCoupleStorySlide(story: string): SlideConfig {
+export function createCoupleStorySlide(): SlideConfig {
   return {
     id: "couple-story",
     refCount: 3,

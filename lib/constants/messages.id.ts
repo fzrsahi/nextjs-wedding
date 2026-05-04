@@ -49,20 +49,21 @@ export const API_RSVP_SINGLE_FIELD_REQUIRED =
   "Field konfirmasi wajib: datang atau tidak.";
 export const API_RSVP_SHEET_WRITE_FAILED = "Gagal menulis ke spreadsheet.";
 
+/** RSVP slide cinematic — English (readable on narrow oval frame). */
 export const UI_RSVP_SECTION_KICKER = "RSVP";
-export const UI_RSVP_FORM_TITLE = "Konfirmasi kehadiran";
+export const UI_RSVP_FORM_TITLE = "Attendance";
 export const UI_RSVP_SECTION_INTRO =
-  "Kami berharap dapat berbagi momen istimewa bersama Bapak/Ibu/Saudara/i. Mohon konfirmasi kehadiran melalui pilihan di bawah ini.";
-export const UI_RSVP_AKAD_LABEL = "Kehadiran di akad";
-export const UI_RSVP_RESEPSI_LABEL = "Kehadiran di resepsi";
-export const UI_RSVP_ATTENDING = "Datang";
-export const UI_RSVP_NOT_ATTENDING = "Tidak dapat hadir";
-export const UI_RSVP_SINGLE_PROMPT = "Apakah Anda dapat hadir?";
-export const UI_RSVP_SUBMIT = "Kirim konfirmasi";
-export const UI_RSVP_SUBMITTING = "Mengirim…";
-export const UI_RSVP_SUCCESS = "Konfirmasi tersimpan. Terima kasih!";
-export const UI_RSVP_ERROR_GENERIC = "Terjadi kesalahan.";
-export const UI_RSVP_ERROR_NETWORK = "Jaringan bermasalah. Coba lagi.";
+  "We hope to share this day with you. Please confirm below.";
+export const UI_RSVP_AKAD_LABEL = "Ceremony";
+export const UI_RSVP_RESEPSI_LABEL = "Reception";
+export const UI_RSVP_ATTENDING = "Attending";
+export const UI_RSVP_NOT_ATTENDING = "Unable to attend";
+export const UI_RSVP_SINGLE_PROMPT = "Will you be joining us?";
+export const UI_RSVP_SUBMIT = "Submit";
+export const UI_RSVP_SUBMITTING = "Sending…";
+export const UI_RSVP_SUCCESS = "Saved. Thank you!";
+export const UI_RSVP_ERROR_GENERIC = "Something went wrong.";
+export const UI_RSVP_ERROR_NETWORK = "Network error. Please try again.";
 
 export const UI_DEV_SHEETS_BANNER =
   "Mode dev: Google Sheets belum dikonfigurasi. Isi .env.local (lihat .env.example).";
@@ -71,13 +72,9 @@ export const UI_STORY_ROADMAP_KICKER = "Perjalanan kami";
 export const UI_STORY_ROADMAP_TITLE = "Cerita awal kami";
 
 export const UI_DRESSCODE_TITLE = "Dresscode";
-export const UI_DRESSCODE_DO_LABEL = "Disarankan";
-export const UI_DRESSCODE_DO_BODY_BEFORE = "Mohon hadir dengan busana berwarna ";
-export const UI_DRESSCODE_DO_EMPHASIS = "gelap atau netral gelap";
-export const UI_DRESSCODE_DO_BODY_AFTER = ".";
-export const UI_DRESSCODE_DONT_LABEL = "Hindari";
-export const UI_DRESSCODE_DONT_BODY =
-  "Pakaian dominan putih tidak disarankan agar suasana tetap selaras dengan rangkaian acara.";
+/** Satu pesan: tanpa menyarankan warna gelap — fokus hindari dominan putih. */
+export const UI_DRESSCODE_BODY =
+  "Mohon hindari busana dengan dominan warna putih agar suasana tetap selaras dengan rangkaian acara.";
 
 export const UI_GALLERY_KICKER = "Momen";
 export const UI_GALLERY_TITLE = "Galeri foto";

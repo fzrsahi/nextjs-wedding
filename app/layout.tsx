@@ -28,6 +28,7 @@ const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -52,6 +53,18 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        {/* Preload Music to start downloading immediately */}
+        <link 
+          rel="preload" 
+          as="audio" 
+          href="https://res.cloudinary.com/dg4xtvqwc/video/upload/v1777858107/soft_itp0ot.webm" 
+          crossOrigin="anonymous" 
+        />
+        {/* Preconnect to Font CDN */}
+        <link rel="preconnect" href="https://fonts.cdnfonts.com" crossOrigin="anonymous" />
+        <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/brittany-signature" />
+      </head>
       {/* Browser extensions may inject attributes on <body> and trigger hydration warnings. */}
       <body className="min-h-full flex flex-col bg-neutral-200" suppressHydrationWarning>
         <div 

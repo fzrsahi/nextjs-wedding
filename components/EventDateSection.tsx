@@ -53,7 +53,7 @@ export function createEventDateSlide(): SlideConfig {
             }}
           >
             {/* Header */}
-            <div className="flex flex-col items-center mb-[5cqw]">
+            <div data-cinematic-line className="flex flex-col items-center mb-[5cqw]">
               <Calendar size="3.5cqw" color="#fbfbfa" className="opacity-80 mb-[1.5cqw] animate-wiggle" strokeWidth={1.5} />
               <p
                 className="uppercase tracking-[0.4em] font-bold opacity-90 animate-glow-text"
@@ -74,6 +74,7 @@ export function createEventDateSlide(): SlideConfig {
             {/* Main Date Display */}
             <div className="flex flex-col items-center">
               <h3
+                data-cinematic-line
                 className="animate-sway"
                 style={{ 
                   fontFamily: "var(--font-cormorant), serif",
@@ -87,7 +88,7 @@ export function createEventDateSlide(): SlideConfig {
                 Saturday
               </h3>
               
-              <div className="flex items-center justify-center my-[2cqw]">
+              <div data-cinematic-line className="flex items-center justify-center my-[2cqw]">
                 <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-[#fbfbfa]/40" />
                 <span 
                   className="mx-6 font-bold drop-shadow-[0_4px_12px_rgba(0,0,0,0.3)] animate-pulse-text" 
@@ -105,6 +106,7 @@ export function createEventDateSlide(): SlideConfig {
               </div>
 
               <h4
+                data-cinematic-line
                 className="animate-sway"
                 style={{ 
                   fontFamily: "var(--font-cormorant), serif",
@@ -119,6 +121,7 @@ export function createEventDateSlide(): SlideConfig {
               </h4>
               
               <p
+                data-cinematic-line
                 className="mt-[3cqw] tracking-[0.4em] font-light animate-float-rotate"
                 style={{ 
                   fontFamily: "var(--font-cormorant), serif",
@@ -131,7 +134,7 @@ export function createEventDateSlide(): SlideConfig {
             </div>
 
             {/* Footer */}
-            <div className="mt-[5cqw]">
+            <div data-cinematic-line className="mt-[5cqw]">
                <p
                 className="italic opacity-70 animate-drift"
                 style={{ 

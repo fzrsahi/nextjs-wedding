@@ -62,7 +62,7 @@ export function createEventLocationSlide(
             {/* Top Section: Times */}
             <div className="flex flex-col items-center w-full gap-[2cqw]">
               {showAkad && (
-                <div className="flex flex-col items-center">
+                <div data-cinematic-line className="flex flex-col items-center">
                   <p
                     className="uppercase tracking-[0.25em] font-bold leading-tight mb-1 animate-glow-text"
                     style={{ 
@@ -90,7 +90,7 @@ export function createEventLocationSlide(
               )}
 
               {showResepsi && (
-                <div className="flex flex-col items-center mt-[1cqw]">
+                <div data-cinematic-line className="flex flex-col items-center mt-[1cqw]">
                   <p
                     className="uppercase tracking-[0.25em] font-bold leading-tight mb-1 animate-glow-text"
                     style={{ 
@@ -129,7 +129,7 @@ export function createEventLocationSlide(
             </div>
 
             {/* Bottom Section: Venue */}
-            <div className="flex flex-col items-center w-full">
+            <div data-cinematic-line className="flex flex-col items-center w-full">
               <MapPin size="3.5cqw" color="#fbfbfa" className="opacity-80 mb-[1cqw] animate-wiggle" strokeWidth={1.5} />
               <h3
                 className="text-center animate-sway"

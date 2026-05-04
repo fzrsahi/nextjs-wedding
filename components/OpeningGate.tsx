@@ -1,25 +1,37 @@
 "use client";
 
-import Image from "next/image";
 import { Home, Volume2, VolumeX } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { CinematicScrollContainer, type SlideConfig } from "./CinematicScroll";
 import { createCoupleStorySlide } from "./CoupleStorySection";
 import { createCoupleDetailSlide } from "./CoupleDetailSection";
+import { createDresscodeSlide } from "./DresscodeSection";
 import { createEventDateSlide } from "./EventDateSection";
 import { createEventLocationSlide } from "./EventLocationSection";
+import { createRsvpSlide } from "./RsvpForm";
 
 import type { TEventScheduleBlock } from "@/lib/types/event.types";
+import type { TInvitationKind } from "@/lib/types/guest.types";
+import {
+  CDN_AMPL_CLOSED,
+  CDN_AMPL_OPEN,
+  CDN_AYAT_FRAME,
+  FALLBACK_AMPL_CLOSED,
+  FALLBACK_AMPL_OPEN,
+  FALLBACK_AYAT_FRAME,
+} from "@/lib/critical-invite-assets";
 
 type TOpeningGateProps = {
   guestName: string;
   coupleHeading: string;
-  coupleStory: string;
   akad: TEventScheduleBlock;
   resepsi: TEventScheduleBlock;
   showAkad: boolean;
   showResepsi: boolean;
+  slug: string;
+  invitationKind: TInvitationKind;
+  initialRsvpRaw: string;
   children: React.ReactNode;
 };
 
@@ -28,11 +40,13 @@ type TOpeningPhase = "closed" | "couple" | "opened";
 export function OpeningGate({
   guestName,
   coupleHeading,
-  coupleStory,
   akad,
   resepsi,
   showAkad,
   showResepsi,
+  slug,
+  invitationKind,
+  initialRsvpRaw,
   children,
 }: TOpeningGateProps) {
   const [phase, setPhase] = useState<TOpeningPhase>("closed");
@@ -125,26 +139,29 @@ export function OpeningGate({
           {/* Caption */}
           <div ref={refs[0]} className="absolute inset-0 z-10 flex flex-col items-center pt-[6vh]">
             <div className="relative inline-block animate-float">
-              <p
-                className="text-[length:10cqw] text-white drop-shadow-md relative z-10"
-                style={{ fontFamily: "'Brittany Signature', serif", lineHeight: 1.3 }}
-              >
-                Hi, <br />
-                <span className="relative inline-block mt-3 px-2">
-                  <span
-                    className="absolute -inset-x-6 bottom-[18%] top-[42%] -z-10 -rotate-2 rounded-sm"
-                    style={{
-                      background: "linear-gradient(to right, transparent 0%, rgba(128, 0, 32, 0.6) 5%, rgba(128, 0, 32, 0.7) 50%, rgba(128, 0, 32, 0.6) 95%, transparent 100%)",
-                      boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
-                    }}
-                  />
-                  <span className="relative z-10 text-[length:12.5cqw] text-white drop-shadow-md animate-sway">{guestName}</span>
-                </span>
-              </p>
+              <div data-cinematic-line className="relative inline-block">
+                <p
+                  className="text-[length:10cqw] text-white drop-shadow-md relative z-10"
+                  style={{ fontFamily: "'Brittany Signature', serif", lineHeight: 1.3 }}
+                >
+                  Hi, <br />
+                  <span className="relative inline-block mt-3 px-2">
+                    <span
+                      className="absolute -inset-x-6 bottom-[18%] top-[42%] -z-10 -rotate-2 rounded-sm"
+                      style={{
+                        background: "linear-gradient(to right, transparent 0%, rgba(128, 0, 32, 0.6) 5%, rgba(128, 0, 32, 0.7) 50%, rgba(128, 0, 32, 0.6) 95%, transparent 100%)",
+                        boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
+                      }}
+                    />
+                    <span className="relative z-10 text-[length:12.5cqw] text-white drop-shadow-md animate-sway">{guestName}</span>
+                  </span>
+                </p>
+              </div>
             </div>
             <div className="mt-2 mx-auto inline-block relative px-10 py-4">
               <div className="flex flex-col items-center justify-center space-y-1 relative z-10 mt-6">
                 <p
+                  data-cinematic-line
                   className="text-[length:4cqw] font-bold uppercase tracking-normal text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)] animate-glow-text"
                   style={{ fontFamily: "serif" }}
                 >
@@ -152,6 +169,7 @@ export function OpeningGate({
                 </p>
                 <div className="h-[1px] w-24 bg-white/30 my-1" />
                 <p
+                  data-cinematic-line
                   className="text-[length:3cqw] font-medium uppercase tracking-wide text-white/90 animate-drift"
                   style={{ fontFamily: "serif" }}
                 >
@@ -161,10 +179,17 @@ export function OpeningGate({
             </div>
           </div>
 
-          {/* Closed Envelope */}
-          <div ref={refs[1]} className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center">
-            <div className="relative mx-auto w-[90%] origin-bottom scale-110 animate-float">
-              <img src="/assets/opening/amplop-closed.png" alt="" className="h-auto w-full drop-shadow-[0_28px_40px_rgba(16,24,40,0.36)] animate-breathe-deep" />
+          {/* Closed Envelope — ref pada node yang pakai animate-float supaya GSAP tidak berlawanan dengan keyframes */}
+          <div className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center">
+            <div ref={refs[1]} className="relative mx-auto w-[90%] origin-bottom scale-110 animate-float">
+              <img
+                src={CDN_AMPL_CLOSED}
+                alt=""
+                onError={(e) => {
+                  e.currentTarget.src = FALLBACK_AMPL_CLOSED;
+                }}
+                className="h-auto w-full drop-shadow-[0_28px_40px_rgba(16,24,40,0.36)] animate-breathe-deep"
+              />
               <div ref={refs[2]} className="absolute bottom-[22%] left-[14%] z-10 aspect-square w-[35%] -translate-x-1/4 md:w-[30%]">
                 <img 
                   src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857769/flower-1_lyminu.png" 
@@ -204,10 +229,17 @@ export function OpeningGate({
         { refIndex: 1, type: "content" },
       ],
       render: (refs) => (
-        <div ref={refs[0]} className="absolute inset-0 z-30 flex flex-col items-center justify-center">
-          <div className="relative mx-auto w-[95%] origin-center scale-[1.15] animate-float">
-            <img src="/assets/opening/amplop-open.png" alt="Open invitation" className="h-auto w-full drop-shadow-[0_30px_42px_rgba(16,24,40,0.4)] animate-breathe-deep" />
-            <div ref={refs[1]} className="absolute inset-x-0 top-[20%] flex items-center justify-center px-4">
+        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center">
+          <div ref={refs[0]} className="relative mx-auto w-[95%] origin-center scale-[1.15] animate-float">
+            <img
+              src={CDN_AMPL_OPEN}
+              alt="Open invitation"
+              onError={(e) => {
+                e.currentTarget.src = FALLBACK_AMPL_OPEN;
+              }}
+              className="h-auto w-full drop-shadow-[0_30px_42px_rgba(16,24,40,0.4)] animate-breathe-deep"
+            />
+            <div ref={refs[1]} className="absolute inset-x-0 top-[20%] z-20 flex items-center justify-center px-4">
               <div className="flex flex-col items-center justify-center w-full">
                 <h2
                   className="text-[length:7.5cqw] text-[#2b2b2b] flex flex-col items-center justify-center animate-sway"
@@ -215,12 +247,12 @@ export function OpeningGate({
                 >
                   {coupleHeading.includes("&") ? (
                     <>
-                      <span className="pb-1">{coupleHeading.split("&")[0].trim()}</span>
-                      <span className="text-[length:4.5cqw] py-1">&amp;</span>
-                      <span className="pt-1">{coupleHeading.split("&")[1].trim()}</span>
+                      <span data-cinematic-line className="pb-1">{coupleHeading.split("&")[0].trim()}</span>
+                      <span data-cinematic-line className="text-[length:4.5cqw] py-1">&amp;</span>
+                      <span data-cinematic-line className="pt-1">{coupleHeading.split("&")[1].trim()}</span>
                     </>
                   ) : (
-                    <span>{coupleHeading}</span>
+                    <span data-cinematic-line>{coupleHeading}</span>
                   )}
                 </h2>
                 <motion.div
@@ -273,23 +305,33 @@ export function OpeningGate({
         { refIndex: 2, type: "flower" },
       ],
       render: (refs) => (
-        <div ref={refs[0]} className="absolute inset-0 z-30 flex flex-col items-center justify-center">
-          <div className="relative mx-auto w-[75%] origin-center animate-float">
-            <img src="/assets/frame/ayat.png" alt="Frame Ayat" className="h-auto w-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.3)]" />
+        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center">
+          <div ref={refs[0]} className="relative mx-auto w-[75%] origin-center animate-float">
+            <img
+              src={CDN_AYAT_FRAME}
+              alt="Frame Ayat"
+              onError={(e) => {
+                e.currentTarget.src = FALLBACK_AYAT_FRAME;
+              }}
+              className="h-auto w-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
+            />
             <div className="absolute inset-0 flex flex-col items-center justify-center px-14 text-center">
               <p
+                data-cinematic-line
                 className="text-[length:2.8cqw] font-bold text-[#2b2b2b] uppercase mb-2 tracking-[0.3em] opacity-80 animate-glow-text"
                 style={{ fontFamily: "var(--font-cormorant), serif" }}
               >
                 QS. Az-Zariyat: 49
               </p>
               <p
+                data-cinematic-line
                 className="text-[length:5.5cqw] text-[#2b2b2b] mb-5 leading-relaxed animate-sway"
                 style={{ fontFamily: "'Traditional Arabic', serif", direction: "rtl" }}
               >
                 وَمِنْ كُلِّ شَيْءٍ خَلَقْنَا زَوْجَيْنِ
               </p>
               <p
+                data-cinematic-line
                 className="text-[length:3.2cqw] text-[#4a4a4a] italic mb-3 leading-relaxed tracking-wide animate-drift"
                 style={{ fontFamily: "var(--font-cormorant), serif" }}
               >
@@ -318,7 +360,7 @@ export function OpeningGate({
     },
 
     // ── SLIDE 3: Couple Story ──
-    createCoupleStorySlide(coupleStory),
+    createCoupleStorySlide(),
 
     // ── SLIDE 4: Couple Details ──
     createCoupleDetailSlide(),
@@ -328,7 +370,23 @@ export function OpeningGate({
 
     // ── SLIDE 6: Event Location ──
     createEventLocationSlide(akad, resepsi, showAkad, showResepsi),
-  ], [guestName, coupleHeading, coupleStory, akad, resepsi, showAkad, showResepsi]);
+
+    // ── SLIDE 7: Dresscode (tanpa frame PNG — kartu di atas bg cinematic) ──
+    createDresscodeSlide(),
+
+    // ── SLIDE 8: RSVP ──
+    createRsvpSlide({ slug, invitationKind, initialRsvpRaw }),
+  ], [
+    guestName,
+    coupleHeading,
+    akad,
+    resepsi,
+    showAkad,
+    showResepsi,
+    slug,
+    invitationKind,
+    initialRsvpRaw,
+  ]);
 
 
   // ─── Scroll Guide ───

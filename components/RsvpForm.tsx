@@ -1,9 +1,11 @@
 "use client";
 
+import { Mail } from "lucide-react";
 import { useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 
-import { SectionScrollBlend } from "@/components/SectionScrollBlend";
+import type { SlideConfig } from "./CinematicScroll";
+
 import {
   UI_RSVP_AKAD_LABEL,
   UI_RSVP_ATTENDING,
@@ -30,9 +32,13 @@ import {
 } from "@/lib/constants/rsvp";
 import type { TInvitationKind, TRsvpAttendance } from "@/lib/types/guest.types";
 import { parseCompositeRsvpValue } from "@/lib/guest";
-import { SECTION_SCROLL_BLEND } from "@/lib/section-scroll-blends";
 
-type TRsvpFormProps = {
+/** Sama dengan `DresscodeSection` / `EventDateSection` — CDN + fallback `public`. */
+const CDN_DATE_FRAME =
+  "https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857425/date_fewkmr.png";
+const FALLBACK_DATE_FRAME = "/assets/frame/date.png";
+
+export type TRsvpSlideProps = {
   slug: string;
   invitationKind: TInvitationKind;
   initialRsvpRaw: string;
@@ -55,12 +61,12 @@ function ChoicePill({
       disabled={disabled}
       onClick={onSelect}
       className={[
-        "min-h-[3rem] w-full rounded-2xl border px-4 py-2.5 text-sm font-medium leading-snug transition",
-        "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--inv-primary)]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[#fdfbf8]",
+        "min-h-0 w-full max-w-full min-w-0 rounded-lg border px-[1.6cqw] py-[1.35cqw] text-[length:2cqw] font-medium leading-snug transition",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a882]/55 focus-visible:ring-offset-1 focus-visible:ring-offset-transparent",
         "disabled:pointer-events-none disabled:opacity-45",
         selected
-          ? "border-[var(--inv-primary)] bg-[rgb(var(--inv-primary-rgb)/0.14)] text-[var(--inv-primary)] shadow-[inset_0_1px_0_rgb(255_255_255_/_0.55)]"
-          : "border-[#e4dbd6] bg-white/80 text-[var(--inv-ink)] hover:border-[var(--inv-primary)]/40 hover:bg-[rgb(var(--inv-primary-rgb)/0.06)]",
+          ? "border-[#fbfbfa]/55 bg-[rgb(251_251_250_/_0.18)] text-[#f4ebe3] shadow-[inset_0_1px_0_rgb(255_255_255_/_0.12)]"
+          : "border-[#fbfbfa]/22 bg-[rgb(8_6_8_/_0.15)] text-[#e8dcd0] hover:border-[#c9a882]/45 hover:bg-[rgb(255_255_255_/_0.06)]",
       ].join(" ")}
     >
       {children}
@@ -68,13 +74,15 @@ function ChoicePill({
   );
 }
 
-export function RsvpForm({
+/** Form RSVP di dalam slide cinematic — pola sama seperti slide dresscode / lokasi. */
+function RsvpCinematicForm({
+  refs,
   slug,
   invitationKind,
   initialRsvpRaw,
-}: TRsvpFormProps) {
-  const reduceMotion = useReducedMotion();
-  const blend = SECTION_SCROLL_BLEND.rsvp;
+}: TRsvpSlideProps & {
+  refs: ((el: HTMLDivElement | null) => void)[];
+}) {
   const parsedDual = parseCompositeRsvpValue(initialRsvpRaw);
   const [single, setSingle] = useState<TRsvpAttendance | "">(() => {
     if (invitationKind === INVITATION_KIND_BOTH) return "";
@@ -134,153 +142,244 @@ export function RsvpForm({
       single !== RSVP_ATTENDING &&
       single !== RSVP_NOT_ATTENDING);
 
+  const stopWheelBubble = (e: React.WheelEvent) => {
+    e.stopPropagation();
+  };
+
   return (
-    <motion.section
-      aria-label={UI_RSVP_FORM_TITLE}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.22 }}
-      transition={{ duration: reduceMotion ? 0 : 0.68, ease: [0.16, 1, 0.3, 1] }}
-      className="relative overflow-hidden px-5 py-16 sm:px-8 sm:py-20"
-    >
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(172deg,#faf7f4_0%,#f0ebe6_38%,#e8f0ea_100%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgb(var(--inv-accent-rgb)/0.1),transparent_42%),radial-gradient(circle_at_85%_80%,rgb(var(--inv-primary-rgb)/0.09),transparent_48%)]" />
+    <div className="absolute inset-0 flex items-center justify-center">
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.4]"
+        ref={refs[0]}
+        className="relative origin-center animate-float [container-type:inline-size]"
         style={{
-          backgroundImage:
-            "radial-gradient(rgb(123 35 50 / 0.045) 1px, transparent 1px)",
-          backgroundSize: "18px 18px",
+          width: "100%",
+          marginTop: "-5%",
+          marginBottom: "-5%",
         }}
-      />
-      <SectionScrollBlend top={blend.top} bottom={blend.bottom} />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--inv-primary)]/20 to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--inv-accent)]/15 to-transparent" />
+      >
+        <img
+          src={CDN_DATE_FRAME}
+          alt=""
+          onError={(e) => {
+            e.currentTarget.src = FALLBACK_DATE_FRAME;
+          }}
+          className="pointer-events-none h-auto w-full select-none animate-frame-pulse drop-shadow-[0_20px_45px_rgba(0,0,0,0.35)]"
+        />
 
-      <div className="relative z-10 mx-auto w-full max-w-md">
-        <header className="text-center">
-          <p className="text-[0.62rem] font-semibold uppercase tracking-[0.32em] text-[var(--inv-primary)]/75">
-            {UI_RSVP_SECTION_KICKER}
-          </p>
-          <h2 className="mt-2 text-[1.85rem] font-medium leading-[1.12] tracking-tight text-[var(--inv-accent)] [font-family:var(--font-display)] sm:text-[2.1rem]">
-            {UI_RSVP_FORM_TITLE}
-          </h2>
-          <p className="mx-auto mt-4 max-w-[32ch] text-[0.9375rem] leading-relaxed text-[var(--inv-ink-muted)] [font-family:var(--font-geist-sans)]">
-            {UI_RSVP_SECTION_INTRO}
-          </p>
-        </header>
-
-        <form
-          onSubmit={onSubmit}
-          className="mx-auto mt-10 max-w-[22rem] space-y-8"
-          noValidate
+        <div
+          data-cinematic-observe-ignore
+          className="absolute inset-0 z-20 flex min-h-0 flex-col overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch] touch-pan-y"
+          style={{
+            top: "11%",
+            bottom: "12%",
+            left: "19%",
+            right: "19%",
+          }}
+          onWheel={stopWheelBubble}
+          onTouchMove={(e) => e.stopPropagation()}
         >
-          {invitationKind === INVITATION_KIND_BOTH ? (
-            <div className="space-y-8">
-              <fieldset className="space-y-3 border-0 p-0">
-                <legend className="w-full text-center text-[0.72rem] font-medium uppercase tracking-[0.18em] text-[#8a7568]">
-                  {UI_RSVP_AKAD_LABEL}
-                </legend>
-                <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-                  <ChoicePill
-                    selected={akad === RSVP_ATTENDING}
-                    onSelect={() => setAkad(RSVP_ATTENDING)}
-                    disabled={status === "loading"}
-                  >
-                    {UI_RSVP_ATTENDING}
-                  </ChoicePill>
-                  <ChoicePill
-                    selected={akad === RSVP_NOT_ATTENDING}
-                    onSelect={() => setAkad(RSVP_NOT_ATTENDING)}
-                    disabled={status === "loading"}
-                  >
-                    {UI_RSVP_NOT_ATTENDING}
-                  </ChoicePill>
+          <div className="flex min-h-full flex-col justify-center py-[2.8cqw]">
+            <div className="mx-auto flex w-full min-w-0 max-w-[min(100%,36cqw)] flex-col items-center gap-y-[2.4cqw] text-center">
+              <header className="flex w-full flex-col items-center gap-y-[1.6cqw]">
+                <div
+                  data-cinematic-line
+                  className="pointer-events-none flex flex-col items-center"
+                >
+                  <Mail
+                    className="mb-[1.2cqw] h-[3.2cqw] w-[3.2cqw] min-h-[14px] min-w-[14px] text-[#c9a882] opacity-95 animate-wiggle"
+                    strokeWidth={1.35}
+                    aria-hidden
+                  />
+                  <div
+                    className="h-px w-[10cqw] max-w-[120px] bg-gradient-to-r from-transparent via-[#c9a882]/70 to-transparent"
+                    aria-hidden
+                  />
                 </div>
-              </fieldset>
 
-              <fieldset className="space-y-3 border-0 p-0">
-                <legend className="w-full text-center text-[0.72rem] font-medium uppercase tracking-[0.18em] text-[#8a7568]">
-                  {UI_RSVP_RESEPSI_LABEL}
-                </legend>
-                <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-                  <ChoicePill
-                    selected={resepsi === RSVP_ATTENDING}
-                    onSelect={() => setResepsi(RSVP_ATTENDING)}
-                    disabled={status === "loading"}
-                  >
-                    {UI_RSVP_ATTENDING}
-                  </ChoicePill>
-                  <ChoicePill
-                    selected={resepsi === RSVP_NOT_ATTENDING}
-                    onSelect={() => setResepsi(RSVP_NOT_ATTENDING)}
-                    disabled={status === "loading"}
-                  >
-                    {UI_RSVP_NOT_ATTENDING}
-                  </ChoicePill>
-                </div>
-              </fieldset>
-            </div>
-          ) : (
-            <fieldset className="space-y-4 border-0 p-0">
-              <legend className="mx-auto block max-w-[28ch] text-center text-[0.9375rem] font-normal leading-relaxed text-[var(--inv-ink-muted)]">
-                {UI_RSVP_SINGLE_PROMPT}
-              </legend>
-              <div
-                className="grid grid-cols-1 gap-2.5 sm:grid-cols-2"
-                role="group"
-                aria-label={UI_RSVP_SINGLE_PROMPT}
+                <p
+                  data-cinematic-line
+                  className="pointer-events-none text-[length:2cqw] font-semibold uppercase tracking-[0.24em] text-[#c9a882] drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)]"
+                >
+                  {UI_RSVP_SECTION_KICKER}
+                </p>
+
+                <h2
+                  data-cinematic-line
+                  className="pointer-events-none text-[length:4.25cqw] font-medium leading-[1.12] tracking-[0.03em] text-[#e8d5c4] drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] [font-family:var(--font-display)]"
+                >
+                  {UI_RSVP_FORM_TITLE}
+                </h2>
+
+                <p
+                  data-cinematic-line
+                  className="pointer-events-none text-pretty text-[length:2.5cqw] leading-[1.48] text-[#e0d6cc] [font-family:var(--font-cormorant),serif] drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]"
+                >
+                  {UI_RSVP_SECTION_INTRO}
+                </p>
+              </header>
+
+              <form
+                onSubmit={onSubmit}
+                className="flex w-full min-w-0 max-w-full flex-col items-center gap-y-[2.2cqw]"
+                noValidate
               >
-                <ChoicePill
-                  selected={single === RSVP_ATTENDING}
-                  onSelect={() => setSingle(RSVP_ATTENDING)}
-                  disabled={status === "loading"}
-                >
-                  {UI_RSVP_ATTENDING}
-                </ChoicePill>
-                <ChoicePill
-                  selected={single === RSVP_NOT_ATTENDING}
-                  onSelect={() => setSingle(RSVP_NOT_ATTENDING)}
-                  disabled={status === "loading"}
-                >
-                  {UI_RSVP_NOT_ATTENDING}
-                </ChoicePill>
+            {invitationKind === INVITATION_KIND_BOTH ? (
+              <div className="flex w-full max-w-[min(34cqw,100%)] flex-col gap-y-[2.1cqw]">
+                <fieldset className="pointer-events-none flex w-full flex-col gap-y-[1.25cqw] border-0 p-0 [&_button]:pointer-events-auto">
+                  <legend className="w-full text-center text-[length:1.85cqw] font-medium uppercase tracking-[0.12em] text-[#d4c4b0]/95">
+                    {UI_RSVP_AKAD_LABEL}
+                  </legend>
+                  <div className="flex w-full min-w-0 flex-col gap-y-[1.05cqw]">
+                    <ChoicePill
+                      selected={akad === RSVP_ATTENDING}
+                      onSelect={() => setAkad(RSVP_ATTENDING)}
+                      disabled={status === "loading"}
+                    >
+                      {UI_RSVP_ATTENDING}
+                    </ChoicePill>
+                    <ChoicePill
+                      selected={akad === RSVP_NOT_ATTENDING}
+                      onSelect={() => setAkad(RSVP_NOT_ATTENDING)}
+                      disabled={status === "loading"}
+                    >
+                      {UI_RSVP_NOT_ATTENDING}
+                    </ChoicePill>
+                  </div>
+                </fieldset>
+
+                <fieldset className="pointer-events-none flex w-full flex-col gap-y-[1.25cqw] border-0 p-0 [&_button]:pointer-events-auto">
+                  <legend className="w-full text-center text-[length:1.85cqw] font-medium uppercase tracking-[0.12em] text-[#d4c4b0]/95">
+                    {UI_RSVP_RESEPSI_LABEL}
+                  </legend>
+                  <div className="flex w-full min-w-0 flex-col gap-y-[1.05cqw]">
+                    <ChoicePill
+                      selected={resepsi === RSVP_ATTENDING}
+                      onSelect={() => setResepsi(RSVP_ATTENDING)}
+                      disabled={status === "loading"}
+                    >
+                      {UI_RSVP_ATTENDING}
+                    </ChoicePill>
+                    <ChoicePill
+                      selected={resepsi === RSVP_NOT_ATTENDING}
+                      onSelect={() => setResepsi(RSVP_NOT_ATTENDING)}
+                      disabled={status === "loading"}
+                    >
+                      {UI_RSVP_NOT_ATTENDING}
+                    </ChoicePill>
+                  </div>
+                </fieldset>
               </div>
-            </fieldset>
-          )}
+            ) : (
+              <fieldset className="pointer-events-none flex w-full max-w-[min(34cqw,100%)] flex-col gap-y-[1.35cqw] border-0 p-0 [&_button]:pointer-events-auto">
+                <legend className="w-full text-pretty text-center text-[length:2.45cqw] font-normal leading-snug text-[#e0d6cc] [font-family:var(--font-cormorant),serif]">
+                  {UI_RSVP_SINGLE_PROMPT}
+                </legend>
+                <div
+                  className="flex w-full min-w-0 flex-col gap-y-[1.05cqw]"
+                  role="group"
+                  aria-label={UI_RSVP_SINGLE_PROMPT}
+                >
+                  <ChoicePill
+                    selected={single === RSVP_ATTENDING}
+                    onSelect={() => setSingle(RSVP_ATTENDING)}
+                    disabled={status === "loading"}
+                  >
+                    {UI_RSVP_ATTENDING}
+                  </ChoicePill>
+                  <ChoicePill
+                    selected={single === RSVP_NOT_ATTENDING}
+                    onSelect={() => setSingle(RSVP_NOT_ATTENDING)}
+                    disabled={status === "loading"}
+                  >
+                    {UI_RSVP_NOT_ATTENDING}
+                  </ChoicePill>
+                </div>
+              </fieldset>
+            )}
 
-          <div className="pt-1">
-            <button
-              type="submit"
-              disabled={submitDisabled}
-              className={[
-                "w-full rounded-2xl px-5 py-3.5 text-sm font-semibold tracking-[0.06em] text-white shadow-[0_14px_32px_rgb(199_154_157_/_0.45)] transition",
-                "bg-[#c79a9d] hover:bg-[#b8898d] active:scale-[0.99]",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--inv-accent)]/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[#fdfbf8]",
-                "disabled:cursor-not-allowed disabled:opacity-45 disabled:shadow-none disabled:active:scale-100",
-              ].join(" ")}
-            >
-              {status === "loading" ? UI_RSVP_SUBMITTING : UI_RSVP_SUBMIT}
-            </button>
+            <div className="flex w-full max-w-[min(34cqw,100%)] justify-center pt-[0.35cqw]">
+              <button
+                type="submit"
+                disabled={submitDisabled}
+                className={[
+                  "box-border w-full max-w-full min-w-0 rounded-xl border border-[#c9a882]/40 px-[2cqw] py-[1.55cqw] text-[length:2.05cqw] font-semibold tracking-[0.06em] text-[#f4ebe3] shadow-[0_10px_26px_rgba(0,0,0,0.35)] transition",
+                  "bg-gradient-to-b from-[#7b2332] to-[#5e1f2d] hover:brightness-[1.06] active:scale-[0.99]",
+                  "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a882]/55",
+                  "disabled:cursor-not-allowed disabled:opacity-45 disabled:active:scale-100",
+                ].join(" ")}
+              >
+                {status === "loading" ? UI_RSVP_SUBMITTING : UI_RSVP_SUBMIT}
+              </button>
+            </div>
+
+            {message ? (
+              <motion.p
+                role="status"
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={[
+                  "pointer-events-none max-w-[min(34cqw,100%)] rounded-lg px-[1.75cqw] py-[1.4cqw] text-center text-[length:2.1cqw] leading-snug [font-family:var(--font-cormorant),serif]",
+                  status === "ok"
+                    ? "bg-[rgb(36_92_72_/_0.25)] text-[#c8e8d8]"
+                    : "bg-[rgb(123_35_50_/_0.22)] text-[#f0d0d4]",
+                ].join(" ")}
+              >
+                {message}
+              </motion.p>
+            ) : null}
+              </form>
+            </div>
           </div>
+        </div>
 
-          {message ? (
-            <motion.p
-              role="status"
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              className={[
-                "rounded-xl px-4 py-3 text-center text-sm leading-relaxed",
-                status === "ok"
-                  ? "bg-[rgb(var(--inv-primary-rgb)/0.1)] text-[var(--inv-primary)]"
-                  : "bg-[rgb(var(--inv-accent-rgb)/0.08)] text-[var(--inv-accent)]",
-              ].join(" ")}
-            >
-              {message}
-            </motion.p>
-          ) : null}
-        </form>
+        <div
+          ref={refs[1]}
+          className="absolute z-10 pointer-events-none"
+          style={{ top: "8%", right: "-20%", width: "75%", aspectRatio: "1" }}
+        >
+          <img
+            src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png"
+            alt=""
+            onError={(e) => {
+              e.currentTarget.src = "/assets/flowers/bunga-ayat.png";
+            }}
+            className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out"
+          />
+        </div>
+        <div
+          ref={refs[2]}
+          className="absolute z-10 pointer-events-none"
+          style={{ bottom: "10%", left: "-20%", width: "75%", aspectRatio: "1" }}
+        >
+          <img
+            src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png"
+            alt=""
+            onError={(e) => {
+              e.currentTarget.src = "/assets/flowers/bunga-ayat.png";
+            }}
+            className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed"
+          />
+        </div>
       </div>
-    </motion.section>
+    </div>
   );
+}
+
+/** Slide RSVP untuk `OpeningGate` / `CinematicScroll` — pola = Event Date / Location / Dresscode. */
+export function createRsvpSlide(props: TRsvpSlideProps): SlideConfig {
+  return {
+    id: "rsvp",
+    refCount: 3,
+    exitOrder: [
+      { refIndex: 1, type: "flower" },
+      { refIndex: 2, type: "flower" },
+      { refIndex: 0, type: "frame" },
+    ],
+    enterOrder: [
+      { refIndex: 0, type: "frame" },
+      { refIndex: 1, type: "flower" },
+      { refIndex: 2, type: "flower" },
+    ],
+    render: (refs) => <RsvpCinematicForm refs={refs} {...props} />,
+  };
 }

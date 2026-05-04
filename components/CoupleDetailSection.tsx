@@ -59,7 +59,7 @@ export function createCoupleDetailSlide(): SlideConfig {
             }}
           >
             {/* Bride Section */}
-            <div className="flex flex-col items-center mb-[4.5cqw] w-full max-w-[85%]">
+            <div data-cinematic-line className="flex flex-col items-center mb-[4.5cqw] w-full max-w-[85%]">
               <h3
                 className="animate-sway"
                 style={{ 
@@ -110,7 +110,7 @@ export function createCoupleDetailSlide(): SlideConfig {
             </div>
 
             {/* Separator */}
-            <div className="flex items-center justify-center w-full mb-[4.5cqw] animate-breathe">
+            <div data-cinematic-line className="flex items-center justify-center w-full mb-[4.5cqw] animate-breathe">
               <div className="h-[0.5px] w-8" style={{ backgroundColor: "rgba(251, 251, 250, 0.4)" }} />
               <span 
                 className="mx-2 italic" 
@@ -126,7 +126,7 @@ export function createCoupleDetailSlide(): SlideConfig {
             </div>
 
             {/* Groom Section */}
-            <div className="flex flex-col items-center w-full max-w-[85%]">
+            <div data-cinematic-line className="flex flex-col items-center w-full max-w-[85%]">
               <h3
                 className="animate-sway"
                 style={{ 

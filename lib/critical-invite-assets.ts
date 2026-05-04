@@ -1,3 +1,15 @@
+/** CDN utama untuk frame ayat & amplop pembuka; fallback ke `public/` di `onError` pada komponen. */
+export const CDN_AYAT_FRAME =
+  "https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777858641/ayat_g9nnbm.png";
+export const CDN_AMPL_OPEN =
+  "https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777858621/amplop-open_vaotz6.png";
+export const CDN_AMPL_CLOSED =
+  "https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777858611/amplop-closed_aprxvh.png";
+
+export const FALLBACK_AYAT_FRAME = "/assets/frame/ayat.png";
+export const FALLBACK_AMPL_OPEN = "/assets/opening/amplop-open.png";
+export const FALLBACK_AMPL_CLOSED = "/assets/opening/amplop-closed.png";
+
 /**
  * Bunga border amplop / scroll frame — unik, sama set yang dipakai
  * `FLOWERS` di `components/OpeningGate.tsx` & `components/FloralScrollFrame.tsx`.
@@ -13,13 +25,13 @@ export const OPENING_BORDER_FLOWER_URLS = [
  * Amplop + galeri pembuka + portrait + **semua file bunga border** (supaya tidak “bolong” saat pertama kali tampil).
  */
 export const CRITICAL_INVITE_PREFETCH_URLS = [
-  "/assets/opening/amplop-closed.png",
-  "/assets/opening/amplop-open.png",
-  "/assets/frame/ayat.png",
+  CDN_AMPL_CLOSED,
+  CDN_AMPL_OPEN,
+  CDN_AYAT_FRAME,
   "/assets/frame/couple.png",
   "/assets/frame/date.png",
   "/assets/frame/gedung.png",
-  "/assets/frame/story.png",
+  "/assets/frame/story.webp",
   "/assets/background/background3.webp",
   "/assets/opening/foto-berdua.jpeg",
   "/assets/musics/soft.webm",
