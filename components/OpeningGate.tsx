@@ -166,10 +166,20 @@ export function OpeningGate({
             <div className="relative mx-auto w-[90%] origin-bottom scale-110 animate-float">
               <img src="/assets/opening/amplop-closed.png" alt="" className="h-auto w-full drop-shadow-[0_28px_40px_rgba(16,24,40,0.36)] animate-breathe-deep" />
               <div ref={refs[2]} className="absolute bottom-[22%] left-[14%] z-10 aspect-square w-[35%] -translate-x-1/4 md:w-[30%]">
-                <Image src="/assets/opening/flower-1.png" alt="" fill sizes="(max-width: 768px) 40vw, 20vw" className="object-contain animate-zoom-in-out" />
+                <img 
+                  src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857769/flower-1_lyminu.png" 
+                  alt="" 
+                  onError={(e) => { e.currentTarget.src = "/assets/opening/flower-1.png"; }}
+                  className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out" 
+                />
               </div>
               <div ref={refs[3]} className="absolute right-[14%] top-[24%] z-10 aspect-square w-[35%] translate-x-1/4 md:w-[30%]">
-                <Image src="/assets/opening/flower-2.png" alt="" fill sizes="(max-width: 768px) 40vw, 20vw" className="object-contain animate-zoom-in-out-delayed" />
+                <img 
+                  src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857841/flower-2_nwx2ki.png" 
+                  alt="" 
+                  onError={(e) => { e.currentTarget.src = "/assets/opening/flower-2.png"; }}
+                  className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed" 
+                />
               </div>
             </div>
           </div>
@@ -228,10 +238,20 @@ export function OpeningGate({
               </div>
             </div>
             <div ref={refs[2]} className="absolute left-[14%] top-[45%] z-10 aspect-square w-[35%] -translate-x-1/4 -translate-y-1/2 md:w-[30%] origin-center">
-              <Image src="/assets/opening/flower-1.png" alt="" fill sizes="(max-width: 768px) 40vw, 20vw" className="object-contain animate-zoom-in-out" />
+              <img 
+                src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857769/flower-1_lyminu.png" 
+                alt="" 
+                onError={(e) => { e.currentTarget.src = "/assets/opening/flower-1.png"; }}
+                className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out" 
+              />
             </div>
             <div ref={refs[3]} className="absolute bottom-[20%] right-[14%] z-10 aspect-square w-[35%] translate-x-1/4 md:w-[30%] origin-center">
-              <Image src="/assets/opening/flower-2.png" alt="" fill sizes="(max-width: 768px) 40vw, 20vw" className="object-contain animate-zoom-in-out-delayed" />
+              <img 
+                src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857841/flower-2_nwx2ki.png" 
+                alt="" 
+                onError={(e) => { e.currentTarget.src = "/assets/opening/flower-2.png"; }}
+                className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed" 
+              />
             </div>
           </div>
         </div>
@@ -277,10 +297,20 @@ export function OpeningGate({
               </p>
             </div>
             <div ref={refs[1]} className="absolute -left-[35%] -top-[25%] z-10 aspect-square w-[110%] origin-center pointer-events-none">
-              <Image src="/assets/flowers/bunga-ayat.png" alt="" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain animate-zoom-in-out" />
+              <img 
+                src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png" 
+                alt="" 
+                onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.png"; }}
+                className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out" 
+              />
             </div>
             <div ref={refs[2]} className="absolute -right-[35%] -bottom-[25%] z-10 aspect-square w-[110%] origin-center pointer-events-none">
-              <Image src="/assets/flowers/bunga-ayat.png" alt="" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain animate-zoom-in-out-delayed" />
+              <img 
+                src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png" 
+                alt="" 
+                onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.png"; }}
+                className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed" 
+              />
             </div>
           </div>
         </div>

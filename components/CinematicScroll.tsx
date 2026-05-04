@@ -1,9 +1,14 @@
 "use client";
 
-import Image from "next/image";
+
+
 import { useLayoutEffect, useRef, useCallback, useMemo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// Cloudinary-optimized background (f_auto = best format, q_auto:good = smart compression, w_1080 = mobile-sized)
+const CLOUDINARY_BG =
+  "https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good,w_1080/v1777856768/background3_lks3ez.webp";
 
 // --- Types ---
 
@@ -405,7 +410,7 @@ export function CinematicScrollContainer({
     >
       {/* 
         Background — 3 copies (300vh) so there's always image coverage during GSAP movement.
-        Start at top: -100vh so middle copy is visible (y:0 baseline).
+        Primary: Cloudinary (optimized). Fallback: local webp.
         GSAP moves by ±100vh; reset is invisible since all copies are identical.
       */}
       <div
@@ -413,15 +418,19 @@ export function CinematicScrollContainer({
         className="pointer-events-none absolute inset-x-0"
         style={{ top: "-100vh", height: "300vh", willChange: "transform" }}
       >
-        <div className="relative h-screen w-full">
-          <Image src={backgroundSrc} alt="" fill priority sizes="100vw" className="object-cover" />
-        </div>
-        <div className="relative h-screen w-full">
-          <Image src={backgroundSrc} alt="" fill priority sizes="100vw" className="object-cover" />
-        </div>
-        <div className="relative h-screen w-full">
-          <Image src={backgroundSrc} alt="" fill priority sizes="100vw" className="object-cover" />
-        </div>
+        {([0, 1, 2] as const).map((i) => (
+          <div key={i} className="relative h-screen w-full">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={CLOUDINARY_BG}
+              alt=""
+              onError={(e) => { e.currentTarget.src = backgroundSrc; }}
+              className="absolute inset-0 h-full w-full object-cover"
+              loading={i === 1 ? "eager" : "lazy"}
+              decoding="async"
+            />
+          </div>
+        ))}
       </div>
 
       {/* All slides layered */}

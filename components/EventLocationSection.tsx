@@ -40,8 +40,9 @@ export function createEventLocationSlide(
         >
           {/* Frame image */}
           <img
-            src="/assets/frame/date.png"
+            src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857425/date_fewkmr.png"
             alt=""
+            onError={(e) => { e.currentTarget.src = "/assets/frame/date.png"; }}
             className="h-auto w-full animate-frame-pulse drop-shadow-[0_20px_45px_rgba(0,0,0,0.35)]"
           />
 
@@ -119,11 +120,11 @@ export function createEventLocationSlide(
 
             {/* Middle Section: Building Illustration */}
             <div className="relative w-[150%] aspect-[2/1] -mt-[5cqw] opacity-100 group z-10">
-               <Image 
-                src="/assets/frame/gedung.png" 
-                alt="Venue Illustration" 
-                fill 
-                className="object-contain filter brightness-[2.5] contrast-[1.2] animate-breathe-deep drop-shadow-[0_0_10px_rgba(251,251,250,0.3)] transition-transform duration-700 group-hover:scale-105" 
+               <img 
+                src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857394/gedung_egnabp.png" 
+                alt="Venue Illustration"
+                onError={(e) => { e.currentTarget.src = "/assets/frame/gedung.png"; }}
+                className="absolute inset-0 h-full w-full object-contain filter brightness-[2.5] contrast-[1.2] animate-breathe-deep drop-shadow-[0_0_10px_rgba(251,251,250,0.3)] transition-transform duration-700 group-hover:scale-105" 
               />
             </div>
 
@@ -166,12 +167,11 @@ export function createEventLocationSlide(
             className="absolute z-10 pointer-events-none"
             style={{ top: "25%", left: "-20%", width: "75%", aspectRatio: "1" }}
           >
-            <Image 
-              src="/assets/flowers/bunga-ayat.png" 
+            <img 
+              src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png" 
               alt="" 
-              fill 
-              sizes="(max-width: 768px) 80vw, 50vw" 
-              className="object-contain animate-zoom-in-out" 
+              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.png"; }}
+              className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out" 
             />
           </div>
           <div
@@ -179,12 +179,11 @@ export function createEventLocationSlide(
             className="absolute z-10 pointer-events-none"
             style={{ top: "30%", right: "-20%", width: "75%", aspectRatio: "1" }}
           >
-            <Image 
-              src="/assets/flowers/bunga-ayat.png" 
+            <img 
+              src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png" 
               alt="" 
-              fill 
-              sizes="(max-width: 768px) 80vw, 50vw" 
-              className="object-contain animate-zoom-in-out-delayed" 
+              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.png"; }}
+              className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed" 
             />
           </div>
         </div>

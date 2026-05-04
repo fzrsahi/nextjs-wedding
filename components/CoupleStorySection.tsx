@@ -48,8 +48,9 @@ export function createCoupleStorySlide(story: string): SlideConfig {
         >
           {/* Frame image — raw size, let it be 100% of the outer div */}
           <img
-            src="/assets/frame/story.webp"
+            src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857423/story_gy9c8g.webp"
             alt=""
+            onError={(e) => { e.currentTarget.src = "/assets/frame/story.webp"; }}
             className="h-auto w-full animate-frame-pulse drop-shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
           />
 
@@ -70,14 +71,24 @@ export function createCoupleStorySlide(story: string): SlideConfig {
             className="absolute z-10 pointer-events-none"
             style={{ top: "10%", left: "-20%", width: "75%", aspectRatio: "1" }}
           >
-            <Image src="/assets/flowers/bunga-ayat.png" alt="" fill sizes="(max-width: 768px) 80vw, 50vw" className="object-contain animate-zoom-in-out" />
+            <img 
+              src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png" 
+              alt="" 
+              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.png"; }}
+              className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out" 
+            />
           </div>
           <div
             ref={refs[2]}
             className="absolute z-10 pointer-events-none"
             style={{ bottom: "12%", right: "-20%", width: "75%", aspectRatio: "1" }}
           >
-            <Image src="/assets/flowers/bunga-ayat.png" alt="" fill sizes="(max-width: 768px) 80vw, 50vw" className="object-contain animate-zoom-in-out-delayed" />
+            <img 
+              src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png" 
+              alt="" 
+              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.png"; }}
+              className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed" 
+            />
           </div>
         </div>
       </div>

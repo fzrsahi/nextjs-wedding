@@ -39,8 +39,9 @@ export function createCoupleDetailSlide(): SlideConfig {
         >
           {/* Frame image */}
           <img
-            src="/assets/frame/couple.png"
+            src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857466/couple_hq7hmk.png"
             alt=""
+            onError={(e) => { e.currentTarget.src = "/assets/frame/couple.png"; }}
             className="h-auto w-full animate-frame-pulse drop-shadow-[0_20px_45px_rgba(0,0,0,0.35)]"
           />
 
@@ -182,12 +183,11 @@ export function createCoupleDetailSlide(): SlideConfig {
             className="absolute z-10 pointer-events-none"
             style={{ top: "8%", right: "-20%", width: "75%", aspectRatio: "1" }}
           >
-            <Image 
-              src="/assets/flowers/bunga-ayat.png" 
+            <img 
+              src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png" 
               alt="" 
-              fill 
-              sizes="(max-width: 768px) 80vw, 50vw" 
-              className="object-contain animate-zoom-in-out" 
+              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.png"; }}
+              className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out" 
             />
           </div>
           <div
@@ -195,12 +195,11 @@ export function createCoupleDetailSlide(): SlideConfig {
             className="absolute z-10 pointer-events-none"
             style={{ bottom: "10%", left: "-20%", width: "75%", aspectRatio: "1" }}
           >
-            <Image 
-              src="/assets/flowers/bunga-ayat.png" 
+            <img 
+              src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png" 
               alt="" 
-              fill 
-              sizes="(max-width: 768px) 80vw, 50vw" 
-              className="object-contain animate-zoom-in-out-delayed" 
+              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.png"; }}
+              className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed" 
             />
           </div>
         </div>
