@@ -16,7 +16,7 @@ export const SECTION_SCROLL_BLEND = {
     bottom: "rgba(248, 246, 242, 0.9)",
   },
   gallery: {
-    top: "rgba(228, 236, 232, 0.88)",
+    top: "rgba(52, 26, 34, 0.82)",
     bottom: "rgba(244, 238, 230, 0.9)",
   },
   gift: {

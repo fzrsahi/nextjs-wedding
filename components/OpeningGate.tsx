@@ -9,6 +9,8 @@ import { createCoupleDetailSlide } from "./CoupleDetailSection";
 import { createDresscodeSlide } from "./DresscodeSection";
 import { createEventDateSlide } from "./EventDateSection";
 import { createEventLocationSlide } from "./EventLocationSection";
+import { createGallerySlide } from "./GallerySection";
+import { createGiftSlide } from "./GiftSection";
 import { createRsvpSlide } from "./RsvpForm";
 
 import type { TEventScheduleBlock } from "@/lib/types/event.types";
@@ -32,6 +34,7 @@ type TOpeningGateProps = {
   slug: string;
   invitationKind: TInvitationKind;
   initialRsvpRaw: string;
+  galleryImagePaths: string[];
   children: React.ReactNode;
 };
 
@@ -47,6 +50,7 @@ export function OpeningGate({
   slug,
   invitationKind,
   initialRsvpRaw,
+  galleryImagePaths,
   children,
 }: TOpeningGateProps) {
   const [phase, setPhase] = useState<TOpeningPhase>("closed");
@@ -376,6 +380,12 @@ export function OpeningGate({
 
     // ── SLIDE 8: RSVP ──
     createRsvpSlide({ slug, invitationKind, initialRsvpRaw }),
+
+    // ── SLIDE 9: Gallery (masuk di dalam cinematic flow) ──
+    createGallerySlide({ imagePaths: galleryImagePaths }),
+
+    // ── SLIDE 10: Gift (masuk di dalam cinematic flow) ──
+    createGiftSlide(),
   ], [
     guestName,
     coupleHeading,
@@ -386,6 +396,7 @@ export function OpeningGate({
     slug,
     invitationKind,
     initialRsvpRaw,
+    galleryImagePaths,
   ]);
 
 

@@ -449,6 +449,166 @@ export function CinematicScrollContainer({
         });
       };
 
+      const buildFinalExitToContent = (
+        slide: (typeof slidesRef.current)[0],
+        slideEls: (HTMLDivElement | null)[] | undefined,
+        onDone: () => void
+      ) => {
+        const vh = window.innerHeight;
+        const vw = window.innerWidth;
+        const STAGGER = 0.08;
+        const BG_DUR = 0.52;
+
+        const flowerImg = (container: HTMLDivElement | null) =>
+          container?.querySelector<HTMLImageElement>(":scope > img") ?? null;
+
+        const tl = gsap.timeline({ onComplete: onDone });
+
+        const decoExits = slide.exitOrder.filter((a) => a.type !== "frame");
+        let decoExitEnd = 0;
+        decoExits.forEach(({ refIndex, type }, i) => {
+          const el = slideEls?.[refIndex];
+          if (!el) return;
+          const t = i * STAGGER;
+          if (type === "flower") {
+            const xDir = i % 2 === 0 ? -1 : 1;
+            tl.to(
+              el,
+              {
+                y: -vh * 0.85,
+                x: xDir * vw * 0.25,
+                scale: 0.1,
+                rotation: -720,
+                opacity: 0,
+                duration: 0.45,
+                ease: "power2.inOut",
+                force3D: true,
+                onStart: () => {
+                  const img = flowerImg(el);
+                  if (img) img.style.animation = "none";
+                },
+              },
+              t
+            );
+            decoExitEnd = Math.max(decoExitEnd, t + 0.45);
+          } else {
+            const lines = getCinematicLines(el);
+            const lineY = Math.min(vh * 0.13, 110);
+            if (lines.length > 0) {
+              lines.forEach((line, li) => {
+                tl.to(
+                  line,
+                  {
+                    y: -lineY,
+                    opacity: 0,
+                    duration: LINE_EXIT_DUR,
+                    ease: "sine.in",
+                    force3D: true,
+                  },
+                  t + li * LINE_STAGGER_TEXT
+                );
+              });
+              const afterLines = t + (lines.length - 1) * LINE_STAGGER_TEXT + LINE_EXIT_DUR;
+              tl.to(el, { opacity: 0, duration: 0.12 }, afterLines);
+              decoExitEnd = Math.max(decoExitEnd, afterLines + 0.12);
+            } else {
+              tl.to(
+                el,
+                {
+                  y: -80,
+                  rotation: i % 2 === 0 ? -5 : 5,
+                  opacity: 0,
+                  scale: 0.88,
+                  duration: 0.3,
+                  ease: "power2.in",
+                  force3D: true,
+                },
+                t
+              );
+              decoExitEnd = Math.max(decoExitEnd, t + 0.3);
+            }
+          }
+        });
+        if (decoExits.length > 0) decoExitEnd += 0.03;
+
+        const frameExits = slide.exitOrder.filter((a) => a.type === "frame");
+        const frameExitItems =
+          frameExits.length > 0 ? frameExits : slide.exitOrder.filter((a) => a.type === "content");
+
+        let frameExitEnd = decoExitEnd;
+        frameExitItems.forEach(({ refIndex }, i) => {
+          const el = slideEls?.[refIndex];
+          if (!el) return;
+          const t0 = Math.max(0, decoExitEnd - DECO_TO_FRAME_OVERLAP) + i * 0.05;
+          const lines = getCinematicLines(el);
+          const lineY = Math.min(vh * 0.13, 110);
+          let frameMoveStart = t0;
+
+          if (lines.length > 0) {
+            const lineBlockEnd = t0 + (lines.length - 1) * LINE_STAGGER_TEXT + LINE_EXIT_DUR;
+            frameMoveStart = Math.max(t0, lineBlockEnd - FRAME_LINE_OVERLAP + 0.02);
+            lines.forEach((line, li) => {
+              tl.to(
+                line,
+                {
+                  y: -lineY,
+                  opacity: 0,
+                  duration: LINE_EXIT_DUR,
+                  ease: "sine.in",
+                  force3D: true,
+                },
+                t0 + li * LINE_STAGGER_TEXT
+              );
+            });
+          }
+
+          tl.to(
+            el,
+            {
+              y: -vh * 0.9,
+              rotation: -5,
+              opacity: 0,
+              scale: 0.9,
+              duration: 0.58,
+              ease: "sine.inOut",
+              force3D: true,
+              onStart: () => {
+                el.style.animation = "none";
+              },
+            },
+            frameMoveStart
+          );
+          frameExitEnd = Math.max(frameExitEnd, frameMoveStart + 0.58 + 0.02);
+        });
+
+        if (bgRef.current) {
+          tl.to(
+            bgRef.current,
+            {
+              y: `-=${vh}`,
+              duration: BG_DUR,
+              ease: "power2.inOut",
+              onComplete: () => {
+                gsap.set(bgRef.current, { y: 0 });
+              },
+            },
+            frameExitEnd
+          );
+        }
+
+        // Handoff halus ke konten utama setelah pola transisi slide selesai.
+        tl.to(
+          containerRef.current,
+          {
+            opacity: 0,
+            yPercent: -14,
+            duration: 0.5,
+            ease: "power2.out",
+          },
+          frameExitEnd + BG_DUR - 0.06
+        );
+      };
+
       // --- FORWARD ---
       const gotoNext = () => {
         const currentSlides = getSlides();
@@ -462,18 +622,16 @@ export function CinematicScrollContainer({
 
         currentIndex++;
 
-        // Past last slide → complete
+        // Past last slide → complete (pakai pola transisi yang sama seperti antar-slide)
         if (currentIndex >= currentSlides.length) {
-          gsap.to(containerRef.current, {
-            yPercent: -100,
-            opacity: 0,
-            duration: 1.2,
-            ease: "power3.inOut",
-            onComplete: () => {
+          buildFinalExitToContent(
+            currentSlides[currentSlides.length - 1],
+            elementRefs.current[currentSlides.length - 1],
+            () => {
               isAnimating = false;
               onCompleteRef.current();
-            },
-          });
+            }
+          );
           return;
         }
 
@@ -553,7 +711,6 @@ export function CinematicScrollContainer({
     }, containerRef);
 
     return () => ctx.revert();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Build ref setters for each slide

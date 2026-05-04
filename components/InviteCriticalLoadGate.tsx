@@ -123,9 +123,12 @@ export function InviteCriticalLoadGate({ children }: TInviteCriticalLoadGateProp
             className="fixed inset-0 z-[100000] flex flex-col items-center justify-center bg-[#fbfbfa]"
             suppressHydrationWarning
           >
-            <div className="relative flex flex-col items-center gap-8 w-full max-w-[280px]">
+            <div
+              className="relative flex flex-col items-center gap-8 w-full max-w-[280px]"
+              suppressHydrationWarning
+            >
               {/* Animated Flower */}
-              <div className="relative w-24 h-24 animate-zoom-in-out">
+              <div className="relative w-24 h-24 animate-zoom-in-out" suppressHydrationWarning>
                 <Image 
                   src="/assets/opening/flower-1.png" 
                   alt="" 
@@ -137,8 +140,8 @@ export function InviteCriticalLoadGate({ children }: TInviteCriticalLoadGateProp
               </div>
 
               {/* Aesthetic Loading Text & Progress */}
-              <div className="flex flex-col items-center gap-5 w-full">
-                <div className="flex flex-col items-center gap-2">
+              <div className="flex flex-col items-center gap-5 w-full" suppressHydrationWarning>
+                <div className="flex flex-col items-center gap-2" suppressHydrationWarning>
                   <p 
                     className="text-base text-[var(--inv-primary)] opacity-60"
                     style={{ fontFamily: "serif", letterSpacing: "0.4em" }}
@@ -148,13 +151,17 @@ export function InviteCriticalLoadGate({ children }: TInviteCriticalLoadGateProp
                 </div>
 
                 {/* Progress Bar Container */}
-                <div className="w-full space-y-2 px-8">
-                  <div className="h-[2px] w-full overflow-hidden rounded-full bg-neutral-200">
+                <div className="w-full space-y-2 px-8" suppressHydrationWarning>
+                  <div
+                    className="h-[2px] w-full overflow-hidden rounded-full bg-neutral-200"
+                    suppressHydrationWarning
+                  >
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${progress}%` }}
                       className="h-full bg-[var(--inv-primary)]"
                       transition={{ duration: 0.5, ease: "easeOut" }}
+                      suppressHydrationWarning
                     />
                   </div>
                   <p className="text-[10px] font-bold tracking-widest text-[var(--inv-primary)] opacity-50 text-center">

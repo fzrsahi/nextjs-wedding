@@ -67,9 +67,11 @@ export default function RootLayout({
       </head>
       {/* Browser extensions may inject attributes on <body> and trigger hydration warnings. */}
       <body className="min-h-full flex flex-col bg-neutral-200" suppressHydrationWarning>
-        <div 
+        {/* Ekstensi (mis. pengelola sandi) bisa menyuntik atribut ke DOM → peringatan hidrasi; redam per node. */}
+        <div
           className="mx-auto w-full max-w-[480px] bg-white min-h-screen relative shadow-2xl overflow-x-hidden"
           style={{ transform: "translateZ(0)", containerType: "inline-size" }}
+          suppressHydrationWarning
         >
           {children}
         </div>
