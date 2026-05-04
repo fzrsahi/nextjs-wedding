@@ -74,7 +74,7 @@ export const UI_STORY_ROADMAP_TITLE = "Cerita awal kami";
 export const UI_DRESSCODE_TITLE = "Dresscode";
 /** Satu pesan: tanpa menyarankan warna gelap — fokus hindari dominan putih. */
 export const UI_DRESSCODE_BODY =
-  "Mohon hindari busana dengan dominan warna putih agar suasana tetap selaras dengan rangkaian acara.";
+  "Kindly avoid outfits dominated by white to keep the celebration visually harmonious.";
 
 export const UI_GALLERY_KICKER = "Momen";
 export const UI_GALLERY_TITLE = "Galeri foto";

@@ -9,18 +9,18 @@ const CDN_DATE_FRAME =
   "https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857425/date_fewkmr.png";
 const FALLBACK_DATE_FRAME = "/assets/frame/date.png";
 
-/** Swatch gelap — aksen di atas oval maroon */
-function DarkToneSwatch() {
+/** Visual cue: white is reserved, so avoid dominant white outfits. */
+function NoWhiteSwatch() {
   return (
     <div
-      className="mx-auto mt-[4cqw] h-[3.75rem] w-[3.75rem] ring-2 ring-[#c9a882]/35 shadow-[inset_0_-5px_12px_rgba(0,0,0,0.3),0_8px_20px_rgba(0,0,0,0.25)]"
-      style={{
-        borderRadius: "46% 54% 52% 48% / 48% 45% 55% 52%",
-        background:
-          "radial-gradient(circle at 32% 28%, rgb(88 64 58), rgb(40 28 24) 52%, rgb(22 16 14))",
-      }}
+      className="mx-auto mt-[3.2cqw] flex flex-col items-center gap-[1cqw]"
       aria-hidden
-    />
+    >
+      <div className="relative h-[4.6rem] w-[4.6rem] rounded-full border border-[#f5e5d5]/60 bg-[radial-gradient(circle_at_34%_28%,#ffffff_0%,#f6efe8_48%,#d9cabd_100%)] shadow-[inset_0_2px_8px_rgba(255,255,255,0.9),0_10px_24px_rgba(0,0,0,0.3)]">
+        <div className="absolute inset-[9%] rounded-full border border-[#7b2332]/65" />
+        <div className="absolute left-1/2 top-1/2 h-[118%] w-[0.34rem] -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-full bg-[#7b2332] shadow-[0_0_0_1px_rgba(255,255,255,0.35)]" />
+      </div>
+    </div>
   );
 }
 
@@ -97,8 +97,8 @@ export function createDresscodeSlide(): SlideConfig {
               data-cinematic-line
               className="mx-auto mt-[4cqw] max-w-[32ch] text-[length:2.85cqw] font-normal leading-[1.7] text-[#e0d6cc] [font-family:var(--font-cormorant),serif] drop-shadow-[0_1px_8px_rgba(0,0,0,0.4)] sm:max-w-[36ch] sm:text-[length:2.5cqw]"
             >
-              {UI_DRESSCODE_BODY.split(/(putih)/i).map((segment, i) =>
-                segment.toLowerCase() === "putih" ? (
+              {UI_DRESSCODE_BODY.split(/(white)/i).map((segment, i) =>
+                segment.toLowerCase() === "white" ? (
                   <strong key={i} className="font-semibold text-[#f0d0c0]">
                     {segment}
                   </strong>
@@ -109,7 +109,7 @@ export function createDresscodeSlide(): SlideConfig {
             </p>
 
             <div data-cinematic-line>
-              <DarkToneSwatch />
+              <NoWhiteSwatch />
             </div>
           </div>
 

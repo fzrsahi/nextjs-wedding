@@ -130,7 +130,7 @@ export function InviteCriticalLoadGate({ children }: TInviteCriticalLoadGateProp
               {/* Animated Flower */}
               <div className="relative w-24 h-24 animate-zoom-in-out" suppressHydrationWarning>
                 <Image 
-                  src="/assets/opening/flower-1.png" 
+                  src="/assets/opening/flower-1.webp" 
                   alt="" 
                   fill 
                   priority

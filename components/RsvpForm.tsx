@@ -2,7 +2,6 @@
 
 import { Mail } from "lucide-react";
 import { useState } from "react";
-import { motion } from "framer-motion";
 
 import type { SlideConfig } from "./CinematicScroll";
 
@@ -149,8 +148,10 @@ function RsvpCinematicForm({
   return (
     <div className="absolute inset-0 flex items-center justify-center">
       <div
-        ref={refs[0]}
-        className="relative origin-center animate-float [container-type:inline-size]"
+        ref={(el) => {
+          refs[0]?.(el);
+        }}
+        className="relative origin-center [container-type:inline-size]"
         style={{
           width: "100%",
           marginTop: "-5%",
@@ -163,7 +164,7 @@ function RsvpCinematicForm({
           onError={(e) => {
             e.currentTarget.src = FALLBACK_DATE_FRAME;
           }}
-          className="pointer-events-none h-auto w-full select-none animate-frame-pulse drop-shadow-[0_20px_45px_rgba(0,0,0,0.35)]"
+          className="pointer-events-none h-auto w-full select-none drop-shadow-[0_20px_45px_rgba(0,0,0,0.35)]"
         />
 
         <div
@@ -183,10 +184,10 @@ function RsvpCinematicForm({
               <header className="flex w-full flex-col items-center gap-y-[1.6cqw]">
                 <div
                   data-cinematic-line
-                  className="pointer-events-none flex flex-col items-center"
+                  className="flex flex-col items-center"
                 >
                   <Mail
-                    className="mb-[1.2cqw] h-[3.2cqw] w-[3.2cqw] min-h-[14px] min-w-[14px] text-[#c9a882] opacity-95 animate-wiggle"
+                    className="mb-[1.2cqw] h-[3.2cqw] w-[3.2cqw] min-h-[14px] min-w-[14px] text-[#c9a882] opacity-95"
                     strokeWidth={1.35}
                     aria-hidden
                   />
@@ -198,34 +199,35 @@ function RsvpCinematicForm({
 
                 <p
                   data-cinematic-line
-                  className="pointer-events-none text-[length:2cqw] font-semibold uppercase tracking-[0.24em] text-[#c9a882] drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)]"
+                  className="text-[length:2cqw] font-semibold uppercase tracking-[0.24em] text-[#c9a882] drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)]"
                 >
                   {UI_RSVP_SECTION_KICKER}
                 </p>
 
                 <h2
                   data-cinematic-line
-                  className="pointer-events-none text-[length:4.25cqw] font-medium leading-[1.12] tracking-[0.03em] text-[#e8d5c4] drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] [font-family:var(--font-display)]"
+                  className="text-[length:4.25cqw] font-medium leading-[1.12] tracking-[0.03em] text-[#e8d5c4] drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] [font-family:var(--font-display)]"
                 >
                   {UI_RSVP_FORM_TITLE}
                 </h2>
 
                 <p
                   data-cinematic-line
-                  className="pointer-events-none text-pretty text-[length:2.5cqw] leading-[1.48] text-[#e0d6cc] [font-family:var(--font-cormorant),serif] drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]"
+                  className="text-pretty text-[length:2.5cqw] leading-[1.48] text-[#e0d6cc] [font-family:var(--font-cormorant),serif] drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]"
                 >
                   {UI_RSVP_SECTION_INTRO}
                 </p>
               </header>
 
               <form
+                data-cinematic-line
                 onSubmit={onSubmit}
                 className="flex w-full min-w-0 max-w-full flex-col items-center gap-y-[2.2cqw]"
                 noValidate
               >
             {invitationKind === INVITATION_KIND_BOTH ? (
               <div className="flex w-full max-w-[min(34cqw,100%)] flex-col gap-y-[2.1cqw]">
-                <fieldset className="pointer-events-none flex w-full flex-col gap-y-[1.25cqw] border-0 p-0 [&_button]:pointer-events-auto">
+                <fieldset className="flex w-full flex-col gap-y-[1.25cqw] border-0 p-0">
                   <legend className="w-full text-center text-[length:1.85cqw] font-medium uppercase tracking-[0.12em] text-[#d4c4b0]/95">
                     {UI_RSVP_AKAD_LABEL}
                   </legend>
@@ -247,7 +249,7 @@ function RsvpCinematicForm({
                   </div>
                 </fieldset>
 
-                <fieldset className="pointer-events-none flex w-full flex-col gap-y-[1.25cqw] border-0 p-0 [&_button]:pointer-events-auto">
+                <fieldset className="flex w-full flex-col gap-y-[1.25cqw] border-0 p-0">
                   <legend className="w-full text-center text-[length:1.85cqw] font-medium uppercase tracking-[0.12em] text-[#d4c4b0]/95">
                     {UI_RSVP_RESEPSI_LABEL}
                   </legend>
@@ -270,7 +272,7 @@ function RsvpCinematicForm({
                 </fieldset>
               </div>
             ) : (
-              <fieldset className="pointer-events-none flex w-full max-w-[min(34cqw,100%)] flex-col gap-y-[1.35cqw] border-0 p-0 [&_button]:pointer-events-auto">
+              <fieldset className="flex w-full max-w-[min(34cqw,100%)] flex-col gap-y-[1.35cqw] border-0 p-0">
                 <legend className="w-full text-pretty text-center text-[length:2.45cqw] font-normal leading-snug text-[#e0d6cc] [font-family:var(--font-cormorant),serif]">
                   {UI_RSVP_SINGLE_PROMPT}
                 </legend>
@@ -313,19 +315,17 @@ function RsvpCinematicForm({
             </div>
 
             {message ? (
-              <motion.p
+              <p
                 role="status"
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
                 className={[
-                  "pointer-events-none max-w-[min(34cqw,100%)] rounded-lg px-[1.75cqw] py-[1.4cqw] text-center text-[length:2.1cqw] leading-snug [font-family:var(--font-cormorant),serif]",
+                  "max-w-[min(34cqw,100%)] rounded-lg px-[1.75cqw] py-[1.4cqw] text-center text-[length:2.1cqw] leading-snug [font-family:var(--font-cormorant),serif]",
                   status === "ok"
                     ? "bg-[rgb(36_92_72_/_0.25)] text-[#c8e8d8]"
                     : "bg-[rgb(123_35_50_/_0.22)] text-[#f0d0d4]",
                 ].join(" ")}
               >
                 {message}
-              </motion.p>
+              </p>
             ) : null}
               </form>
             </div>
@@ -333,7 +333,9 @@ function RsvpCinematicForm({
         </div>
 
         <div
-          ref={refs[1]}
+          ref={(el) => {
+            refs[1]?.(el);
+          }}
           className="absolute z-10 pointer-events-none"
           style={{ top: "8%", right: "-20%", width: "75%", aspectRatio: "1" }}
         >
@@ -343,11 +345,13 @@ function RsvpCinematicForm({
             onError={(e) => {
               e.currentTarget.src = "/assets/flowers/bunga-ayat.png";
             }}
-            className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out"
+            className="absolute inset-0 h-full w-full object-contain"
           />
         </div>
         <div
-          ref={refs[2]}
+          ref={(el) => {
+            refs[2]?.(el);
+          }}
           className="absolute z-10 pointer-events-none"
           style={{ bottom: "10%", left: "-20%", width: "75%", aspectRatio: "1" }}
         >
@@ -357,7 +361,7 @@ function RsvpCinematicForm({
             onError={(e) => {
               e.currentTarget.src = "/assets/flowers/bunga-ayat.png";
             }}
-            className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed"
+            className="absolute inset-0 h-full w-full object-contain"
           />
         </div>
       </div>

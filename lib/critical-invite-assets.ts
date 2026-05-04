@@ -1,20 +1,20 @@
 /** CDN utama untuk frame ayat & amplop pembuka; fallback ke `public/` di `onError` pada komponen. */
-export const CDN_AYAT_FRAME = "/assets/frame/ayat.png";
+export const CDN_AYAT_FRAME = "/assets/frame/ayat.webp";
 /** Amplop gunakan aset lokal agar render lebih stabil di Safari iOS. */
-export const CDN_AMPL_OPEN = "/assets/opening/amplop-open.png";
-export const CDN_AMPL_CLOSED = "/assets/opening/amplop-closed.png";
+export const CDN_AMPL_OPEN = "/assets/opening/amplop-open.webp";
+export const CDN_AMPL_CLOSED = "/assets/opening/amplop-closed.webp";
 
-export const FALLBACK_AYAT_FRAME = "/assets/frame/ayat.png";
-export const FALLBACK_AMPL_OPEN = "/assets/opening/amplop-open.png";
-export const FALLBACK_AMPL_CLOSED = "/assets/opening/amplop-closed.png";
+export const FALLBACK_AYAT_FRAME = "/assets/frame/ayat.webp";
+export const FALLBACK_AMPL_OPEN = "/assets/opening/amplop-open.webp";
+export const FALLBACK_AMPL_CLOSED = "/assets/opening/amplop-closed.webp";
 
 /**
  * Bunga border amplop / scroll frame — unik, sama set yang dipakai
  * `FLOWERS` di `components/OpeningGate.tsx` & `components/FloralScrollFrame.tsx`.
  */
 export const OPENING_BORDER_FLOWER_URLS = [
-  "/assets/opening/flower-1.png",
-  "/assets/opening/flower-2.png",
+  "/assets/opening/flower-1.webp",
+  "/assets/opening/flower-2.webp",
   "/assets/flowers/bunga-ayat.png",
 ] as const;
 

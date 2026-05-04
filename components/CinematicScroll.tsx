@@ -67,6 +67,7 @@ export function CinematicScrollContainer({
   scrollGuide,
 }: CinematicScrollProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const slideLayerRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // elementRefs[slideIndex][elementIndex] = HTMLDivElement | null
   const elementRefs = useRef<(HTMLDivElement | null)[][]>(
@@ -109,11 +110,18 @@ export function CinematicScrollContainer({
       let hasScrolled = false;
 
       const getSlides = () => slidesRef.current;
+      const setSlideInteractive = (slideIdx: number, interactive: boolean) => {
+        const layer = slideLayerRefs.current[slideIdx];
+        if (layer) {
+          layer.style.pointerEvents = interactive ? "auto" : "none";
+        }
+      };
 
       // Helper: hide all elements of a slide
       const hideSlide = (slideIdx: number) => {
         const slide = getSlides()[slideIdx];
         if (!slide) return;
+        setSlideInteractive(slideIdx, false);
         slide.enterOrder.forEach(({ refIndex }) => {
           const el = elementRefs.current[slideIdx]?.[refIndex];
           if (el) gsap.set(el, { visibility: "hidden", opacity: 0 });
@@ -124,6 +132,7 @@ export function CinematicScrollContainer({
       const showSlide = (slideIdx: number) => {
         const slide = getSlides()[slideIdx];
         if (!slide) return;
+        setSlideInteractive(slideIdx, true);
         slide.enterOrder.forEach(({ refIndex }) => {
           const el = elementRefs.current[slideIdx]?.[refIndex];
           if (el) gsap.set(el, { visibility: "visible" });
@@ -132,6 +141,9 @@ export function CinematicScrollContainer({
 
       // Initial state: hide all slides except first
       const initSlides = getSlides();
+      initSlides.forEach((_, si) => {
+        setSlideInteractive(si, si === 0);
+      });
       for (let si = 1; si < initSlides.length; si++) {
         const slide = initSlides[si];
         slide.enterOrder.forEach(({ refIndex }) => {
@@ -723,7 +735,13 @@ export function CinematicScrollContainer({
       <div className="relative z-30 mx-auto flex h-full w-full max-w-full flex-col items-center justify-center touch-manipulation py-4">
         <div className="relative h-full w-full max-w-full text-center">
           {slides.map((slide, si) => (
-            <div key={slide.id}>
+            <div
+              key={slide.id}
+              ref={(el) => {
+                slideLayerRefs.current[si] = el;
+              }}
+              className="absolute inset-0"
+            >
               {slide.render(allRefSetters[si])}
             </div>
           ))}

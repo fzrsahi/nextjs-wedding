@@ -143,7 +143,7 @@ export function createEventDateSlide(): SlideConfig {
                   color: "#fbfbfa"
                 }}
               >
-                Our Journey Towards Forever
+                But, Our Journey Towards Forever
               </p>
             </div>
           </div>

@@ -40,7 +40,6 @@ const EN_GALLERY = {
   intro:
     "Tiny snapshots of our happiest day. Tap around and enjoy every little moment with us.",
   tap: "Tap any photo to open",
-  hint: "Tap to view",
   close: "Close gallery",
   previous: "Previous photo",
   next: "Next photo",
@@ -215,45 +214,52 @@ function GalleryCinematicSlide({
   }, [onKeyDown, openIndex]);
 
   return (
-    <div className="absolute inset-0 z-30 flex items-center justify-center px-3 py-4 sm:px-4">
+    <div className="absolute inset-0 z-30 flex items-center justify-center px-4 py-5 sm:px-6">
       <div
         ref={(el) => {
           mountCallbacks[0]?.(el);
         }}
-        className="relative w-full max-w-[460px] origin-center"
+        className="relative w-full max-w-[500px] origin-center"
         style={{ width: "100%" }}
       >
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,rgba(0,0,0,0.7)_0%,rgba(0,0,0,0.38)_55%,transparent_100%)]" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_55%_at_50%_0%,rgba(255,255,255,0.12),transparent_62%)]" />
-        <div className="pointer-events-none absolute -left-8 top-8 z-[2] h-28 w-28 opacity-80">
+        <div className="pointer-events-none absolute -left-9 top-14 z-[2] h-24 w-24 opacity-55">
           <Image
-            src="/assets/opening/flower-1.png"
+            src="/assets/opening/flower-1.webp"
             alt=""
             fill
-            sizes="112px"
+            sizes="96px"
             className="object-contain animate-zoom-in-out"
             loading="lazy"
           />
         </div>
-        <div className="pointer-events-none absolute -right-8 top-8 z-[2] h-28 w-28 opacity-80">
+        <div className="pointer-events-none absolute -right-9 top-20 z-[2] h-24 w-24 opacity-55">
           <Image
-            src="/assets/opening/flower-2.png"
+            src="/assets/opening/flower-2.webp"
             alt=""
             fill
-            sizes="112px"
+            sizes="96px"
             className="object-contain animate-zoom-in-out-delayed"
             loading="lazy"
           />
         </div>
 
         <div className="relative z-10">
-          <header className="px-1 text-center">
+          <header className="relative px-1 text-center">
+            <div
+              className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[8.8rem] w-[min(92vw,25rem)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(28,8,14,0.78)_0%,rgba(28,8,14,0.58)_36%,rgba(9,42,31,0.24)_62%,transparent_78%)] blur-[2px]"
+              aria-hidden
+            />
+            <div
+              className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[5.6rem] w-[min(78vw,20rem)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#f8d7b7]/18 bg-[#16070b]/24 shadow-[0_0_42px_rgba(244,200,157,0.16)] backdrop-blur-[1px]"
+              aria-hidden
+            />
             <p
               data-cinematic-line
-              className="text-[1.95rem] leading-none text-[#7b2233] animate-sway"
+              className="text-[2.15rem] leading-none text-[#ffd8b5] animate-sway"
               style={{
                 fontFamily: "'Brittany Signature', serif",
-                textShadow: "0 2px 12px rgba(0,0,0,0.42)",
+                textShadow:
+                  "0 2px 2px rgba(23,5,9,0.92), 0 8px 24px rgba(0,0,0,0.88), 0 0 22px rgba(244,200,157,0.34)",
               }}
             >
               {EN_GALLERY.kicker}
@@ -261,40 +267,45 @@ function GalleryCinematicSlide({
             <h2
               id={headingId}
               data-cinematic-line
-              className="mt-1 text-[1.3rem] font-semibold leading-[1.03] tracking-[0.12em] uppercase text-[#f4e6d8] animate-glow-text"
+              className="mt-1 text-[1.6rem] font-bold leading-none tracking-[0.16em] uppercase text-[#fff7e8] animate-glow-text"
               style={{
                 fontFamily: "var(--font-cormorant), serif",
-                textShadow: "0 2px 12px rgba(0,0,0,0.5)",
+                textShadow:
+                  "0 2px 1px rgba(28,8,14,0.95), 0 8px 22px rgba(0,0,0,0.9), 0 0 18px rgba(255,224,194,0.28)",
               }}
             >
               {EN_GALLERY.title}
             </h2>
-            <div className="mx-auto mt-1 h-px w-36 bg-[linear-gradient(90deg,transparent,rgba(240,226,212,0.65),transparent)]" />
+            <div className="mx-auto mt-2 flex w-44 items-center justify-center gap-2">
+              <span className="h-px flex-1 bg-[linear-gradient(90deg,transparent,rgba(255,231,202,0.8))]" />
+              <span className="h-1.5 w-1.5 rotate-45 border border-[#ffe1c4]/80 bg-[#f4c89d]/65 shadow-[0_0_12px_rgba(244,200,157,0.7)]" />
+              <span className="h-px flex-1 bg-[linear-gradient(90deg,rgba(255,231,202,0.8),transparent)]" />
+            </div>
             <p
               data-cinematic-line
-              className="mx-auto mt-1.5 max-w-[34ch] text-[0.74rem] leading-relaxed text-[#f3e8de]/95 animate-drift"
+              className="mx-auto mt-2.5 max-w-[34ch] rounded-full border border-[#ffe1c4]/16 bg-[#120607]/22 px-4 py-1.5 text-[0.78rem] leading-relaxed text-[#fff4e8]/96 shadow-[0_10px_30px_rgba(0,0,0,0.28)] backdrop-blur-[1.5px] animate-drift"
               style={{
                 fontFamily: "var(--font-cormorant), serif",
-                textShadow: "0 2px 12px rgba(0,0,0,0.4)",
+                textShadow: "0 2px 8px rgba(0,0,0,0.88)",
               }}
             >
               {EN_GALLERY.intro}
             </p>
             <p
-              className="mt-2 text-[0.62rem] font-medium tracking-wide text-[#f3e8dd]/74"
+              className="mx-auto mt-2 inline-flex items-center justify-center rounded-full border border-[#f4c89d]/28 bg-[#260b12]/42 px-3 py-1 text-[0.58rem] font-bold uppercase tracking-[0.24em] text-[#ffd8b5]/92 shadow-[0_8px_22px_rgba(0,0,0,0.32)] backdrop-blur-[1px]"
               style={{
                 fontFamily: "var(--font-cormorant), serif",
-                textShadow: "0 2px 10px rgba(0,0,0,0.4)",
+                textShadow: "0 2px 8px rgba(0,0,0,0.86)",
               }}
             >
               {EN_GALLERY.tap}
             </p>
           </header>
 
-          <div className="mt-2.5 grid grid-cols-3 gap-2.5">
+          <div className="mt-4 grid grid-cols-[1fr_0.42fr] items-stretch gap-3">
             <button
               type="button"
-              className="group relative col-span-2 row-span-2 aspect-[4/5] overflow-hidden rounded-2xl text-left sm:aspect-[5/6]"
+              className="group relative aspect-[3/4] overflow-hidden rounded-[1.65rem] border border-[#f8dcc0]/55 text-left shadow-[0_24px_55px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.08)] sm:aspect-[4/5]"
               onClick={() => setOpenIndex(safeActiveIndex)}
               aria-label={`Open highlighted photo ${safeActiveIndex + 1}`}
             >
@@ -328,13 +339,13 @@ function GalleryCinematicSlide({
                   )}
                 </motion.div>
               </AnimatePresence>
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(7,3,5,0.68)_0%,transparent_58%)]" />
-              <span className="absolute bottom-2.5 left-2.5 text-[0.54rem] font-semibold uppercase tracking-[0.2em] text-white/74">
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(34,9,16,0.72)_0%,rgba(34,9,16,0.16)_45%,transparent_78%)]" />
+              <span className="absolute bottom-3 left-3 rounded-full border border-[#ffe1c4]/35 bg-[#19070b]/38 px-3 py-1 text-[0.54rem] font-semibold uppercase tracking-[0.22em] text-[#fff2e4]/88 backdrop-blur-[2px]">
                 Highlight
               </span>
             </button>
 
-            <div className="col-span-1 row-span-2 flex flex-col gap-2.5">
+            <div className="flex flex-col gap-3">
               {Array.from({ length: Math.max(0, Math.min(2, sideCount)) }).map((_, i) => {
                 const idx = (safeActiveIndex + i + 1) % paths.length;
                 const src = paths[idx]!;
@@ -342,7 +353,7 @@ function GalleryCinematicSlide({
                   <button
                     key={`side-${idx}-${src.slice(0, 32)}`}
                     type="button"
-                    className="group relative aspect-[4/3] overflow-hidden rounded-xl text-left"
+                    className="group relative aspect-[3/4] overflow-hidden rounded-2xl border border-[#f8dcc0]/40 text-left shadow-[0_16px_32px_rgba(0,0,0,0.36)]"
                     onClick={() => setActiveIndex(idx)}
                     aria-label={`Set photo ${idx + 1} as highlight`}
                   >
@@ -366,12 +377,14 @@ function GalleryCinematicSlide({
                         decoding="async"
                       />
                     )}
-                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(7,3,5,0.6)_0%,transparent_62%)]" />
+                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(34,9,16,0.48)_0%,transparent_68%)]" />
                   </button>
                 );
               })}
             </div>
+          </div>
 
+          <div className="mt-3 grid grid-cols-3 gap-3">
             {Array.from({ length: Math.max(0, Math.min(3, paths.length - 1)) }).map((_, i) => {
               const idx = (safeActiveIndex + i + 3) % paths.length;
               const src = paths[idx]!;
@@ -379,7 +392,7 @@ function GalleryCinematicSlide({
                 <button
                   key={`bottom-${idx}-${src.slice(0, 28)}`}
                   type="button"
-                  className="group relative aspect-[4/3] overflow-hidden rounded-xl text-left"
+                  className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-[#f8dcc0]/35 text-left shadow-[0_12px_28px_rgba(0,0,0,0.34)]"
                   onClick={() => setActiveIndex(idx)}
                   aria-label={`Set photo ${idx + 1} as highlight`}
                 >
@@ -403,15 +416,12 @@ function GalleryCinematicSlide({
                       decoding="async"
                     />
                   )}
-                  <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(7,3,5,0.55)_0%,transparent_65%)]" />
+                  <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(34,9,16,0.5)_0%,transparent_70%)]" />
                 </button>
               );
             })}
           </div>
 
-          <p className="mt-1 text-center text-[0.52rem] font-semibold uppercase tracking-[0.26em] text-[#e7d0bb]/48">
-            {EN_GALLERY.hint}
-          </p>
         </div>
       </div>
 

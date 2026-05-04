@@ -103,9 +103,9 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
 
   const renderProviderIcon = (acc: TGiftAccount) => {
     if (acc.category === "ewallet") {
-      return <Wallet className="h-4 w-4 text-[#f3dac3]/88" aria-hidden />;
+      return <Wallet className="h-3 w-3 text-[#f3dac3]/88" aria-hidden />;
     }
-    return <Landmark className="h-4 w-4 text-[#f3dac3]/88" aria-hidden />;
+    return <Landmark className="h-3 w-3 text-[#f3dac3]/88" aria-hidden />;
   };
 
   return (
@@ -118,11 +118,11 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
         ref={(el) => {
           refs[0]?.(el);
         }}
-        className="relative w-full max-w-[360px] origin-center"
+        className="relative w-full max-w-[430px] origin-center"
       >
-        <div className="pointer-events-none absolute -left-6 top-8 z-[2] h-20 w-20 opacity-72">
+        <div className="pointer-events-none absolute -left-8 top-10 z-[2] h-20 w-20 opacity-55">
           <Image
-            src="/assets/opening/flower-1.png"
+            src="/assets/opening/flower-1.webp"
             alt=""
             fill
             sizes="80px"
@@ -130,9 +130,9 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
             loading="lazy"
           />
         </div>
-        <div className="pointer-events-none absolute -right-6 top-8 z-[2] h-20 w-20 opacity-72">
+        <div className="pointer-events-none absolute -right-8 top-12 z-[2] h-20 w-20 opacity-55">
           <Image
-            src="/assets/opening/flower-2.png"
+            src="/assets/opening/flower-2.webp"
             alt=""
             fill
             sizes="80px"
@@ -142,13 +142,22 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
         </div>
 
         <div className="relative z-10">
-        <header className="text-center">
+        <header className="relative text-center">
+          <div
+            className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[7.6rem] w-[min(92vw,22rem)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(28,8,14,0.82)_0%,rgba(28,8,14,0.56)_38%,rgba(9,42,31,0.24)_64%,transparent_80%)] blur-[2px]"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[4.8rem] w-[min(76vw,18rem)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#f8d7b7]/18 bg-[#16070b]/28 shadow-[0_0_40px_rgba(244,200,157,0.14)] backdrop-blur-[1px]"
+            aria-hidden
+          />
           <p
             data-cinematic-line
-            className="text-[1.2rem] leading-none text-[#8a2b3e] animate-sway"
+            className="text-[1.65rem] leading-none text-[#ffd8b5] animate-sway"
             style={{
               fontFamily: "'Brittany Signature', serif",
-              textShadow: "0 2px 10px rgba(0,0,0,0.46)",
+              textShadow:
+                "0 2px 2px rgba(23,5,9,0.92), 0 8px 22px rgba(0,0,0,0.86), 0 0 20px rgba(244,200,157,0.32)",
             }}
           >
             {EN_GIFT.kicker}
@@ -156,21 +165,26 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
           <h2
             id={headingId}
             data-cinematic-line
-            className="mt-0.5 text-[0.9rem] font-semibold leading-tight tracking-[0.14em] uppercase text-[#f1dfcf] animate-glow-text"
+            className="mt-0.5 text-[1.12rem] font-bold leading-tight tracking-[0.16em] uppercase text-[#fff7e8] animate-glow-text"
             style={{
               fontFamily: "var(--font-cormorant), serif",
-              textShadow: "0 2px 10px rgba(0,0,0,0.45)",
+              textShadow:
+                "0 2px 1px rgba(28,8,14,0.95), 0 8px 20px rgba(0,0,0,0.86), 0 0 18px rgba(255,224,194,0.24)",
             }}
           >
             {EN_GIFT.title}
           </h2>
-          <div className="mx-auto mt-1 h-px w-20 bg-[linear-gradient(90deg,transparent,rgba(240,226,212,0.6),transparent)]" />
+          <div className="mx-auto mt-1.5 flex w-32 items-center justify-center gap-2">
+            <span className="h-px flex-1 bg-[linear-gradient(90deg,transparent,rgba(255,231,202,0.8))]" />
+            <span className="h-1.5 w-1.5 rotate-45 border border-[#ffe1c4]/80 bg-[#f4c89d]/70 shadow-[0_0_12px_rgba(244,200,157,0.72)]" />
+            <span className="h-px flex-1 bg-[linear-gradient(90deg,rgba(255,231,202,0.8),transparent)]" />
+          </div>
           <p
             data-cinematic-line
-            className="mx-auto mt-1 max-w-[30ch] text-[0.54rem] leading-relaxed text-[#e7d8cb]/90 animate-drift"
+            className="mx-auto mt-2 max-w-[34ch] rounded-full border border-[#ffe1c4]/16 bg-[#120607]/24 px-4 py-1.5 text-[0.62rem] leading-relaxed text-[#fff4e8]/96 shadow-[0_10px_30px_rgba(0,0,0,0.28)] backdrop-blur-[1.5px] animate-drift"
             style={{
               fontFamily: "var(--font-cormorant), serif",
-              textShadow: "0 1px 8px rgba(0,0,0,0.4)",
+              textShadow: "0 2px 8px rgba(0,0,0,0.86)",
             }}
           >
             {EN_GIFT.intro}
@@ -178,8 +192,7 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
         </header>
 
         <motion.ul
-          data-cinematic-observe-ignore
-          className="mt-2 space-y-0 pr-0.5"
+          className="mt-3 grid grid-cols-2 gap-2.5 pr-0.5"
           initial={false}
           animate="show"
           variants={{
@@ -204,25 +217,37 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
                   transition: { duration: reduceMotion ? 0 : 0.34, ease: [0.16, 1, 0.3, 1] },
                 },
               }}
-              className="border-b border-[#efe0d0]/14 py-1.5 last:border-b-0"
+              className="relative min-w-0 overflow-hidden rounded-2xl border border-[#f8dcc0]/28 bg-[linear-gradient(145deg,rgba(38,11,18,0.72)_0%,rgba(13,47,36,0.54)_100%)] px-2.5 py-2.5 shadow-[0_16px_34px_rgba(0,0,0,0.36),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-[1.5px]"
             >
-              <div className="flex flex-wrap items-start justify-between gap-2">
-                <div className="min-w-0 flex-1 space-y-1.5">
-                  <p className="flex items-center gap-1 text-[0.44rem] font-semibold uppercase tracking-[0.2em] text-[#f0dccb]/66">
+              <div
+                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,225,196,0.74),transparent)]"
+                aria-hidden
+              />
+              <div
+                className="pointer-events-none absolute -right-8 -top-8 h-20 w-20 rounded-full bg-[#f4c89d]/10 blur-xl"
+                aria-hidden
+              />
+              <div className="flex h-full min-w-0 flex-col gap-1.5">
+                <div className="min-w-0 flex-1 space-y-1">
+                  <p className="inline-flex max-w-full items-center gap-1 rounded-full border border-[#f8dcc0]/18 bg-[#120607]/26 px-1.5 py-0.5 text-[0.38rem] font-bold uppercase tracking-[0.14em] text-[#ffd8b5]/90">
                     {renderProviderIcon(acc)}
-                    {acc.category === "bank"
-                      ? EN_GIFT.accountTypeBank
-                      : EN_GIFT.accountTypeEwallet}
+                    <span className="truncate">
+                      {acc.category === "bank"
+                        ? EN_GIFT.accountTypeBank
+                        : EN_GIFT.accountTypeEwallet}
+                    </span>
                   </p>
-                  <p className="text-[0.68rem] font-semibold text-[#f6e9de]">{acc.provider}</p>
-                  <p className="text-[0.5rem] text-[#e9ddd3]/82">
-                    <span className="font-medium text-[#f4e7dc]">{EN_GIFT.accountName}:</span>{" "}
+                  <p className="truncate text-[0.68rem] font-bold tracking-[0.04em] text-[#fff3e5] [text-shadow:0_2px_8px_rgba(0,0,0,0.72)]">
+                    {acc.provider}
+                  </p>
+                  <p className="line-clamp-2 text-[0.45rem] leading-snug text-[#fff0df]/86">
+                    <span className="font-semibold text-[#ffd8b5]">{EN_GIFT.accountName}:</span>{" "}
                     {acc.accountHolder}
                   </p>
-                  <p className="text-[0.42rem] font-medium uppercase tracking-[0.18em] text-[#f0dccb]/66">
+                  <p className="text-[0.35rem] font-bold uppercase tracking-[0.18em] text-[#f4c89d]/74">
                     {EN_GIFT.accountNumber}
                   </p>
-                  <p className="font-mono text-[0.76rem] font-semibold tracking-wide text-[#f7eadf] tabular-nums sm:text-[0.82rem]">
+                  <p className="truncate font-mono text-[0.78rem] font-bold tracking-wide text-[#fff7e8] tabular-nums [text-shadow:0_2px_10px_rgba(0,0,0,0.78)] sm:text-[0.86rem]">
                     {acc.accountNumber}
                   </p>
                 </div>
@@ -231,7 +256,7 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
                   type="button"
                   onClick={() => onCopy(acc.id, acc.accountNumber)}
                   aria-label={`${EN_GIFT.copy} ${acc.provider}`}
-                  className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#ecddce]/26 px-2 py-1 text-[0.44rem] font-semibold uppercase tracking-[0.14em] text-[#f6ebdf]/94 transition"
+                  className="inline-flex w-full shrink-0 items-center justify-center gap-1 rounded-full border border-[#ffd8b5]/48 bg-[#f8dcc0]/12 px-2 py-1.5 text-[0.38rem] font-bold uppercase tracking-[0.12em] text-[#fff4e8] shadow-[0_8px_18px_rgba(0,0,0,0.3)] transition hover:bg-[#f8dcc0]/18 active:scale-95"
                 >
                   {copiedId === acc.id ? (
                     <>
@@ -251,19 +276,18 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
         </motion.ul>
 
         <motion.div
-          data-cinematic-observe-ignore
           initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: reduceMotion ? 0 : 0.38, delay: reduceMotion ? 0 : 0.08 }}
-          className="mt-2 border-t border-[#efe0d0]/16 pt-2"
+          className="mt-3 rounded-2xl border border-[#f8dcc0]/22 bg-[#120607]/30 px-3 py-2.5 shadow-[0_14px_30px_rgba(0,0,0,0.3)] backdrop-blur-[1.5px]"
         >
-          <p className="text-[0.44rem] font-semibold uppercase tracking-[0.2em] text-[#f0dccb]/74">
+          <p className="text-[0.48rem] font-bold uppercase tracking-[0.22em] text-[#ffd8b5]/88">
             {EN_GIFT.sendGift}
           </p>
-          <div className="mt-1.5 flex items-start gap-1.5">
-            <MapPin className="mt-[1px] h-3.5 w-3.5 shrink-0 text-[#f1d7be]/82" aria-hidden />
-            <p className="text-[0.5rem] leading-relaxed text-[#ece1d4]/84">
-              <span className="font-medium text-[#f6eadf]">{GIFT_DELIVERY_LABEL}:</span>{" "}
+          <div className="mt-1.5 flex items-start gap-2">
+            <MapPin className="mt-[1px] h-3.5 w-3.5 shrink-0 text-[#f4c89d]" aria-hidden />
+            <p className="text-[0.54rem] leading-relaxed text-[#fff0df]/88">
+              <span className="font-semibold text-[#fff7e8]">{GIFT_DELIVERY_LABEL}:</span>{" "}
               {GIFT_DELIVERY_ADDRESS}
             </p>
           </div>

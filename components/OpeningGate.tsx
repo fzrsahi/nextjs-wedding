@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Home, Volume2, VolumeX } from "lucide-react";
+import { BookOpen, Home, Volume2, VolumeX } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { CinematicScrollContainer, type SlideConfig } from "./CinematicScroll";
@@ -54,7 +54,7 @@ export function OpeningGate({
   const [phase, setPhase] = useState<TOpeningPhase>("closed");
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const reduceMotion = useReducedMotion();
-  const [musicMuted, setMusicMuted] = useState(false);
+  const [musicMuted, setMusicMuted] = useState(true);
 
   const isOpen = phase === "opened";
 
@@ -95,14 +95,18 @@ export function OpeningGate({
   const toggleMusicMute = useCallback(() => {
     const el = audioRef.current;
     if (!el) return;
-    const next = !el.muted;
-    el.muted = next;
-    setMusicMuted(next);
-  }, []);
+    const nextMuted = !musicMuted;
+    el.volume = 0.85;
+    el.muted = nextMuted;
+    setMusicMuted(nextMuted);
 
-  useEffect(() => {
-    playMusic();
-  }, [playMusic]);
+    if (!nextMuted) {
+      void el.play().catch(() => {
+        el.muted = true;
+        setMusicMuted(true);
+      });
+    }
+  }, [musicMuted]);
 
   const handleBackToOpening = useCallback(() => {
     pauseMusic();
@@ -193,22 +197,22 @@ export function OpeningGate({
                 className="h-auto w-full drop-shadow-[0_28px_40px_rgba(16,24,40,0.36)]"
                 priority
               />
-              <div ref={refs[2]} className="absolute bottom-[22%] left-[14%] z-10 aspect-square w-[35%] -translate-x-1/4 md:w-[30%]">
+              <div ref={refs[2]} className="absolute bottom-[20%] left-[12%] z-10 aspect-square w-[48%] -translate-x-1/4 md:w-[42%]">
                 <Image
-                  src="/assets/opening/flower-1.png"
+                  src="/assets/opening/flower-1.webp"
                   alt=""
                   fill
-                  sizes="(max-width: 768px) 32vw, 180px"
+                  sizes="(max-width: 768px) 44vw, 260px"
                   className="object-contain animate-zoom-in-out"
                   loading="lazy"
                 />
               </div>
-              <div ref={refs[3]} className="absolute right-[14%] top-[24%] z-10 aspect-square w-[35%] translate-x-1/4 md:w-[30%]">
+              <div ref={refs[3]} className="absolute right-[12%] top-[20%] z-10 aspect-square w-[48%] translate-x-1/4 md:w-[42%]">
                 <Image
-                  src="/assets/opening/flower-2.png"
+                  src="/assets/opening/flower-2.webp"
                   alt=""
                   fill
-                  sizes="(max-width: 768px) 32vw, 180px"
+                  sizes="(max-width: 768px) 44vw, 260px"
                   className="object-contain animate-zoom-in-out-delayed"
                   loading="lazy"
                 />
@@ -250,49 +254,80 @@ export function OpeningGate({
             <div ref={refs[1]} className="absolute inset-x-0 top-[20%] z-20 flex items-center justify-center px-4">
               <div className="flex flex-col items-center justify-center w-full">
                 <h2
-                  className="text-[length:7.5cqw] text-[#2b2b2b] flex flex-col items-center justify-center"
-                  style={{ fontFamily: "'Brittany Signature', serif", lineHeight: 1.1 }}
+                  className="flex flex-col items-center justify-center text-[length:8.4cqw] text-[#184234]"
+                  style={{
+                    fontFamily: "'Brittany Signature', serif",
+                    lineHeight: 1.05,
+                    textShadow:
+                      "0 1px 0 rgba(255,255,255,0.82), 0 10px 20px rgba(24,66,52,0.18)",
+                  }}
                 >
                   {coupleHeading.includes("&") ? (
                     <>
-                      <span data-cinematic-line className="pb-1">{coupleHeading.split("&")[0].trim()}</span>
-                      <span data-cinematic-line className="text-[length:4.5cqw] py-1">&amp;</span>
-                      <span data-cinematic-line className="pt-1">{coupleHeading.split("&")[1].trim()}</span>
+                      <span data-cinematic-line className="pb-1">
+                        <motion.span
+                          className="inline-block text-[#184234] drop-shadow-[0_6px_14px_rgba(24,66,52,0.18)] will-change-transform"
+                          animate={{ x: reduceMotion ? 0 : [-2, 2, -2] }}
+                          transition={{
+                            duration: 3.2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
+                        >
+                          {coupleHeading.split("&")[0].trim()}
+                        </motion.span>
+                      </span>
+                      <span
+                        data-cinematic-line
+                        className="my-0.5 flex h-[7cqw] w-[7cqw] items-center justify-center rounded-full border border-[#c79a52]/55 bg-[#fff8ec]/70 text-[length:4.1cqw] font-bold text-[#c18a3a] shadow-[0_8px_18px_rgba(24,66,52,0.12),inset_0_1px_0_rgba(255,255,255,0.75)]"
+                        style={{
+                          fontFamily: "var(--font-cormorant), serif",
+                          textShadow: "0 1px 0 rgba(255,255,255,0.82)",
+                        }}
+                      >
+                        &amp;
+                      </span>
+                      <span data-cinematic-line className="pt-1">
+                        <motion.span
+                          className="inline-block text-[#184234] drop-shadow-[0_6px_14px_rgba(24,66,52,0.18)] will-change-transform"
+                          animate={{ x: reduceMotion ? 0 : [2, -2, 2] }}
+                          transition={{
+                            duration: 3.2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
+                        >
+                          {coupleHeading.split("&")[1].trim()}
+                        </motion.span>
+                      </span>
                     </>
                   ) : (
-                    <span data-cinematic-line>{coupleHeading}</span>
+                    <span
+                      data-cinematic-line
+                      className="text-[#184234]"
+                    >
+                      {coupleHeading}
+                    </span>
                   )}
                 </h2>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 0.5, scale: 1 }}
-                  transition={{ delay: 1.8, duration: 1 }}
-                  className="mt-6 w-32"
-                >
-                  <svg viewBox="0 0 120 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-                    <path d="M0 10H50M70 10H120" stroke="#2b2b2b" strokeWidth="0.5" strokeLinecap="round" />
-                    <path d="M54 10L60 4L66 10L60 16L54 10Z" stroke="#2b2b2b" strokeWidth="0.5" />
-                    <circle cx="60" cy="10" r="1.2" fill="#2b2b2b" />
-                  </svg>
-                </motion.div>
               </div>
             </div>
-            <div ref={refs[2]} className="absolute left-[14%] top-[45%] z-10 aspect-square w-[35%] -translate-x-1/4 -translate-y-1/2 md:w-[30%] origin-center">
+            <div ref={refs[2]} className="absolute bottom-[8%] left-[10%] z-10 aspect-square w-[48%] -translate-x-1/4 md:w-[42%] origin-center">
               <Image
-                src="/assets/opening/flower-1.png"
+                src="/assets/opening/flower-1.webp"
                 alt=""
                 fill
-                sizes="(max-width: 768px) 32vw, 180px"
+                sizes="(max-width: 768px) 44vw, 260px"
                 className="object-contain animate-zoom-in-out"
                 loading="lazy"
               />
             </div>
-            <div ref={refs[3]} className="absolute bottom-[20%] right-[14%] z-10 aspect-square w-[35%] translate-x-1/4 md:w-[30%] origin-center">
+            <div ref={refs[3]} className="absolute right-[10%] top-[22%] z-10 aspect-square w-[48%] translate-x-1/4 md:w-[42%] origin-center">
               <Image
-                src="/assets/opening/flower-2.png"
+                src="/assets/opening/flower-2.webp"
                 alt=""
                 fill
-                sizes="(max-width: 768px) 32vw, 180px"
+                sizes="(max-width: 768px) 44vw, 260px"
                 className="object-contain animate-zoom-in-out-delayed"
                 loading="lazy"
               />
@@ -318,56 +353,96 @@ export function OpeningGate({
       ],
       render: (refs) => (
         <div className="absolute inset-0 z-30 flex flex-col items-center justify-center">
-          <div ref={refs[0]} className="relative mx-auto w-[75%] origin-center animate-float">
+          <div
+            ref={refs[0]}
+            className="relative origin-center animate-float"
+            style={{
+              width: "130%",
+              marginLeft: "-15%",
+              marginRight: "-15%",
+              marginTop: "-16%",
+              marginBottom: "-16%",
+            }}
+          >
             <Image
               src={CDN_AYAT_FRAME}
               alt="Frame Ayat"
-              width={800}
-              height={1200}
-              sizes="75vw"
-              className="h-auto w-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
+              width={4062}
+              height={6249}
+              sizes="130vw"
+              className="h-auto w-full drop-shadow-[0_28px_55px_rgba(28,8,14,0.34)]"
             />
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-14 text-center">
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-[25%] pb-[28%] pt-[24%] text-center">
+              <div
+                data-cinematic-line
+                className="mb-[1.2cqw] flex h-[6.2cqw] w-[6.2cqw] items-center justify-center rounded-full border border-[#8a2436]/24 bg-[#fff7ef]/46 text-[#8a2436] shadow-[0_8px_18px_rgba(111,29,45,0.12),inset_0_1px_0_rgba(255,255,255,0.8)]"
+                aria-hidden
+              >
+                <BookOpen className="h-[3.2cqw] w-[3.2cqw]" strokeWidth={1.65} />
+              </div>
               <p
                 data-cinematic-line
-                className="text-[length:2.8cqw] font-bold text-[#2b2b2b] uppercase mb-2 tracking-[0.3em] opacity-80 animate-glow-text"
-                style={{ fontFamily: "var(--font-cormorant), serif" }}
+                className="mb-[1.4cqw] text-[length:2.35cqw] font-bold uppercase tracking-[0.34em] text-[#8a2436] animate-glow-text"
+                style={{
+                  fontFamily: "var(--font-cormorant), serif",
+                  textShadow: "0 1px 0 rgba(255,255,255,0.74)",
+                }}
               >
                 QS. Az-Zariyat: 49
               </p>
+              <div
+                data-cinematic-line
+                className="mb-[1.8cqw] h-px w-[22cqw] bg-[linear-gradient(90deg,transparent,rgba(138,36,54,0.68),transparent)]"
+                aria-hidden
+              />
               <p
                 data-cinematic-line
-                className="text-[length:5.5cqw] text-[#2b2b2b] mb-5 leading-relaxed animate-sway"
-                style={{ fontFamily: "'Traditional Arabic', serif", direction: "rtl" }}
+                className="mb-[2.6cqw] text-[length:5.25cqw] font-semibold leading-[1.45] text-[#6f1d2d] animate-sway"
+                style={{
+                  fontFamily: "'Traditional Arabic', 'Amiri', serif",
+                  direction: "rtl",
+                  textShadow: "0 1px 0 rgba(255,255,255,0.8), 0 8px 18px rgba(111,29,45,0.12)",
+                }}
               >
-                وَمِنْ كُلِّ شَيْءٍ خَلَقْنَا زَوْجَيْنِ
+                وَمِنْ كُلِّ شَيْءٍ
+                <br />
+                خَلَقْنَا زَوْجَيْنِ
               </p>
               <p
                 data-cinematic-line
-                className="text-[length:3.2cqw] text-[#4a4a4a] italic mb-3 leading-relaxed tracking-wide animate-drift"
-                style={{ fontFamily: "var(--font-cormorant), serif" }}
+                className="mb-[1cqw] text-[length:3.15cqw] font-medium italic leading-[1.45] tracking-[0.03em] text-[#7b2332] animate-drift"
+                style={{
+                  fontFamily: "var(--font-cormorant), serif",
+                  textShadow: "0 1px 0 rgba(255,255,255,0.76)",
+                }}
               >
                 &ldquo;And of all things We created pairs, <br /> that you may remember.&rdquo;
               </p>
             </div>
-            <div ref={refs[1]} className="absolute -left-[35%] -top-[25%] z-10 aspect-square w-[110%] origin-center pointer-events-none">
+            <div
+              ref={refs[1]}
+              className="absolute z-10 pointer-events-none"
+              style={{ top: "10%", left: "-20%", width: "75%", aspectRatio: "1" }}
+            >
               <Image
                 src="/assets/flowers/bunga-ayat.png"
                 alt=""
                 fill
-                sizes="(max-width: 768px) 62vw, 420px"
-                className="object-contain animate-zoom-in-out"
-                loading="lazy"
+                sizes="75vw"
+                className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out"
               />
             </div>
-            <div ref={refs[2]} className="absolute -right-[35%] -bottom-[25%] z-10 aspect-square w-[110%] origin-center pointer-events-none">
+            <div
+              ref={refs[2]}
+              className="absolute z-10 pointer-events-none"
+              style={{ bottom: "12%", right: "-20%", width: "75%", aspectRatio: "1" }}
+            >
               <Image
                 src="/assets/flowers/bunga-ayat.png"
                 alt=""
                 fill
-                sizes="(max-width: 768px) 62vw, 420px"
-                className="object-contain animate-zoom-in-out-delayed"
-                loading="lazy"
+                sizes="75vw"
+                className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed"
               />
             </div>
           </div>
@@ -409,6 +484,7 @@ export function OpeningGate({
     invitationKind,
     initialRsvpRaw,
     galleryImagePaths,
+    reduceMotion,
   ]);
 
 
@@ -441,7 +517,7 @@ export function OpeningGate({
 
   return (
     <>
-      <audio ref={audioRef} loop playsInline preload="auto" className="hidden">
+      <audio ref={audioRef} loop playsInline preload="auto" muted={musicMuted} className="hidden">
         <source src="https://res.cloudinary.com/dg4xtvqwc/video/upload/v1777858107/soft_itp0ot.webm" type="audio/webm" />
         <source src="/assets/musics/soft.webm" type="audio/webm" />
         <source src="/assets/musics/soft.mp3" type="audio/mpeg" />
@@ -490,11 +566,24 @@ export function OpeningGate({
         <button
           type="button"
           onClick={toggleMusicMute}
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--inv-primary)]/20 bg-[#fbfbfa]/80 text-[var(--inv-primary)] shadow-sm backdrop-blur-sm transition active:scale-95"
-          aria-label={musicMuted ? "Unmute music" : "Mute music"}
+          className={[
+            "group relative flex h-11 min-w-11 items-center justify-center rounded-full border shadow-sm backdrop-blur-sm transition active:scale-95",
+            musicMuted
+              ? "border-[#ffd8b5]/70 bg-[#7b2332]/92 px-3 text-[#fff7e8] shadow-[0_0_0_1px_rgba(255,216,181,0.24),0_0_24px_rgba(123,35,50,0.55)]"
+              : "border-[var(--inv-primary)]/20 bg-[#fbfbfa]/80 text-[var(--inv-primary)]",
+          ].join(" ")}
+          aria-label={musicMuted ? "Play music" : "Mute music"}
         >
           {musicMuted ? (
-            <VolumeX className="h-5 w-5" strokeWidth={2} aria-hidden />
+            <span className="pointer-events-none absolute -inset-1 -z-10 rounded-full bg-[#f4c89d]/24 blur-md" />
+          ) : null}
+          {musicMuted ? (
+            <>
+              <VolumeX className="h-5 w-5" strokeWidth={2} aria-hidden />
+              <span className="ml-1.5 text-[10px] font-bold uppercase tracking-[0.16em]">
+                Play
+              </span>
+            </>
           ) : (
             <Volume2 className="h-5 w-5" strokeWidth={2} aria-hidden />
           )}
