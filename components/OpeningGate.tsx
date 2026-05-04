@@ -361,6 +361,7 @@ export function OpeningGate({
   return (
     <>
       <audio ref={audioRef} loop playsInline preload="auto" className="hidden">
+        <source src="https://res.cloudinary.com/dg4xtvqwc/video/upload/v1777858107/soft_itp0ot.webm" type="audio/webm" />
         <source src="/assets/musics/soft.webm" type="audio/webm" />
         <source src="/assets/musics/soft.mp3" type="audio/mpeg" />
       </audio>
