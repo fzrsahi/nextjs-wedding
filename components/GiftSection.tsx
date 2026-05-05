@@ -145,7 +145,7 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
 
         <div className="relative z-10">
         <header className="relative text-center">
-          <div className="mx-auto w-[min(88vw,23rem)] rounded-[2.2rem] border border-[#ffe1c4]/18 bg-[radial-gradient(ellipse_at_center,rgba(28,8,14,0.8)_0%,rgba(28,8,14,0.56)_52%,rgba(9,42,31,0.22)_84%)] px-4 py-3 shadow-[0_16px_36px_rgba(0,0,0,0.34)] backdrop-blur-[1.5px]">
+          <div className="mx-auto w-[min(88vw,23rem)] rounded-[1.8rem] border border-[#ffe1c4]/18 bg-[radial-gradient(ellipse_at_center,rgba(28,8,14,0.8)_0%,rgba(28,8,14,0.56)_52%,rgba(9,42,31,0.22)_84%)] px-3 py-2 shadow-[0_16px_36px_rgba(0,0,0,0.34)] backdrop-blur-[1.5px] sm:rounded-[2.2rem] sm:px-4 sm:py-3">
             <p
               data-cinematic-line
               className="text-[1.95rem] leading-none text-[#ffd8b5] animate-sway"
@@ -168,14 +168,14 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
               }}
             >
             </h2>
-            <div className="mx-auto mt-1.5 flex w-32 items-center justify-center gap-2">
+            <div className="mx-auto mt-1 flex w-32 items-center justify-center gap-2 sm:mt-1.5">
               <span className="h-px flex-1 bg-[linear-gradient(90deg,transparent,rgba(255,231,202,0.8))]" />
               <span className="h-1.5 w-1.5 rotate-45 border border-[#ffe1c4]/80 bg-[#f4c89d]/70 shadow-[0_0_12px_rgba(244,200,157,0.72)]" />
               <span className="h-px flex-1 bg-[linear-gradient(90deg,rgba(255,231,202,0.8),transparent)]" />
             </div>
             <p
               data-cinematic-line
-              className="mx-auto mt-2 px-2 text-center text-[0.62rem] leading-relaxed text-[#fff4e8]/96 animate-drift"
+              className="mx-auto mt-[1vh] px-2 text-center text-[0.62rem] leading-relaxed text-[#fff4e8]/96 animate-drift sm:mt-2"
               style={{
                 fontFamily: "var(--font-cormorant), serif",
                 textShadow: "0 2px 8px rgba(0,0,0,0.86)",
@@ -187,7 +187,7 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
         </header>
 
         <motion.ul
-          className="mt-3 grid grid-cols-2 gap-2.5 pr-0.5"
+          className="mt-[1.5vh] grid grid-cols-2 gap-2 pr-0.5 sm:mt-3 sm:gap-2.5"
           initial={false}
           animate="show"
           variants={{
@@ -212,7 +212,7 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
                   transition: { duration: reduceMotion ? 0 : 0.34, ease: [0.16, 1, 0.3, 1] },
                 },
               }}
-              className="relative min-w-0 overflow-hidden rounded-2xl border border-[#f8dcc0]/28 bg-[linear-gradient(145deg,rgba(38,11,18,0.72)_0%,rgba(13,47,36,0.54)_100%)] px-2.5 py-2.5 shadow-[0_16px_34px_rgba(0,0,0,0.36),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-[1.5px]"
+              className="relative min-w-0 overflow-hidden rounded-xl border border-[#f8dcc0]/28 bg-[linear-gradient(145deg,rgba(38,11,18,0.72)_0%,rgba(13,47,36,0.54)_100%)] px-2 py-2 shadow-[0_16px_34px_rgba(0,0,0,0.36),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-[1.5px] sm:rounded-2xl sm:px-2.5 sm:py-2.5"
             >
               <div
                 className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,225,196,0.74),transparent)]"
@@ -274,7 +274,7 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
           initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: reduceMotion ? 0 : 0.38, delay: reduceMotion ? 0 : 0.08 }}
-          className="mt-3 rounded-2xl border border-[#f8dcc0]/22 bg-[#120607]/30 px-3 py-2.5 shadow-[0_14px_30px_rgba(0,0,0,0.3)] backdrop-blur-[1.5px]"
+          className="mt-[1.5vh] rounded-xl border border-[#f8dcc0]/22 bg-[#120607]/30 px-3 py-2 shadow-[0_14px_30px_rgba(0,0,0,0.3)] backdrop-blur-[1.5px] sm:mt-3 sm:rounded-2xl sm:py-2.5"
         >
           <p className="text-[0.48rem] font-bold uppercase tracking-[0.22em] text-[#ffd8b5]/88">
             {EN_GIFT.sendGift}

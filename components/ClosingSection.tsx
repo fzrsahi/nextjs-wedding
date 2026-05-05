@@ -100,12 +100,12 @@ export function createClosingSlide({ coupleHeading, guestName }: TCreateClosingS
             </p>
           </div>
 
-          <div className="absolute bottom-[2.5%] right-[3%] z-40 text-right opacity-30 transition-all duration-700 hover:opacity-100">
+          <div className="absolute bottom-[2.5%] left-[4%] z-40 text-left opacity-70 transition-all duration-700 hover:opacity-100 max-w-[85%]">
             <a
               href="https://instagram.com/fzrsahi"
               target="_blank"
               rel="noreferrer"
-              className="group flex flex-col items-end gap-0.5"
+              className="group flex flex-col items-start gap-0.5"
             >
               <div className="flex items-center gap-1.5">
                 <span className="text-[7.5px] font-bold uppercase tracking-[0.3em] text-[#fff7e8]/60">

@@ -192,6 +192,22 @@ export function createEventLocationSlide(
                 </a>
               ) : null}
             </div>
+
+            {/* Romantic Quote inside the frame */}
+            <div data-cinematic-line className="mt-[3cqw]">
+              <p
+                className="italic opacity-75 animate-drift"
+                style={{
+                  fontFamily: "var(--font-cormorant), serif",
+                  fontSize: "clamp(10px, 1.6cqw, 13px)",
+                  color: "#fff7e8",
+                  lineHeight: 1.3
+                }}
+              >
+                "They say there's no place like home, but it is here<br />
+                that we begin our journey toward our new home."
+              </p>
+            </div>
           </div>
 
           {/* Decorative Flowers (Refined Side placement) */}

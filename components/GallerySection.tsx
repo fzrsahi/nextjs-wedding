@@ -266,9 +266,8 @@ function GalleryCinematicSlide({
             loading="lazy"
           />
         </div>
-
-        <div className="relative z-10">
-          <header className="relative px-1 text-center">
+        <div className="relative z-10 w-full max-w-md px-4 py-[3vh] sm:px-8 sm:py-6">
+          <header className="relative mb-[2vh] text-center sm:mb-4">
             <div
               className="mx-auto w-[min(90vw,27rem)] rounded-[2.2rem] border border-[#ffe1c4]/18 bg-[radial-gradient(ellipse_at_center,rgba(28,8,14,0.76)_0%,rgba(28,8,14,0.56)_52%,rgba(9,42,31,0.22)_84%)] px-4 py-3 shadow-[0_16px_36px_rgba(0,0,0,0.34)] backdrop-blur-[1.5px]"
             >
@@ -302,7 +301,7 @@ function GalleryCinematicSlide({
             </div>
           </header>
 
-          <div className="mt-4 grid grid-cols-2 gap-2.5">
+          <div className="mt-[2.5vh] grid grid-cols-2 gap-[1.5vh] sm:mt-4 sm:gap-2.5">
             {displayGalleryItems.slice(0, 2).map(({ src, index }) => (
               <button
                 key={`gallery-top-${index}-${src.slice(0, 28)}`}
@@ -336,7 +335,7 @@ function GalleryCinematicSlide({
             ))}
           </div>
 
-          <div className="mt-2.5">
+          <div className="mt-[1.5vh] sm:mt-2.5">
             <div className="group relative overflow-hidden rounded-[1.45rem] border border-[#f8dcc0]/65 bg-black/65 text-left shadow-[0_24px_58px_rgba(0,0,0,0.55),0_0_0_1px_rgba(255,255,255,0.08),0_0_36px_rgba(244,200,157,0.16)]">
               <div className="relative aspect-video w-full">
                 <video
@@ -365,7 +364,7 @@ function GalleryCinematicSlide({
             </div>
           </div>
 
-          <div className="mt-2.5 grid grid-cols-3 gap-2.5">
+          <div className="mt-[1.5vh] grid grid-cols-3 gap-[1.5vh] sm:mt-2.5 sm:gap-2.5">
             {displayGalleryItems.slice(2).map(({ src, index }) => {
               return (
               <button
