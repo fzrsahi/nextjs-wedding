@@ -40,6 +40,7 @@ Dokumen di sini **melengkapi** [README utama di root](../README.md): README root
 4. [panduan-penggunaan.md](panduan-penggunaan.md) — memahami apa yang panitia dan tamu alami di lapangan.
 
 ---
+Update
 
 ## Konsistensi antar dokumen
 
