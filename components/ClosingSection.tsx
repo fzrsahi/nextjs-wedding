@@ -116,7 +116,7 @@ export function createClosingSlide({ coupleHeading, guestName }: TCreateClosingS
                 </span>
               </div>
               <p className="text-[7px] italic tracking-wide text-[#fff7e8]/50">
-                with 10% Vibe Coding, 40% Passionate & 50% Love
+                with 10% Vibe Coding, <br /> 40% Passion & 50% Love
               </p>
             </a>
           </div>
@@ -126,7 +126,7 @@ export function createClosingSlide({ coupleHeading, guestName }: TCreateClosingS
             className="absolute -left-12 bottom-4 z-[1] h-28 w-28 opacity-50"
           >
             <Image
-              src="/assets/opening/flower-1.webp"
+              src="/assets/flowers/flower-new-1.webp"
               alt=""
               fill
               sizes="112px"
@@ -139,7 +139,7 @@ export function createClosingSlide({ coupleHeading, guestName }: TCreateClosingS
             className="absolute -right-14 bottom-20 z-[1] h-28 w-28 opacity-45"
           >
             <Image
-              src="/assets/opening/flower-2.webp"
+              src="/assets/flowers/flower-new-2.webp"
               alt=""
               fill
               sizes="112px"

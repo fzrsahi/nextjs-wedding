@@ -1,6 +1,6 @@
 # nextjs-wedding — Situs Undangan Pernikahan
 
-Aplikasi web **undangan pernikahan digital** berbasis **Next.js**. Setiap tamu membuka **tautan pribadi** (alamat situs + kode nama); alur halaman mengikuti urutan dokumentasi: **opening**, **quotes/ayat**, **visual panel (pengenalan pengantin)** termasuk sapaan nama, **detail acara + countdown** sesuai jenis undangan, **RSVP**, **gift**, dan **closing**. Data tamu dan jawaban konfirmasi dikelola lewat **Google Sheets**; aset gambar di lingkungan produksi dapat dilayani lewat **CDN** (misalnya Cloudinary), dengan cadangan aset lokal di folder `public/`.
+Aplikasi web **undangan pernikahan digital** berbasis **Next.js**. Setiap tamu membuka **tautan pribadi** (alamat situs + kode nama); alur halaman mengikuti urutan dokumentasi: **opening**, **quotes/ayat**, **visual panel (pengenalan pengantin)** termasuk sapaan nama, **detail acara + countdown** sesuai jenis undangan, **RSVP**, **komentar / guestbook**, **gift**, dan **closing**. Data tamu, jawaban konfirmasi, dan komentar dikelola lewat **Google Sheets**; aset gambar di lingkungan produksi dapat dilayani lewat **CDN** (misalnya Cloudinary), dengan cadangan aset lokal di folder `public/`.
 
 ---
 
@@ -11,9 +11,8 @@ Aplikasi web **undangan pernikahan digital** berbasis **Next.js**. Setiap tamu m
 | **Personalisasi** | Query `?to=...` pada URL menentukan tamu; jika tidak cocok dengan data, tamu melihat pesan bahwa undangan tidak ditemukan. |
 | **Jenis undangan** | Nilai di spreadsheet mengatur apakah yang ditampilkan hanya akad, hanya resepsi, atau keduanya. |
 | **RSVP** | Tamu mengirim konfirmasi lewat situs; nilai tertulis kembali ke spreadsheet (jawaban baru menggantikan yang lama jika dikirim ulang). |
+| **Komentar / guestbook** | Tamu dapat mengirim pesan ucapan, memilih tampil anonim atau tidak, lalu komentarnya bisa ikut melayang lembut di layar undangan. |
 | **Tautan undangan** | **Bukan** fitur tombol di aplikasi. Panitia mengisi kolom tautan di spreadsheet memakai **rumus** (seperti di Excel / Google Sheets) atau menyalin format yang sudah disepakati. |
-
-Rencana fitur **komentar / buku tamu** masih **pertimbangan** untuk ke depan; lihat dokumen spesifikasi.
 
 ---
 
@@ -37,7 +36,7 @@ Semua panduan proyek undangan ditulis dalam **Bahasa Indonesia**. Ringkasan isi 
 - **Tampilan:** Tailwind CSS
 - **Hosting:** Vercel (disarankan)
 - **Data tamu:** Google Sheets
-- **API:** Next.js Route Handler / API Route (serverless) untuk RSVP
+- **API:** Next.js Route Handler / API Route (serverless) untuk RSVP dan komentar
 - **Aset:** pengembangan dari berkas di proyek; produksi dari CDN dengan fallback ke `public/` jika CDN tidak dipakai atau tidak tersedia
 
 Detail implementasi dan keputusan arsitektur ada di [`docs/spesifikasi-proyek.md`](docs/spesifikasi-proyek.md).
@@ -79,13 +78,13 @@ Perintah lain yang tersedia:
 
 ## Variabel lingkungan & layanan luar
 
-Salin [`.env.example`](.env.example) ke `.env.local`, lalu isi nilai Google Sheets dan (opsional) `NEXT_PUBLIC_*` untuk teks acara, galeri, hero, dan CDN. Untuk tab yang namanya rumit (`|`, `&`, dll.), set **`GOOGLE_SHEETS_SHEET_GID`** dari URL (`#gid=...`). Detail kolom sheet dan format RSVP ada di [`docs/spesifikasi-proyek.md`](docs/spesifikasi-proyek.md).
+Salin [`.env.example`](.env.example) ke `.env.local`, lalu isi nilai Google Sheets dan (opsional) `NEXT_PUBLIC_*` untuk teks acara, galeri, hero, dan CDN. Untuk tab yang namanya rumit (`|`, `&`, dll.), set **`GOOGLE_SHEETS_SHEET_GID`** dari URL (`#gid=...`). Jika fitur guestbook dipakai, siapkan juga tab komentar lewat `GOOGLE_SHEETS_COMMENTS_*`. Detail kolom sheet, komentar, dan format RSVP ada di [`docs/spesifikasi-proyek.md`](docs/spesifikasi-proyek.md).
 
 **Logging (server):** [Pino](https://getpino.io/) lewat `lib/logger.ts` — JSON di production (Vercel / log drain), `pino-pretty` di development. Atur `LOG_LEVEL`.
 
 **Penting:** jangan mengunggah kunci rahasia ke repositori publik.
 
-**Rute utama:** halaman undangan `/?to={slug}` · `POST /api/rsvp` (body JSON memakai field `slug`).
+**Rute utama:** halaman undangan `/?to={slug}` · `POST /api/rsvp` · `GET/POST /api/comments`.
 
 ---
 
@@ -97,7 +96,7 @@ Cara umum untuk Next.js di **Vercel**: hubungkan repositori Git, tentukan perint
 
 ## Struktur repositori (orientasi)
 
-- `app/` — halaman undangan (`page.tsx`), `app/api/rsvp` (handler tipis).
+- `app/` — halaman undangan (`page.tsx`), `app/api/rsvp`, `app/api/comments` (handler tipis).
 - `components/` — UI minimal (RSVP form, banner dev Sheets).
 - `lib/constants/` — cache tag, keys sheet/RSVP, teks UI/API bahasa Indonesia (`messages.id.ts`).
 - `lib/types/` — tipe `T*` (guest, sheet, RSVP, event).

@@ -115,6 +115,10 @@ body {
   .animate-spin-float {
     animation: spin-float 3.5s ease-in-out infinite;
   }
+  .animate-floating-comment {
+    animation: floating-comment linear forwards;
+    will-change: transform, opacity;
+  }
 }
 
 @keyframes float {
@@ -222,6 +226,30 @@ body {
   100% { transform: translateY(0)    rotate(0deg)   scale(1); }
 }
 
+@keyframes floating-comment {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.6);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+    transform: translate3d(-10px, -20px, 0) scale(1.05);
+  }
+  30% {
+    transform: translate3d(5px, -50px, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-8px, -90px, 0) scale(1);
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate3d(10px, calc(-50vh - 100px), 0) scale(0.9);
+    opacity: 0;
+  }
+}
+
 /* Mobile Safari stabilization: disable most looping animations on touch devices. */
 @media (hover: none) and (pointer: coarse) {
   /* Keep aggressive feel on phone, but run slightly slower for stability. */
@@ -239,6 +267,7 @@ body {
   .animate-frame-pulse { animation-duration: 4.6s !important; }
   .animate-wiggle { animation-duration: 2.4s !important; }
   .animate-sparkle-line { animation-duration: 2.8s !important; }
+  .animate-floating-comment { animation-duration: 22s !important; }
 
   .animate-slow-pan {
     animation: none !important;
@@ -263,7 +292,8 @@ body {
   .animate-float-rotate,
   .animate-sparkle-line,
   .animate-bounce-subtle,
-  .animate-spin-float {
+  .animate-spin-float,
+  .animate-floating-comment {
     animation: none !important;
   }
 }

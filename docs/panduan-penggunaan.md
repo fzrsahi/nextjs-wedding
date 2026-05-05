@@ -124,9 +124,11 @@ Jika perlu laporan ke keluarga, Anda bisa **menyaring / mengurutkan** baris di s
 
 ---
 
-## Yang mungkin hadir nanti (bukan fitur awal)
+## Komentar / buku tamu digital
 
-- **Komentar / buku tamu** dari pengunjung situs masih **pertimbangan** untuk ke depan — belum tentu ada di versi pertama.
+- Pengunjung bisa membuka panel komentar dari tombol melayang di undangan.
+- Tamu dapat menulis ucapan dan memilih tampil **anonim** atau memakai nama dari tautan undangan.
+- Jika komentar melayang di layar terasa ramai, tamu bisa mematikannya sendiri dari panel komentar; pilihannya akan diingat di perangkat itu.
 
 ---
 

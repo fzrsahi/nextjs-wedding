@@ -248,7 +248,7 @@ function GalleryCinematicSlide({
       >
         <div className="pointer-events-none absolute -left-9 top-14 z-[2] h-24 w-24 opacity-55">
           <Image
-            src="/assets/opening/flower-1.webp"
+            src="/assets/flowers/flower-new-1.webp"
             alt=""
             fill
             sizes="96px"
@@ -258,7 +258,7 @@ function GalleryCinematicSlide({
         </div>
         <div className="pointer-events-none absolute -right-9 top-20 z-[2] h-24 w-24 opacity-55">
           <Image
-            src="/assets/opening/flower-2.webp"
+            src="/assets/flowers/flower-new-2.webp"
             alt=""
             fill
             sizes="96px"

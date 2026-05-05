@@ -2,7 +2,7 @@
 
 Dokumen ini adalah **spesifikasi teknis** (data, API, alur, performa). Urutan section, token visual, motion, dan audio dibahas di **[desain undangan teknis](./desain-undangan-teknis.md)**; kebutuhan dari klien di **[brief desain klien](./brief-desain-klien.md)**.
 
-Untuk **panduan pemakaian** yang mudah dibaca panitia dan tamu (non-programmer), lihat **[panduan penggunaan](./panduan-pengguna.md)**.
+Untuk **panduan pemakaian** yang mudah dibaca panitia dan tamu (non-programmer), lihat **[panduan penggunaan](./panduan-penggunaan.md)**.
 
 ---
 
@@ -26,11 +26,11 @@ Situs undangan pernikahan berbasis **link personal** (`?to=slug-nama`), data tam
 
 ---
 
-## Roadmap & Pertimbangan
+## Fitur tambahan yang sudah aktif
 
 | Item | Status |
 |------|--------|
-| **Komentar tamu** (guestbook / komentar) | **Dipertimbangkan** untuk pengembangan ke depan; belum masuk scope awal implementasi. |
+| **Komentar tamu** (guestbook / komentar) | Aktif. Tersedia panel komentar full-screen, kirim anonim / non-anonim, polling komentar, dan floating comments yang bisa di-toggle per perangkat. |
 
 ---
 
@@ -64,6 +64,20 @@ Kolom sheet (header disarankan persis seperti ini agar mapping API konsisten):
 | **tipe** | Jenis undangan: `akad`, `resepsi`, `keduanya`. **Kosong** = di aplikasi dianggap `keduanya` (memudahkan sheet yang baru isi nama saja). |
 | **link** | URL undangan personal; diisi admin (biasanya dengan **rumus** di spreadsheet, bukan dari fitur app). |
 | **konfirmasi** | Hasil RSVP: `datang` atau `tidak`. Di-update API (overwrite). |
+
+### Tab komentar (opsional, direkomendasikan untuk guestbook)
+
+Tab komentar default bernama **`Comments`** dan bisa diganti lewat env `GOOGLE_SHEETS_COMMENTS_*`.
+
+| waktu | slug | nama_tampil | nama_pengirim | anonim | pesan |
+|-------|------|-------------|---------------|--------|-------|
+
+Keterangan singkat:
+
+- **`nama_tampil`** = nama yang muncul di UI (`Anonymous` jika tamu memilih anonim).
+- **`nama_pengirim`** = identitas internal tamu dari slug / URL personal.
+- **`anonim`** = `ya` / `tidak`.
+- **`pesan`** = isi ucapan yang juga dipakai untuk floating comment.
 
 ---
 
@@ -219,6 +233,31 @@ Field identitas tamu memakai **`slug`** (bukan `nama`) agar konsisten dengan que
 
 ---
 
+## API Komentar
+
+| Item | Nilai |
+|------|--------|
+| Method | `GET`, `POST` |
+| Path | `/api/comments` |
+
+### Payload `POST` (contoh)
+
+```json
+{
+  "slug": "budi-santoso",
+  "pesan": "Masya Allah, semoga lancar sampai hari-H dan seterusnya.",
+  "anonim": true
+}
+```
+
+Catatan:
+
+- **`slug`** tetap identitas tamu utama; nama publik diambil dari URL / data tamu yang cocok.
+- Jika **`anonim=true`**, UI menampilkan **`Anonymous`**, tetapi sheet tetap menyimpan nama pengirim internal.
+- `GET /api/comments` mengembalikan daftar komentar terbaru + status ketersediaan tab komentar.
+
+---
+
 ## Flow Sistem
 
 ### Admin
@@ -232,6 +271,7 @@ Field identitas tamu memakai **`slug`** (bukan `nama`) agar konsisten dengan que
 1. Buka `?to=...`.
 2. Konten mengikuti `tipe`.
 3. RSVP.
+4. Opsional: kirim komentar / ucapan, lalu atur floating comments sesuai preferensi.
 
 ### Sistem
 

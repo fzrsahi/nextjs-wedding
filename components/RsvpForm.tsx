@@ -338,10 +338,10 @@ function RsvpCinematicForm({
           style={{ top: "8%", right: "-10%", width: "75%", aspectRatio: "1" }}
         >
           <img
-            src="/assets/opening/flower-1.webp"
+            src="/assets/flowers/flower-new-1.webp"
             alt=""
             onError={(e) => {
-              e.currentTarget.src = "/assets/opening/flower-1.webp";
+              e.currentTarget.src = "/assets/flowers/flower-new-1.webp";
             }}
             className="absolute inset-0 h-full w-full object-contain"
           />
@@ -354,10 +354,10 @@ function RsvpCinematicForm({
           style={{ bottom: "10%", left: "-10%", width: "75%", aspectRatio: "1" }}
         >
           <img
-            src="/assets/opening/flower-2.webp"
+            src="/assets/flowers/flower-new-2.webp"
             alt=""
             onError={(e) => {
-              e.currentTarget.src = "/assets/opening/flower-2.webp";
+              e.currentTarget.src = "/assets/flowers/flower-new-2.webp";
             }}
             className="absolute inset-0 h-full w-full object-contain"
           />

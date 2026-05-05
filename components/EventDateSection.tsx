@@ -156,9 +156,9 @@ export function createEventDateSlide(): SlideConfig {
             style={{ top: "8%", right: "-20%", width: "75%", aspectRatio: "1" }}
           >
             <img 
-              src="/assets/flowers/bunga-ayat.webp" 
+              src="/assets/flowers/flower-new-3.webp" 
               alt="" 
-              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.webp"; }}
+              onError={(e) => { e.currentTarget.src = "/assets/flowers/flower-new-3.webp"; }}
               className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out" 
             />
           </div>
@@ -168,9 +168,9 @@ export function createEventDateSlide(): SlideConfig {
             style={{ bottom: "10%", left: "-20%", width: "75%", aspectRatio: "1" }}
           >
             <img 
-              src="/assets/flowers/bunga-ayat.webp" 
+              src="/assets/flowers/flower-new-3.webp" 
               alt="" 
-              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.webp"; }}
+              onError={(e) => { e.currentTarget.src = "/assets/flowers/flower-new-3.webp"; }}
               className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed" 
             />
           </div>

@@ -1,3 +1,5 @@
+import { COMMENT_MAX_LENGTH } from "@/lib/constants/comments";
+
 /**
  * Indonesian copy for UI and JSON API responses only.
  * Code, logs, and types remain English elsewhere.
@@ -48,6 +50,16 @@ export const API_RSVP_DUAL_FIELDS_REQUIRED =
 export const API_RSVP_SINGLE_FIELD_REQUIRED =
   "Field konfirmasi wajib: datang atau tidak.";
 export const API_RSVP_SHEET_WRITE_FAILED = "Gagal menulis ke spreadsheet.";
+
+export const API_COMMENT_SHEETS_NOT_READY =
+  "Komentar belum dikonfigurasi (sheet komentar belum siap).";
+export const API_COMMENT_INVALID_JSON = "Body JSON tidak valid.";
+export const API_COMMENT_SLUG_REQUIRED = "Field slug wajib diisi.";
+export const API_COMMENT_GUEST_NOT_FOUND = "Tamu tidak ditemukan.";
+export const API_COMMENT_MESSAGE_REQUIRED = "Pesan wajib diisi.";
+export const API_COMMENT_MESSAGE_TOO_LONG = `Pesan maksimal ${COMMENT_MAX_LENGTH} karakter.`;
+export const API_COMMENT_SHEET_WRITE_FAILED =
+  "Gagal menulis komentar ke spreadsheet.";
 
 /** RSVP slide cinematic — English (readable on narrow oval frame). */
 export const UI_RSVP_SECTION_KICKER = "RSVP";
@@ -104,3 +116,31 @@ export const UI_CLOSING_BODY =
 export const UI_CLOSING_NAMES_PREFIX = "Kami yang berbahagia,";
 export const UI_CLOSING_WASSALAM =
   "Wassalamu'alaikum warahmatullahi wabarakatuh";
+
+export const UI_COMMENT_BUTTON = "Notes";
+export const UI_COMMENT_KICKER = "Guestbook";
+export const UI_COMMENT_TITLE = "Sweet Wishes";
+export const UI_COMMENT_INTRO =
+  "Leave a soft little note for the couple. Every message can also drift gently across the invitation.";
+export const UI_COMMENT_EMPTY =
+  "No notes yet. Be the first to leave a warm wish for the happy couple.";
+export const UI_COMMENT_LIST_ARIA = "Guest comments";
+export const UI_COMMENT_CLOSE = "Close comments";
+export const UI_COMMENT_OPEN = "Open comments";
+export const UI_COMMENT_WRITE_LABEL = "Write a note";
+export const UI_COMMENT_PLACEHOLDER =
+  "Send a prayer, a sweet wish, or a tiny heartfelt message…";
+export const UI_COMMENT_SEND_AS_ANONYMOUS = "Send as anonymous";
+export const UI_COMMENT_SUBMIT = "Send";
+export const UI_COMMENT_SUBMITTING = "Sending…";
+export const UI_COMMENT_SUCCESS = "Your note has been sent.";
+export const UI_COMMENT_ERROR_GENERIC = "Something went wrong.";
+export const UI_COMMENT_ERROR_NETWORK = "Network error. Please try again.";
+export const UI_COMMENT_FLOATING_LABEL = "Floating notes";
+export const UI_COMMENT_FLOATING_ON = "On";
+export const UI_COMMENT_FLOATING_OFF = "Off";
+export const UI_COMMENT_SENDING_AS = "Showing as";
+export const UI_COMMENT_ANONYMOUS_HELPER =
+  "Your message will appear as Anonymous";
+export const UI_COMMENT_UNAVAILABLE =
+  "Comment storage is not ready yet. The invitation still works normally, but sending notes is temporarily disabled.";

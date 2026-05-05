@@ -13,9 +13,10 @@ export const FALLBACK_AMPL_CLOSED = "/assets/opening/amplop-closed.webp";
  * `FLOWERS` di `components/OpeningGate.tsx` & `components/FloralScrollFrame.tsx`.
  */
 export const OPENING_BORDER_FLOWER_URLS = [
-  "/assets/opening/flower-1.webp",
-  "/assets/opening/flower-2.webp",
-  "/assets/flowers/bunga-ayat.webp",
+  "/assets/flowers/flower-new-1.webp",
+  "/assets/flowers/flower-new-2.webp",
+  "/assets/flowers/flower-new-3.webp",
+  "/assets/flowers/flower-new-4.webp",
 ] as const;
 
 /**

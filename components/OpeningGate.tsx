@@ -14,9 +14,11 @@ import { createGallerySlide } from "./GallerySection";
 import { createGiftSlide } from "./GiftSection";
 import { createClosingSlide } from "./ClosingSection";
 import { createRsvpSlide } from "./RsvpForm";
+import { FloatingCommentExperience } from "./FloatingCommentExperience";
 
 import type { TEventScheduleBlock } from "@/lib/types/event.types";
 import type { TInvitationKind } from "@/lib/types/guest.types";
+import type { TGuestComment } from "@/lib/types/comment.types";
 import {
   CDN_AMPL_CLOSED,
   CDN_AMPL_OPEN,
@@ -34,6 +36,8 @@ type TOpeningGateProps = {
   invitationKind: TInvitationKind;
   initialRsvpRaw: string;
   galleryImagePaths: string[];
+  initialComments: TGuestComment[];
+  commentsAvailable: boolean;
   children: React.ReactNode;
 };
 
@@ -50,6 +54,8 @@ export function OpeningGate({
   invitationKind,
   initialRsvpRaw,
   galleryImagePaths,
+  initialComments,
+  commentsAvailable,
   children,
 }: TOpeningGateProps) {
   const [phase, setPhase] = useState<TOpeningPhase>("closed");
@@ -127,12 +133,8 @@ export function OpeningGate({
   const handleComplete = useCallback(() => {
     setPhase("opened");
     window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    if (!isOpen) return;
     void playMusic();
-  }, [isOpen, playMusic]);
+  }, [playMusic]);
 
   // ─── SLIDE DEFINITIONS ───
   // Each slide: refCount, exitOrder, enterOrder, render
@@ -212,22 +214,22 @@ export function OpeningGate({
                 className="h-auto w-full drop-shadow-[0_28px_40px_rgba(16,24,40,0.36)]"
                 priority
               />
-              <div ref={refs[2]} className="absolute bottom-[20%] left-[12%] z-10 aspect-square w-[48%] -translate-x-1/4 md:w-[42%]">
+              <div ref={refs[2]} className="absolute bottom-[10%] left-[-5%] z-10 aspect-square w-[82%] -translate-x-1/4 md:left-[-2%] md:w-[60%]">
                 <Image
-                  src="/assets/opening/flower-1.webp"
+                  src="/assets/flowers/flower-new-1.webp"
                   alt=""
                   fill
-                  sizes="(max-width: 768px) 44vw, 260px"
+                  sizes="(max-width: 768px) 80vw, 400px"
                   className="object-contain animate-zoom-in-out"
                   loading="lazy"
                 />
               </div>
-              <div ref={refs[3]} className="absolute right-[12%] top-[20%] z-10 aspect-square w-[48%] translate-x-1/4 md:w-[42%]">
+              <div ref={refs[3]} className="absolute right-[-5%] top-[10%] z-10 aspect-square w-[82%] translate-x-1/4 md:right-[-2%] md:w-[60%]">
                 <Image
-                  src="/assets/opening/flower-2.webp"
+                  src="/assets/flowers/flower-new-2.webp"
                   alt=""
                   fill
-                  sizes="(max-width: 768px) 44vw, 260px"
+                  sizes="(max-width: 768px) 80vw, 400px"
                   className="object-contain animate-zoom-in-out-delayed"
                   loading="lazy"
                 />
@@ -329,22 +331,22 @@ export function OpeningGate({
                 </h2>
               </div>
             </div>
-            <div ref={refs[2]} className="absolute bottom-[8%] left-[10%] z-10 aspect-square w-[48%] -translate-x-1/4 md:w-[42%] origin-center">
+            <div ref={refs[2]} className="absolute bottom-[-2%] left-[-15%] z-10 aspect-square w-[85%] -translate-x-1/4 md:left-[-5%] md:w-[62%] origin-center">
               <Image
-                src="/assets/opening/flower-1.webp"
+                src="/assets/flowers/flower-new-1.webp"
                 alt=""
                 fill
-                sizes="(max-width: 768px) 44vw, 260px"
+                sizes="(max-width: 768px) 82vw, 420px"
                 className="object-contain animate-zoom-in-out"
                 loading="lazy"
               />
             </div>
-            <div ref={refs[3]} className="absolute right-[6%] top-[31%] z-10 aspect-square w-[48%] translate-x-1/4 md:w-[42%] origin-center">
+            <div ref={refs[3]} className="absolute right-[-18%] top-[24%] z-10 aspect-square w-[85%] translate-x-1/4 md:right-[-8%] md:w-[62%] origin-center">
               <Image
-                src="/assets/opening/flower-2.webp"
+                src="/assets/flowers/flower-new-2.webp"
                 alt=""
                 fill
-                sizes="(max-width: 768px) 44vw, 260px"
+                sizes="(max-width: 768px) 82vw, 420px"
                 className="object-contain animate-zoom-in-out-delayed"
                 loading="lazy"
               />
@@ -442,7 +444,7 @@ export function OpeningGate({
               style={{ top: "10%", left: "-12%", width: "75%", aspectRatio: "1" }}
             >
               <Image
-                src="/assets/flowers/bunga-ayat.webp"
+                src="/assets/flowers/flower-new-3.webp"
                 alt=""
                 fill
                 sizes="75vw"
@@ -455,7 +457,7 @@ export function OpeningGate({
               style={{ bottom: "12%", right: "-16%", width: "75%", aspectRatio: "1" }}
             >
               <Image
-                src="/assets/flowers/bunga-ayat.webp"
+                src="/assets/flowers/flower-new-4.webp"
                 alt=""
                 fill
                 sizes="75vw"
@@ -565,7 +567,7 @@ export function OpeningGate({
       </main>
 
       {/* Music & Home FAB */}
-      <div className="fixed bottom-24 right-5 z-[60] flex flex-col gap-3">
+      <div className="fixed bottom-10 right-4 z-[60] flex flex-row-reverse items-center gap-2.5">
         <AnimatePresence>
           {isOpen && (
             <motion.button
@@ -583,42 +585,41 @@ export function OpeningGate({
           )}
         </AnimatePresence>
 
+        <FloatingCommentExperience
+          guestName={guestName}
+          slug={slug}
+          initialComments={initialComments}
+          commentsAvailable={commentsAvailable}
+        />
+
         <motion.button
           type="button"
           onClick={toggleMusicMute}
-          animate={musicMuted ? { scale: [1, 1.06, 1] } : { scale: 1 }}
-          transition={musicMuted ? { duration: 1.1, repeat: Infinity, ease: "easeInOut" } : { duration: 0.2 }}
+          animate={musicMuted ? { scale: [1, 1.05, 1] } : { scale: 1 }}
+          transition={musicMuted ? { duration: 1.5, repeat: Infinity, ease: "easeInOut" } : { duration: 0.2 }}
           className={[
-            "group relative flex min-w-11 items-center justify-center rounded-full border shadow-sm backdrop-blur-sm transition active:scale-95",
+            "group relative flex items-center justify-center rounded-full border shadow-sm backdrop-blur-md transition active:scale-95",
             musicMuted
-              ? "h-14 border-[#ffe4c7]/90 bg-[linear-gradient(135deg,#7b2332_0%,#9b2d42_100%)] px-4 text-[#fff7e8] shadow-[0_0_0_2px_rgba(255,228,199,0.35),0_0_40px_rgba(155,45,66,0.7)]"
-              : "h-12 border-[#cfe6db]/80 bg-[linear-gradient(135deg,#f7fffb_0%,#e8f8f0_100%)] px-3.5 text-[#1d4f3f] shadow-[0_0_0_1px_rgba(207,230,219,0.8),0_0_24px_rgba(36,92,72,0.22)]",
+              ? "h-12 border-[#ffe4c7]/90 bg-[linear-gradient(135deg,#7b2332_0%,#9b2d42_100%)] px-4 text-[#fff7e8] shadow-[0_0_30px_rgba(155,45,66,0.6)]"
+              : "h-10 w-10 border-[#cfe6db]/80 bg-[linear-gradient(135deg,#f7fffb_0%,#e8f8f0_100%)] text-[#1d4f3f] shadow-[0_0_24px_rgba(36,92,72,0.12)]",
           ].join(" ")}
           aria-label={musicMuted ? "Play music" : "Mute music"}
         >
+          {musicMuted && (
+             <span className="absolute -inset-1.5 animate-ping rounded-full bg-[#f4c89d]/25" />
+          )}
           {musicMuted ? (
-            <>
-              <span className="pointer-events-none absolute -inset-2 -z-10 rounded-full border border-[#ffe6cb]/40" />
-              <span className="pointer-events-none absolute -inset-3 -z-20 rounded-full bg-[#f4c89d]/35 blur-xl animate-pulse" />
-              <span className="pointer-events-none absolute -top-2 right-0 rounded-full border border-[#ffe1c4]/80 bg-[#fff4e8] px-2 py-[2px] text-[9px] font-extrabold uppercase tracking-[0.12em] text-[#7b2332] shadow-[0_8px_18px_rgba(0,0,0,0.3)]">
+            <div className="flex items-center gap-2.5">
+              <div className="relative">
+                <span className="absolute -inset-2 rounded-full bg-white/20 blur-md animate-pulse" />
+                <VolumeX className="relative h-5 w-5" strokeWidth={2.3} aria-hidden />
+              </div>
+              <span className="text-[10px] font-black uppercase tracking-[0.25em] drop-shadow-sm">
                 Tap to Play
               </span>
-            </>
-          ) : null}
-          {musicMuted ? (
-            <>
-              <VolumeX className="h-5 w-5" strokeWidth={2.3} aria-hidden />
-              <span className="ml-2 text-[11px] font-extrabold uppercase tracking-[0.2em]">
-                Muted
-              </span>
-            </>
+            </div>
           ) : (
-            <>
-              <Volume2 className="h-5 w-5" strokeWidth={2.2} aria-hidden />
-              <span className="ml-1.5 text-[10px] font-bold uppercase tracking-[0.16em]">
-                On
-              </span>
-            </>
+            <Volume2 className="h-5 w-5" strokeWidth={2.2} aria-hidden />
           )}
         </motion.button>
       </div>

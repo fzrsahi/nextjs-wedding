@@ -68,24 +68,24 @@ export function createCoupleStorySlide(): SlideConfig {
           <div
             ref={refs[1]}
             className="absolute z-10 pointer-events-none"
-            style={{ top: "10%", left: "-20%", width: "75%", aspectRatio: "1" }}
+            style={{ top: "10%", left: "-20%", width: "82%", aspectRatio: "1" }}
           >
             <img 
-              src="/assets/flowers/bunga-ayat.webp"
+              src="/assets/flowers/flower-new-3.webp"
               alt="" 
-              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.webp"; }}
+              onError={(e) => { e.currentTarget.src = "/assets/flowers/flower-new-3.webp"; }}
               className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out" 
             />
           </div>
           <div
             ref={refs[2]}
             className="absolute z-10 pointer-events-none"
-            style={{ bottom: "12%", right: "-20%", width: "75%", aspectRatio: "1" }}
+            style={{ bottom: "12%", right: "-20%", width: "82%", aspectRatio: "1" }}
           >
             <img 
-              src="/assets/flowers/bunga-ayat.webp"
+              src="/assets/flowers/flower-new-3.webp"
               alt="" 
-              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.webp"; }}
+              onError={(e) => { e.currentTarget.src = "/assets/flowers/flower-new-3.webp"; }}
               className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed" 
             />
           </div>

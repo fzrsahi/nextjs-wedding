@@ -26,7 +26,7 @@ import {
 } from "@/lib/event-config";
 import { isAkadSectionVisible, isResepsiSectionVisible } from "@/lib/guest";
 import { createLogger } from "@/lib/logger";
-import { getGuestsData } from "@/lib/sheets";
+import { getCommentsData, getGuestsData } from "@/lib/sheets";
 import { normalizeInvitationQueryParam } from "@/lib/slug";
 
 const log = createLogger("page:invitation");
@@ -162,6 +162,7 @@ export default async function Home({
   const akad = getAkadSchedule();
   const resepsi = getResepsiSchedule();
   const galleryImagePaths = getResolvedGalleryPaths();
+  const commentsData = await getCommentsData();
 
   return (
     <>
@@ -178,6 +179,8 @@ export default async function Home({
           invitationKind={guest.invitationKind}
           initialRsvpRaw={guest.rsvpRaw}
           galleryImagePaths={galleryImagePaths}
+          initialComments={commentsData.comments}
+          commentsAvailable={commentsData.isAvailable}
         >
           <div className="min-h-screen" />
         </OpeningGate>

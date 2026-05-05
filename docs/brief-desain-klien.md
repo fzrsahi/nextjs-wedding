@@ -50,7 +50,7 @@ Urutan flow yang diinginkan:
 ## Catatan singkat untuk tim
 
 - **Musik di HP:** biasanya perlu interaksi pengguna (tombol play) dulu; tidak memutar otomatis keras.
-- **Ucapan tamu di halaman** (buku tamu digital): belum di versi awal proyek — jika diminta, direncanakan terpisah.
+- **Ucapan tamu di halaman** (buku tamu digital): tersedia sebagai guestbook + floating comments; jaga tetap lembut dan tidak mengganggu flow utama.
 - **Referensi TikTok:** jadikan acuan mood, transisi, dan “feel” buka undangan; hindari menyalin aset berhak cipta tanpa izin.
 
 ---

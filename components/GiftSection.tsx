@@ -124,7 +124,7 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
       >
         <div className="pointer-events-none absolute -left-8 top-10 z-[2] h-20 w-20 opacity-55">
           <Image
-            src="/assets/opening/flower-1.webp"
+            src="/assets/flowers/flower-new-1.webp"
             alt=""
             fill
             sizes="80px"
@@ -134,7 +134,7 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
         </div>
         <div className="pointer-events-none absolute -right-8 top-12 z-[2] h-20 w-20 opacity-55">
           <Image
-            src="/assets/opening/flower-2.webp"
+            src="/assets/flowers/flower-new-2.webp"
             alt=""
             fill
             sizes="80px"
