@@ -69,7 +69,6 @@ export default function RootLayout({
         />
         {/* Preconnect to Font CDN */}
         <link rel="preconnect" href="https://fonts.cdnfonts.com" crossOrigin="anonymous" />
-        <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/brittany-signature" />
       </head>
       {/* Browser extensions may inject attributes on <body> and trigger hydration warnings. */}
       <body className="min-h-full flex flex-col bg-neutral-200" suppressHydrationWarning>

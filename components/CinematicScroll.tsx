@@ -43,6 +43,8 @@ export type SlideConfig = {
   enterOrder: AnimElement[];
   /** Render receives ref callbacks, attach them to your DOM nodes */
   render: (refSetters: ((el: HTMLDivElement | null) => void)[]) => React.ReactNode;
+  /** Optional custom background for this slide */
+  background?: string;
 };
 
 type CinematicScrollProps = {
@@ -298,12 +300,25 @@ export function CinematicScrollContainer({
         }
 
         // ── Phase 3: bg transitions AFTER all assets are gone ──
+        const enterBg = enterSlide.background || backgroundSrc;
+        
+        if (up) {
+          document.getElementById('cinematic-bg-2')?.setAttribute('src', enterBg);
+        } else {
+          document.getElementById('cinematic-bg-0')?.setAttribute('src', enterBg);
+        }
+
         if (bgRef.current) {
           tl.to(bgRef.current, {
             y: up ? `-=${vh}` : `+=${vh}`,
             duration: BG_DUR,
             ease: "power2.inOut",
-            onComplete: () => { gsap.set(bgRef.current, { y: 0 }); },
+            onComplete: () => { 
+              gsap.set(bgRef.current, { y: 0 }); 
+              [0, 1, 2].forEach(i => {
+                document.getElementById(`cinematic-bg-${i}`)?.setAttribute('src', enterBg);
+              });
+            },
           }, frameExitEnd); // waits for ALL assets to exit first
         }
 
@@ -609,16 +624,10 @@ export function CinematicScrollContainer({
 
         currentIndex++;
 
-        // Past last slide → complete (pakai pola transisi yang sama seperti antar-slide)
+        // Stay on the last slide
         if (currentIndex >= currentSlides.length) {
-          buildFinalExitToContent(
-            currentSlides[currentSlides.length - 1],
-            elementRefs.current[currentSlides.length - 1],
-            () => {
-              isAnimating = false;
-              onCompleteRef.current();
-            }
-          );
+          currentIndex--;
+          isAnimating = false;
           return;
         }
 
@@ -735,10 +744,11 @@ export function CinematicScrollContainer({
           <div key={i} className="relative h-screen w-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              id={`cinematic-bg-${i}`}
               src={LOCAL_CINEMATIC_BG}
               alt=""
               onError={(e) => { e.currentTarget.src = backgroundSrc; }}
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover transition-opacity duration-300"
               loading={i === 1 ? "eager" : "lazy"}
               decoding="async"
             />

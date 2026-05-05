@@ -5,14 +5,30 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { UI_INVITE_INITIAL_LOADING } from "@/lib/constants/messages.id";
-import { CRITICAL_INVITE_PREFETCH_URLS } from "@/lib/critical-invite-assets";
+import { BLOCKING_CRITICAL_URLS, CRITICAL_INVITE_PREFETCH_URLS } from "@/lib/critical-invite-assets";
 
-const MAX_WAIT_MS = 20000;
+const MAX_WAIT_MS = 25000;
 const OVERLAY_FADE_MS = 420;
 
 function preloadAsset(url: string, onComplete: () => void): Promise<void> {
   return new Promise((resolve) => {
-    if (url.match(/\.(mp3|webm|wav|ogg)$/)) {
+    if (url.match(/\.(woff|woff2|ttf|otf)$/)) {
+      // Font Loading
+      const font = new FontFace("Brittany Signature", `url(${url})`, {
+        display: "swap",
+      });
+      font.load()
+        .then((loadedFont) => {
+          document.fonts.add(loadedFont);
+          onComplete();
+          resolve();
+        })
+        .catch((e) => {
+          console.warn("[Preload] Font error:", url, e);
+          onComplete();
+          resolve();
+        });
+    } else if (url.match(/\.(mp3|webm|wav|ogg)$/)) {
       const audio = new window.Audio();
       audio.oncanplaythrough = () => {
         onComplete();
@@ -65,8 +81,19 @@ export function InviteCriticalLoadGate({ children }: TInviteCriticalLoadGateProp
 
     const load = async () => {
       try {
+        // 1. First, wait for ABSOLUTELY CRITICAL assets (No race/timeout allowed for these)
+        // This ensures the envelope and opening flowers are ready.
+        await Promise.all(
+          BLOCKING_CRITICAL_URLS.map((url) => preloadAsset(url, onAssetComplete))
+        );
+
+        // 2. Then, wait for the rest with a timeout fallback
+        const remainingUrls = CRITICAL_INVITE_PREFETCH_URLS.filter(
+          (url) => !BLOCKING_CRITICAL_URLS.includes(url as any)
+        );
+
         await Promise.race([
-          Promise.all(CRITICAL_INVITE_PREFETCH_URLS.map((url) => preloadAsset(url, onAssetComplete))),
+          Promise.all(remainingUrls.map((url) => preloadAsset(url, onAssetComplete))),
           new Promise<void>((r) => {
             const crawlInterval = window.setInterval(() => {
               if (!cancelled) {
@@ -90,7 +117,7 @@ export function InviteCriticalLoadGate({ children }: TInviteCriticalLoadGateProp
           setProgress(100);
           window.setTimeout(() => {
             if (!cancelled) setAssetsReady(true);
-          }, 600);
+          }, 800);
         }
       }
     };

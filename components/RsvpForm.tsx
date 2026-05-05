@@ -32,7 +32,7 @@ import {
 import type { TInvitationKind, TRsvpAttendance } from "@/lib/types/guest.types";
 import { parseCompositeRsvpValue } from "@/lib/guest";
 
-const DATE_FRAME = "/assets/frame/date.jpg";
+const DATE_FRAME = "/assets/frame/reservation.webp";
 
 export type TRsvpSlideProps = {
   slug: string;
@@ -57,7 +57,7 @@ function ChoicePill({
       disabled={disabled}
       onClick={onSelect}
       className={[
-        "min-h-0 w-full max-w-full min-w-0 rounded-lg border px-[1.6cqw] py-[1.35cqw] text-[length:2cqw] font-medium leading-snug transition",
+        "min-h-0 w-full max-w-full min-w-0 rounded-lg border px-[1.6cqw] py-[1.35cqw] text-[length:1.4cqw] font-medium leading-snug transition",
         "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a882]/55 focus-visible:ring-offset-1 focus-visible:ring-offset-transparent",
         "disabled:pointer-events-none disabled:opacity-45",
         selected
@@ -150,9 +150,11 @@ function RsvpCinematicForm({
         }}
         className="relative origin-center [container-type:inline-size]"
         style={{
-          width: "100%",
-          marginTop: "-5%",
-          marginBottom: "-5%",
+          width: "125%",
+          marginLeft: "-12.5%",
+          marginRight: "-12.5%",
+          marginTop: "-8%",
+          marginBottom: "-8%",
         }}
       >
         <img
@@ -168,10 +170,10 @@ function RsvpCinematicForm({
           data-cinematic-observe-ignore
           className="absolute inset-0 z-20 flex min-h-0 flex-col overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch] touch-pan-y"
           style={{
-            top: "11%",
-            bottom: "12%",
-            left: "19%",
-            right: "19%",
+            top: "18%",
+            bottom: "19%",
+            left: "26%",
+            right: "26%",
           }}
           onWheel={stopWheelBubble}
           onTouchMove={(e) => e.stopPropagation()}
@@ -196,21 +198,21 @@ function RsvpCinematicForm({
 
                 <p
                   data-cinematic-line
-                  className="text-[length:2cqw] font-semibold uppercase tracking-[0.24em] text-[#c9a882] drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)]"
+                  className="text-[length:1.4cqw] font-semibold uppercase tracking-[0.24em] text-[#c9a882] drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)]"
                 >
                   {UI_RSVP_SECTION_KICKER}
                 </p>
 
                 <h2
                   data-cinematic-line
-                  className="text-[length:4.25cqw] font-medium leading-[1.12] tracking-[0.03em] text-[#e8d5c4] drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] [font-family:var(--font-display)]"
+                  className="text-[length:3.1cqw] font-medium leading-[1.12] tracking-[0.03em] text-[#e8d5c4] drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] [font-family:var(--font-display)]"
                 >
                   {UI_RSVP_FORM_TITLE}
                 </h2>
 
                 <p
                   data-cinematic-line
-                  className="text-pretty text-[length:2.5cqw] leading-[1.48] text-[#e0d6cc] [font-family:var(--font-cormorant),serif] drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]"
+                  className="text-pretty text-[length:1.7cqw] leading-[1.48] text-[#e0d6cc] [font-family:var(--font-cormorant),serif] drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]"
                 >
                   {UI_RSVP_SECTION_INTRO}
                 </p>
@@ -225,7 +227,7 @@ function RsvpCinematicForm({
             {invitationKind === INVITATION_KIND_BOTH ? (
               <div className="flex w-full max-w-[min(34cqw,100%)] flex-col gap-y-[2.1cqw]">
                 <fieldset className="flex w-full flex-col gap-y-[1.25cqw] border-0 p-0">
-                  <legend className="w-full text-center text-[length:1.85cqw] font-medium uppercase tracking-[0.12em] text-[#d4c4b0]/95">
+                  <legend className="w-full text-center text-[length:1.3cqw] font-medium uppercase tracking-[0.12em] text-[#d4c4b0]/95">
                     {UI_RSVP_AKAD_LABEL}
                   </legend>
                   <div className="flex w-full min-w-0 flex-col gap-y-[1.05cqw]">
@@ -247,7 +249,7 @@ function RsvpCinematicForm({
                 </fieldset>
 
                 <fieldset className="flex w-full flex-col gap-y-[1.25cqw] border-0 p-0">
-                  <legend className="w-full text-center text-[length:1.85cqw] font-medium uppercase tracking-[0.12em] text-[#d4c4b0]/95">
+                  <legend className="w-full text-center text-[length:1.3cqw] font-medium uppercase tracking-[0.12em] text-[#d4c4b0]/95">
                     {UI_RSVP_RESEPSI_LABEL}
                   </legend>
                   <div className="flex w-full min-w-0 flex-col gap-y-[1.05cqw]">
@@ -270,7 +272,7 @@ function RsvpCinematicForm({
               </div>
             ) : (
               <fieldset className="flex w-full max-w-[min(34cqw,100%)] flex-col gap-y-[1.35cqw] border-0 p-0">
-                <legend className="w-full text-pretty text-center text-[length:2.45cqw] font-normal leading-snug text-[#e0d6cc] [font-family:var(--font-cormorant),serif]">
+                <legend className="w-full text-pretty text-center text-[length:1.6cqw] font-normal leading-snug text-[#e0d6cc] [font-family:var(--font-cormorant),serif]">
                   {UI_RSVP_SINGLE_PROMPT}
                 </legend>
                 <div
@@ -301,10 +303,9 @@ function RsvpCinematicForm({
                 type="submit"
                 disabled={submitDisabled}
                 className={[
-                  "box-border w-full max-w-full min-w-0 rounded-xl border border-[#c9a882]/40 px-[2cqw] py-[1.55cqw] text-[length:2.05cqw] font-semibold tracking-[0.06em] text-[#f4ebe3] shadow-[0_10px_26px_rgba(0,0,0,0.35)] transition",
-                  "bg-gradient-to-b from-[#7b2332] to-[#5e1f2d] hover:brightness-[1.06] active:scale-[0.99]",
+                  "box-border w-full max-w-full min-w-0 rounded-xl border border-[#c9a882]/40 px-[2cqw] py-[1.55cqw] text-[length:1.5cqw] font-semibold tracking-[0.06em] text-[#f4ebe3] shadow-[0_10px_26px_rgba(0,0,0,0.35)] transition",
+                  "bg-gradient-to-br from-[#184234] via-[#245c48] to-[#153a2d] hover:brightness-[1.12] active:scale-[0.99]",
                   "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a882]/55",
-                  "disabled:cursor-not-allowed disabled:opacity-45 disabled:active:scale-100",
                 ].join(" ")}
               >
                 {status === "loading" ? UI_RSVP_SUBMITTING : UI_RSVP_SUBMIT}
@@ -315,7 +316,7 @@ function RsvpCinematicForm({
               <p
                 role="status"
                 className={[
-                  "max-w-[min(34cqw,100%)] rounded-lg px-[1.75cqw] py-[1.4cqw] text-center text-[length:2.1cqw] leading-snug [font-family:var(--font-cormorant),serif]",
+                  "max-w-[min(34cqw,100%)] rounded-lg px-[1.75cqw] py-[1.4cqw] text-center text-[length:1.6cqw] leading-snug [font-family:var(--font-cormorant),serif]",
                   status === "ok"
                     ? "bg-[rgb(36_92_72_/_0.25)] text-[#c8e8d8]"
                     : "bg-[rgb(123_35_50_/_0.22)] text-[#f0d0d4]",
@@ -334,13 +335,13 @@ function RsvpCinematicForm({
             refs[1]?.(el);
           }}
           className="absolute z-10 pointer-events-none"
-          style={{ top: "8%", right: "-20%", width: "75%", aspectRatio: "1" }}
+          style={{ top: "8%", right: "-10%", width: "75%", aspectRatio: "1" }}
         >
           <img
-            src="/assets/flowers/bunga-ayat.webp"
+            src="/assets/opening/flower-1.webp"
             alt=""
             onError={(e) => {
-              e.currentTarget.src = "/assets/flowers/bunga-ayat.webp";
+              e.currentTarget.src = "/assets/opening/flower-1.webp";
             }}
             className="absolute inset-0 h-full w-full object-contain"
           />
@@ -350,13 +351,13 @@ function RsvpCinematicForm({
             refs[2]?.(el);
           }}
           className="absolute z-10 pointer-events-none"
-          style={{ bottom: "10%", left: "-20%", width: "75%", aspectRatio: "1" }}
+          style={{ bottom: "10%", left: "-10%", width: "75%", aspectRatio: "1" }}
         >
           <img
-            src="/assets/flowers/bunga-ayat.webp"
+            src="/assets/opening/flower-2.webp"
             alt=""
             onError={(e) => {
-              e.currentTarget.src = "/assets/flowers/bunga-ayat.webp";
+              e.currentTarget.src = "/assets/opening/flower-2.webp";
             }}
             className="absolute inset-0 h-full w-full object-contain"
           />

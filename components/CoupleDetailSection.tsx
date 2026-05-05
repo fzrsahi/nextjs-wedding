@@ -39,9 +39,9 @@ export function createCoupleDetailSlide(): SlideConfig {
         >
           {/* Frame image */}
           <img
-            src="/assets/frame/couple.jpg"
+            src="/assets/frame/couple.webp"
             alt=""
-            onError={(e) => { e.currentTarget.src = "/assets/frame/couple.png"; }}
+            onError={(e) => { e.currentTarget.src = "/assets/frame/couple.webp"; }}
             className="h-auto w-full animate-frame-pulse drop-shadow-[0_20px_45px_rgba(0,0,0,0.35)]"
           />
 
@@ -81,18 +81,29 @@ export function createCoupleDetailSlide(): SlideConfig {
               >
                 Syafa’ Tasya Nabila Zees, S.I.P.
               </p>
-              <div className="flex items-center gap-[1cqw] mt-1 animate-float-rotate">
-                <Camera size="2.2cqw" color="rgba(251, 251, 250, 0.7)" />
+              <div className="flex items-center justify-center mt-2 animate-float-rotate">
                 <a
                   href="https://instagram.com/syafatazya"
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-sm bg-white/10 px-[0.8cqw] py-[0.25cqw] tracking-wider font-semibold text-white/95 underline decoration-white/70 decoration-[0.8px] underline-offset-2 transition hover:bg-white/20 hover:text-white"
-                  style={{ 
-                    fontSize: "clamp(8px, 1.95cqw, 11px)"
-                  }}
+                  className="p-1 transition hover:scale-110"
+                  aria-label="Instagram Syafatazya"
                 >
-                  @Syafatazya
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="5cqw"
+                    height="5cqw"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="rgba(251, 251, 250, 0.9)"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
                 </a>
               </div>
               <div 
@@ -150,18 +161,29 @@ export function createCoupleDetailSlide(): SlideConfig {
               >
                 Fauzan Kurnia, S.T., M.T.
               </p>
-              <div className="flex items-center gap-[1cqw] mt-1 animate-float-rotate">
-                <Camera size="2.2cqw" color="rgba(251, 251, 250, 0.7)" />
+              <div className="flex items-center justify-center mt-2 animate-float-rotate">
                 <a
                   href="https://instagram.com/fznkurnia"
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-sm bg-white/10 px-[0.8cqw] py-[0.25cqw] tracking-wider font-semibold text-white/95 underline decoration-white/70 decoration-[0.8px] underline-offset-2 transition hover:bg-white/20 hover:text-white"
-                  style={{ 
-                    fontSize: "clamp(8px, 1.95cqw, 11px)"
-                  }}
+                  className="p-1 transition hover:scale-110"
+                  aria-label="Instagram fznkurnia"
                 >
-                  @fznkurnia
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="5cqw"
+                    height="5cqw"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="rgba(251, 251, 250, 0.9)"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
                 </a>
               </div>
               <div 

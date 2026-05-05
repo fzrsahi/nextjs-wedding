@@ -9,6 +9,7 @@ type TCreateClosingSlideArgs = {
 export function createClosingSlide({ coupleHeading, guestName }: TCreateClosingSlideArgs): SlideConfig {
   return {
     id: "closing",
+    background: "/assets/background/bg-closing.jpeg",
     refCount: 3,
     exitOrder: [
       { refIndex: 1, type: "flower" },
@@ -65,10 +66,10 @@ export function createClosingSlide({ coupleHeading, guestName }: TCreateClosingS
 
           <div
             data-cinematic-line
-            className="absolute bottom-[17%] right-[2%] z-30 -rotate-6 text-right"
+            className="absolute left-[5%] top-[62%] -translate-y-1/2 z-30 flex flex-col items-start gap-2"
           >
             <p
-              className="text-[4.35rem] leading-none text-[#fff7e8] animate-glow-text"
+              className="text-[4.35rem] leading-none text-[#fff7e8] animate-glow-text -rotate-6"
               style={{
                 fontFamily: "'Brittany Signature', serif",
                 textShadow:
@@ -77,14 +78,8 @@ export function createClosingSlide({ coupleHeading, guestName }: TCreateClosingS
             >
               Aca
             </p>
-          </div>
-
-          <div
-            data-cinematic-line
-            className="absolute bottom-[21%] right-[35%] z-30 translate-x-1/2 text-center"
-          >
             <p
-              className="text-[2.5rem] leading-none text-[#fff0dd]"
+              className="text-[2.5rem] leading-none text-[#fff0dd] ml-12"
               style={{
                 fontFamily: "var(--font-cormorant), serif",
                 textShadow:
@@ -93,14 +88,8 @@ export function createClosingSlide({ coupleHeading, guestName }: TCreateClosingS
             >
               &amp;
             </p>
-          </div>
-
-          <div
-            data-cinematic-line
-            className="absolute bottom-[8%] right-[3%] z-30 rotate-3 text-right"
-          >
             <p
-              className="text-[4.15rem] leading-none text-[#fff7e8] animate-glow-text"
+              className="text-[4.15rem] leading-none text-[#fff7e8] animate-glow-text rotate-3 ml-6"
               style={{
                 fontFamily: "'Brittany Signature', serif",
                 textShadow:
@@ -111,18 +100,25 @@ export function createClosingSlide({ coupleHeading, guestName }: TCreateClosingS
             </p>
           </div>
 
-          <div
-            data-cinematic-line
-            className="absolute -bottom-8 -left-16 z-20 h-[27rem] w-[23rem]"
-          >
-            <Image
-              src="/assets/frame/anime.webp"
-              alt=""
-              fill
-              sizes="352px"
-              className="object-contain object-bottom drop-shadow-[0_28px_42px_rgba(0,0,0,0.56)]"
-              priority={false}
-            />
+          <div className="absolute bottom-[2.5%] right-[3%] z-40 text-right opacity-30 transition-all duration-700 hover:opacity-100">
+            <a
+              href="https://instagram.com/fzrsahi"
+              target="_blank"
+              rel="noreferrer"
+              className="group flex flex-col items-end gap-0.5"
+            >
+              <div className="flex items-center gap-1.5">
+                <span className="text-[7.5px] font-bold uppercase tracking-[0.3em] text-[#fff7e8]/60">
+                  Made By
+                </span>
+                <span className="text-[12px] font-medium tracking-wider text-[#fff7e8] transition-colors group-hover:text-[#f4c89d]">
+                  @fzrsahi
+                </span>
+              </div>
+              <p className="text-[7px] italic tracking-wide text-[#fff7e8]/50">
+                with 10% Vibe Coding, 40% Passionate & 50% Love
+              </p>
+            </a>
           </div>
 
           <div

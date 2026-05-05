@@ -33,9 +33,9 @@ export function createEventDateSlide(): SlideConfig {
         >
           {/* Frame image */}
           <img
-            src="/assets/frame/date.jpg"
+            src="/assets/frame/date.webp"
             alt=""
-            onError={(e) => { e.currentTarget.src = "/assets/frame/date.png"; }}
+            onError={(e) => { e.currentTarget.src = "/assets/frame/date.webp"; }}
             className="h-auto w-full animate-frame-pulse drop-shadow-[0_20px_45px_rgba(0,0,0,0.35)]"
           />
 

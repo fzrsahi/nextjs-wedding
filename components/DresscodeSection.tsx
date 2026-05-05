@@ -4,7 +4,7 @@ import type { SlideConfig } from "./CinematicScroll";
 
 import { UI_DRESSCODE_BODY, UI_DRESSCODE_TITLE } from "@/lib/constants/messages.id";
 
-const DATE_FRAME = "/assets/frame/date.jpg";
+const DATE_FRAME = "/assets/frame/reservation.webp";
 
 /** Visual cue: white is reserved, so avoid dominant white outfits. */
 function NoWhiteSwatch() {
@@ -45,9 +45,11 @@ export function createDresscodeSlide(): SlideConfig {
           ref={refs[0]}
           className="relative origin-center animate-float"
           style={{
-            width: "100%",
-            marginTop: "-5%",
-            marginBottom: "-5%",
+            width: "125%",
+            marginLeft: "-12.5%",
+            marginRight: "-12.5%",
+            marginTop: "-8%",
+            marginBottom: "-8%",
           }}
         >
           <img
@@ -62,10 +64,10 @@ export function createDresscodeSlide(): SlideConfig {
           <div
             className="absolute flex flex-col items-center justify-center text-center"
             style={{
-              top: "20%",
-              bottom: "24%",
-              left: "20%",
-              right: "20%",
+              top: "26%",
+              bottom: "29%",
+              left: "26%",
+              right: "26%",
               padding: "0 2%",
             }}
           >
@@ -85,14 +87,14 @@ export function createDresscodeSlide(): SlideConfig {
 
             <h2
               data-cinematic-line
-              className="animate-sway text-[length:6cqw] font-medium leading-tight tracking-[0.06em] text-[#e8d5c4] drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] [font-family:var(--font-display)] sm:text-[length:5.2cqw]"
+              className="animate-sway text-[length:5.2cqw] font-medium leading-tight tracking-[0.06em] text-[#e8d5c4] drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] [font-family:var(--font-display)] sm:text-[length:4.8cqw]"
             >
               {UI_DRESSCODE_TITLE}
             </h2>
 
             <p
               data-cinematic-line
-              className="mx-auto mt-[4cqw] max-w-[32ch] text-[length:2.85cqw] font-normal leading-[1.7] text-[#e0d6cc] [font-family:var(--font-cormorant),serif] drop-shadow-[0_1px_8px_rgba(0,0,0,0.4)] sm:max-w-[36ch] sm:text-[length:2.5cqw]"
+              className="mx-auto mt-[4cqw] max-w-[32ch] text-[length:2.6cqw] font-normal leading-[1.7] text-[#e0d6cc] [font-family:var(--font-cormorant),serif] drop-shadow-[0_1px_8px_rgba(0,0,0,0.4)] sm:max-w-[36ch] sm:text-[length:2.3cqw]"
             >
               {UI_DRESSCODE_BODY.split(/(white)/i).map((segment, i) =>
                 segment.toLowerCase() === "white" ? (
@@ -113,13 +115,13 @@ export function createDresscodeSlide(): SlideConfig {
           <div
             ref={refs[1]}
             className="absolute z-10 pointer-events-none"
-            style={{ top: "8%", right: "-20%", width: "75%", aspectRatio: "1" }}
+            style={{ top: "8%", right: "-12%", width: "75%", aspectRatio: "1" }}
           >
             <img
-              src="/assets/flowers/bunga-ayat.webp"
+              src="/assets/opening/flower-1.webp"
               alt=""
               onError={(e) => {
-                e.currentTarget.src = "/assets/flowers/bunga-ayat.webp";
+                e.currentTarget.src = "/assets/opening/flower-1.webp";
               }}
               className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out"
             />
@@ -127,13 +129,13 @@ export function createDresscodeSlide(): SlideConfig {
           <div
             ref={refs[2]}
             className="absolute z-10 pointer-events-none"
-            style={{ bottom: "10%", left: "-20%", width: "75%", aspectRatio: "1" }}
+            style={{ bottom: "10%", left: "-12%", width: "75%", aspectRatio: "1" }}
           >
             <img
-              src="/assets/flowers/bunga-ayat.webp"
+              src="/assets/opening/flower-2.webp"
               alt=""
               onError={(e) => {
-                e.currentTarget.src = "/assets/flowers/bunga-ayat.webp";
+                e.currentTarget.src = "/assets/opening/flower-2.webp";
               }}
               className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed"
             />

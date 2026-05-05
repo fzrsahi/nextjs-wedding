@@ -21,6 +21,15 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-display: var(--font-cormorant);
+  --font-brittany: "Brittany Signature", cursive;
+}
+
+@font-face {
+  font-family: "Brittany Signature";
+  src: url("https://fonts.cdnfonts.com/s/39082/BrittanySignature-LjyZ.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 @media (prefers-color-scheme: dark) {

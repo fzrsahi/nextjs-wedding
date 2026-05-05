@@ -91,9 +91,9 @@ export function createEventLocationSlide(
         >
           {/* Frame image */}
           <img
-            src="/assets/frame/date.jpg"
+            src="/assets/frame/date.webp"
             alt=""
-            onError={(e) => { e.currentTarget.src = "/assets/frame/date.png"; }}
+            onError={(e) => { e.currentTarget.src = "/assets/frame/date.webp"; }}
             className="h-auto w-full animate-frame-pulse drop-shadow-[0_20px_45px_rgba(0,0,0,0.35)]"
           />
 
@@ -127,9 +127,9 @@ export function createEventLocationSlide(
             {/* Middle Section: Building Illustration */}
             <div className="relative z-10 -my-[1.2cqw] aspect-[2/1] w-[105%] opacity-100 group">
                <img 
-                src="/assets/frame/gedung.jpg" 
+                src="/assets/frame/gedung.webp" 
                 alt="Venue Illustration"
-                onError={(e) => { e.currentTarget.src = "/assets/frame/gedung.png"; }}
+                onError={(e) => { e.currentTarget.src = "/assets/frame/gedung.webp"; }}
                 className="absolute inset-0 h-full w-full object-contain filter brightness-[2.5] contrast-[1.2] animate-breathe-deep drop-shadow-[0_0_10px_rgba(251,251,250,0.3)] transition-transform duration-700 group-hover:scale-105" 
               />
             </div>

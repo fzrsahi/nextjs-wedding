@@ -565,7 +565,7 @@ export function OpeningGate({
       </main>
 
       {/* Music & Home FAB */}
-      <div className="fixed bottom-14 right-5 z-[60] flex flex-col gap-3">
+      <div className="fixed bottom-24 right-5 z-[60] flex flex-col gap-3">
         <AnimatePresence>
           {isOpen && (
             <motion.button

@@ -181,6 +181,7 @@ function GalleryCinematicSlide({
   imagePaths: string[];
 }) {
   const headingId = useId();
+  const videoRef = useRef<HTMLVideoElement>(null);
   const reduceMotion = useReducedMotion();
   const mounted = useClientMounted();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -219,6 +220,19 @@ function GalleryCinematicSlide({
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [onKeyDown, openIndex]);
+
+  useEffect(() => {
+    const playVideo = async () => {
+      if (videoRef.current) {
+        try {
+          await videoRef.current.play();
+        } catch (err) {
+          console.warn("Video autoplay failed:", err);
+        }
+      }
+    };
+    playVideo();
+  }, []);
 
   return (
     <div
@@ -326,15 +340,26 @@ function GalleryCinematicSlide({
             <div className="group relative overflow-hidden rounded-[1.45rem] border border-[#f8dcc0]/65 bg-black/65 text-left shadow-[0_24px_58px_rgba(0,0,0,0.55),0_0_0_1px_rgba(255,255,255,0.08),0_0_36px_rgba(244,200,157,0.16)]">
               <div className="relative aspect-video w-full">
                 <video
-                  src={DEFAULT_GALLERY_VIDEO_URL}
+                  ref={videoRef}
                   className="absolute inset-0 h-full w-full object-contain"
                   controls
                   autoPlay
                   muted
                   loop
                   playsInline
-                  preload="metadata"
-                />
+                  preload="auto"
+                >
+                  {/* 1. Prioritaskan MP4 dari CDN karena Safari/iOS sangat rewel dengan format WebM */}
+                  <source src={DEFAULT_GALLERY_VIDEO_URL.replace(".webm", ".mp4")} type="video/mp4" />
+                  
+                  {/* 2. WebM dari CDN untuk Chrome/Android/Firefox yang mendukungnya dengan baik */}
+                  <source src={DEFAULT_GALLERY_VIDEO_URL} type="video/webm" />
+
+                  {/* 3. Fallback ke file lokal jika CDN bermasalah */}
+                  <source src="/assets/video/video.webm" type="video/webm" />
+                  
+                  Maaf, browser Anda tidak mendukung pemutaran video.
+                </video>
               </div>
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(34,9,16,0.48)_0%,rgba(34,9,16,0.08)_45%,transparent_78%)]" />
             </div>

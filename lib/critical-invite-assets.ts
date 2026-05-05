@@ -19,20 +19,23 @@ export const OPENING_BORDER_FLOWER_URLS = [
 ] as const;
 
 /**
- * URL di `public/` yang diprefetch sebelum undangan interaktif tampil.
- * Amplop + galeri pembuka + portrait + **semua file bunga border** (supaya tidak “bolong” saat pertama kali tampil).
+ * Aset yang WAJIB terload sebelum loading screen hilang.
+ * Jika aset ini gagal/lambat, loading tidak boleh selesai.
+ */
+export const BLOCKING_CRITICAL_URLS = [
+  CDN_AMPL_CLOSED,
+  "/assets/background/background3.webp",
+  ...OPENING_BORDER_FLOWER_URLS,
+  "https://res.cloudinary.com/dg4xtvqwc/video/upload/v1777858107/soft_itp0ot.webm",
+  "https://fonts.cdnfonts.com/s/39082/BrittanySignature-LjyZ.woff",
+] as const;
+
+/**
+ * URL yang diprefetch sebelum undangan interaktif tampil.
+ * Sekarang dipangkas hanya untuk aset yang benar-benar krusial agar loading cepat.
  */
 export const CRITICAL_INVITE_PREFETCH_URLS = [
-  CDN_AMPL_CLOSED,
-  CDN_AMPL_OPEN,
-  CDN_AYAT_FRAME,
-  "/assets/frame/couple.jpg",
-  "/assets/frame/date.jpg",
-  "/assets/frame/gedung.jpg",
-  "/assets/frame/story_11zon.webp",
-  "/assets/background/background3.webp",
-  "/assets/gallery/gallery-moment-04.jpeg",
+  ...BLOCKING_CRITICAL_URLS,
   "/assets/musics/soft.webm",
   "/assets/musics/soft.mp3",
-  ...OPENING_BORDER_FLOWER_URLS,
 ] as const;
