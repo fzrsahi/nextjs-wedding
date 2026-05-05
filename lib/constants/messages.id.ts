@@ -28,13 +28,13 @@ export const UI_OG_NOT_FOUND_DESCRIPTION =
   "Tautan ini tidak cocok dengan daftar tamu. Periksa penulisan alamat atau minta tautan terbaru kepada mempelai.";
 
 /** Judul pratinjau undangan valid — `coupleHeading` dari env (mis. nama mempelai) */
-export function uiOgInviteTitle(coupleHeading: string): string {
-  return `${coupleHeading} · Undangan Pernikahan`;
+export function uiOgInviteTitle(guestDisplayName: string): string {
+  return `Hi ${guestDisplayName}, You're Invited to Our Wedding`;
 }
 
 /** Deskripsi pratinjau undangan personal — `guestDisplayName` dari spreadsheet */
-export function uiOgInviteDescription(guestDisplayName: string): string {
-  return `Dengan penuh hormat kami mengundang ${guestDisplayName}. Satu tautan untuk jadwal acara, lokasi, dan konfirmasi kehadiran — kami sangat menanti kehadiran Bapak/Ibu/Saudara/i.`;
+export function uiOgInviteDescription(): string {
+  return "Come witness our little forever begin. Bring your smiles, prayers, and maybe a happy tear or two.";
 }
 
 export const API_RSVP_SHEETS_NOT_READY =
@@ -53,9 +53,9 @@ export const API_RSVP_SHEET_WRITE_FAILED = "Gagal menulis ke spreadsheet.";
 export const UI_RSVP_SECTION_KICKER = "RSVP";
 export const UI_RSVP_FORM_TITLE = "Attendance";
 export const UI_RSVP_SECTION_INTRO =
-  "We hope to share this day with you. Please confirm below.";
-export const UI_RSVP_AKAD_LABEL = "Ceremony";
-export const UI_RSVP_RESEPSI_LABEL = "Reception";
+  "It would mean the world to have you with us. Please let us know if you can make it.";
+export const UI_RSVP_AKAD_LABEL = "Akad Nikah";
+export const UI_RSVP_RESEPSI_LABEL = "Resepsi";
 export const UI_RSVP_ATTENDING = "Attending";
 export const UI_RSVP_NOT_ATTENDING = "Unable to attend";
 export const UI_RSVP_SINGLE_PROMPT = "Will you be joining us?";
@@ -74,7 +74,7 @@ export const UI_STORY_ROADMAP_TITLE = "Cerita awal kami";
 export const UI_DRESSCODE_TITLE = "Dresscode";
 /** Satu pesan: tanpa menyarankan warna gelap — fokus hindari dominan putih. */
 export const UI_DRESSCODE_BODY =
-  "Kindly avoid outfits dominated by white to keep the celebration visually harmonious.";
+  "To keep the day beautifully balanced, we kindly suggest avoiding all-white outfits. Let the bride have her tiny main-character moment.";
 
 export const UI_GALLERY_KICKER = "Momen";
 export const UI_GALLERY_TITLE = "Galeri foto";

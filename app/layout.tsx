@@ -35,6 +35,10 @@ export const metadata: Metadata = {
   metadataBase: resolveMetadataBase(),
   title: UI_OG_INCOMPLETE_TITLE,
   description: UI_OG_INCOMPLETE_DESCRIPTION,
+  icons: {
+    icon: [{ url: "/icon.png", type: "image/png" }],
+    shortcut: [{ url: "/icon.png", type: "image/png" }],
+  },
   openGraph: {
     siteName: UI_OG_SITE_NAME,
     locale: "id_ID",
@@ -54,6 +58,8 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <link rel="icon" type="image/png" href="/icon.png" />
+        <link rel="shortcut icon" type="image/png" href="/icon.png" />
         {/* Preload Music to start downloading immediately */}
         <link 
           rel="preload" 

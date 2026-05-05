@@ -47,7 +47,7 @@ export function createCoupleStorySlide(): SlideConfig {
         >
           {/* Frame image — raw size, let it be 100% of the outer div */}
           <img
-            src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857423/story_gy9c8g.webp"
+            src="/assets/frame/story_11zon.webp"
             alt=""
             onError={(e) => { e.currentTarget.src = "/assets/frame/story.webp"; }}
             className="h-auto w-full animate-frame-pulse drop-shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
@@ -71,9 +71,9 @@ export function createCoupleStorySlide(): SlideConfig {
             style={{ top: "10%", left: "-20%", width: "75%", aspectRatio: "1" }}
           >
             <img 
-              src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png" 
+              src="/assets/flowers/bunga-ayat.webp"
               alt="" 
-              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.png"; }}
+              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.webp"; }}
               className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out" 
             />
           </div>
@@ -83,9 +83,9 @@ export function createCoupleStorySlide(): SlideConfig {
             style={{ bottom: "12%", right: "-20%", width: "75%", aspectRatio: "1" }}
           >
             <img 
-              src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png" 
+              src="/assets/flowers/bunga-ayat.webp"
               alt="" 
-              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.png"; }}
+              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.webp"; }}
               className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed" 
             />
           </div>

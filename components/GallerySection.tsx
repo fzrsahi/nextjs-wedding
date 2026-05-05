@@ -35,15 +35,16 @@ function useClientMounted() {
 }
 
 const EN_GALLERY = {
-  kicker: "Our Sweet Moments",
-  title: "Wedding Gallery",
+  title: "Our Sweet Gallery",
   intro:
     "Tiny snapshots of our happiest day. Tap around and enjoy every little moment with us.",
-  tap: "Tap any photo to open",
   close: "Close gallery",
   previous: "Previous photo",
   next: "Next photo",
 } as const;
+
+const DEFAULT_GALLERY_VIDEO_URL =
+  "https://res.cloudinary.com/dg4xtvqwc/video/upload/v1777979011/video_f5r8yl.webm";
 
 function GalleryLightbox({
   paths,
@@ -183,10 +184,16 @@ function GalleryCinematicSlide({
   const reduceMotion = useReducedMotion();
   const mounted = useClientMounted();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
   const paths = imagePaths.filter(Boolean);
-  const safeActiveIndex = paths.length > 0 ? activeIndex % paths.length : 0;
-  const sideCount = Math.max(0, Math.min(4, paths.length - 1));
+  const galleryItems = paths.map((src, index) => ({ src, index }));
+  const displayGalleryItems =
+    galleryItems.length > 1
+      ? [
+          galleryItems[galleryItems.length - 1]!,
+          ...galleryItems.slice(1, -1),
+          galleryItems[0]!,
+        ]
+      : galleryItems;
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -214,7 +221,10 @@ function GalleryCinematicSlide({
   }, [onKeyDown, openIndex]);
 
   return (
-    <div className="absolute inset-0 z-30 flex items-center justify-center px-4 py-5 sm:px-6">
+    <div
+      data-cinematic-allow-scroll
+      className="absolute inset-0 z-30 flex items-center justify-center px-4 py-5 sm:px-6"
+    >
       <div
         ref={(el) => {
           mountCallbacks[0]?.(el);
@@ -246,178 +256,122 @@ function GalleryCinematicSlide({
         <div className="relative z-10">
           <header className="relative px-1 text-center">
             <div
-              className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[8.8rem] w-[min(92vw,25rem)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(28,8,14,0.78)_0%,rgba(28,8,14,0.58)_36%,rgba(9,42,31,0.24)_62%,transparent_78%)] blur-[2px]"
-              aria-hidden
-            />
-            <div
-              className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[5.6rem] w-[min(78vw,20rem)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#f8d7b7]/18 bg-[#16070b]/24 shadow-[0_0_42px_rgba(244,200,157,0.16)] backdrop-blur-[1px]"
-              aria-hidden
-            />
-            <p
-              data-cinematic-line
-              className="text-[2.15rem] leading-none text-[#ffd8b5] animate-sway"
-              style={{
-                fontFamily: "'Brittany Signature', serif",
-                textShadow:
-                  "0 2px 2px rgba(23,5,9,0.92), 0 8px 24px rgba(0,0,0,0.88), 0 0 22px rgba(244,200,157,0.34)",
-              }}
+              className="mx-auto w-[min(90vw,27rem)] rounded-[2.2rem] border border-[#ffe1c4]/18 bg-[radial-gradient(ellipse_at_center,rgba(28,8,14,0.76)_0%,rgba(28,8,14,0.56)_52%,rgba(9,42,31,0.22)_84%)] px-4 py-3 shadow-[0_16px_36px_rgba(0,0,0,0.34)] backdrop-blur-[1.5px]"
             >
-              {EN_GALLERY.kicker}
-            </p>
-            <h2
-              id={headingId}
-              data-cinematic-line
-              className="mt-1 text-[1.6rem] font-bold leading-none tracking-[0.16em] uppercase text-[#fff7e8] animate-glow-text"
-              style={{
-                fontFamily: "var(--font-cormorant), serif",
-                textShadow:
-                  "0 2px 1px rgba(28,8,14,0.95), 0 8px 22px rgba(0,0,0,0.9), 0 0 18px rgba(255,224,194,0.28)",
-              }}
-            >
-              {EN_GALLERY.title}
-            </h2>
-            <div className="mx-auto mt-2 flex w-44 items-center justify-center gap-2">
-              <span className="h-px flex-1 bg-[linear-gradient(90deg,transparent,rgba(255,231,202,0.8))]" />
-              <span className="h-1.5 w-1.5 rotate-45 border border-[#ffe1c4]/80 bg-[#f4c89d]/65 shadow-[0_0_12px_rgba(244,200,157,0.7)]" />
-              <span className="h-px flex-1 bg-[linear-gradient(90deg,rgba(255,231,202,0.8),transparent)]" />
+              <h2
+                id={headingId}
+                data-cinematic-line
+                className="text-[2.15rem] leading-none text-[#fff0dd] animate-glow-text"
+                style={{
+                  fontFamily: "'Brittany Signature', serif",
+                  textShadow:
+                    "0 2px 1px rgba(28,8,14,0.95), 0 8px 22px rgba(0,0,0,0.9), 0 0 18px rgba(255,224,194,0.28)",
+                }}
+              >
+                {EN_GALLERY.title}
+              </h2>
+              <div className="mx-auto mt-2 flex w-44 items-center justify-center gap-2">
+                <span className="h-px flex-1 bg-[linear-gradient(90deg,transparent,rgba(255,231,202,0.8))]" />
+                <span className="h-1.5 w-1.5 rotate-45 border border-[#ffe1c4]/80 bg-[#f4c89d]/65 shadow-[0_0_12px_rgba(244,200,157,0.7)]" />
+                <span className="h-px flex-1 bg-[linear-gradient(90deg,rgba(255,231,202,0.8),transparent)]" />
+              </div>
+              <p
+                data-cinematic-line
+                className="mx-auto mt-2.5 px-2 text-center text-[0.78rem] leading-relaxed text-[#fff4e8]/96 animate-drift"
+                style={{
+                  fontFamily: "var(--font-cormorant), serif",
+                  textShadow: "0 2px 8px rgba(0,0,0,0.88)",
+                }}
+              >
+                {EN_GALLERY.intro}
+              </p>
             </div>
-            <p
-              data-cinematic-line
-              className="mx-auto mt-2.5 max-w-[34ch] rounded-full border border-[#ffe1c4]/16 bg-[#120607]/22 px-4 py-1.5 text-[0.78rem] leading-relaxed text-[#fff4e8]/96 shadow-[0_10px_30px_rgba(0,0,0,0.28)] backdrop-blur-[1.5px] animate-drift"
-              style={{
-                fontFamily: "var(--font-cormorant), serif",
-                textShadow: "0 2px 8px rgba(0,0,0,0.88)",
-              }}
-            >
-              {EN_GALLERY.intro}
-            </p>
-            <p
-              className="mx-auto mt-2 inline-flex items-center justify-center rounded-full border border-[#f4c89d]/28 bg-[#260b12]/42 px-3 py-1 text-[0.58rem] font-bold uppercase tracking-[0.24em] text-[#ffd8b5]/92 shadow-[0_8px_22px_rgba(0,0,0,0.32)] backdrop-blur-[1px]"
-              style={{
-                fontFamily: "var(--font-cormorant), serif",
-                textShadow: "0 2px 8px rgba(0,0,0,0.86)",
-              }}
-            >
-              {EN_GALLERY.tap}
-            </p>
           </header>
 
-          <div className="mt-4 grid grid-cols-[1fr_0.42fr] items-stretch gap-3">
-            <button
-              type="button"
-              className="group relative aspect-[3/4] overflow-hidden rounded-[1.65rem] border border-[#f8dcc0]/55 text-left shadow-[0_24px_55px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.08)] sm:aspect-[4/5]"
-              onClick={() => setOpenIndex(safeActiveIndex)}
-              aria-label={`Open highlighted photo ${safeActiveIndex + 1}`}
-            >
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`hero-${safeActiveIndex}`}
-                  initial={{ opacity: 0, scale: reduceMotion ? 1 : 1.04 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: reduceMotion ? 1 : 0.98 }}
-                  transition={{ duration: reduceMotion ? 0 : 0.42, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute inset-0"
-                >
-                  {isPublicStaticImage(paths[safeActiveIndex] ?? "") ? (
-                    <Image
-                      src={paths[safeActiveIndex] ?? paths[0] ?? ""}
-                      alt=""
-                      fill
-                      sizes="(max-width: 640px) 58vw, 360px"
-                      className="object-cover object-center transition duration-700 group-hover:scale-[1.06]"
-                      priority
-                      decoding="async"
-                    />
-                  ) : (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img
-                      src={paths[safeActiveIndex] ?? paths[0] ?? ""}
-                      alt=""
-                      className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.06]"
-                      decoding="async"
-                    />
-                  )}
-                </motion.div>
-              </AnimatePresence>
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(34,9,16,0.72)_0%,rgba(34,9,16,0.16)_45%,transparent_78%)]" />
-              <span className="absolute bottom-3 left-3 rounded-full border border-[#ffe1c4]/35 bg-[#19070b]/38 px-3 py-1 text-[0.54rem] font-semibold uppercase tracking-[0.22em] text-[#fff2e4]/88 backdrop-blur-[2px]">
-                Highlight
-              </span>
-            </button>
+          <div className="mt-4 grid grid-cols-2 gap-2.5">
+            {displayGalleryItems.slice(0, 2).map(({ src, index }) => (
+              <button
+                key={`gallery-top-${index}-${src.slice(0, 28)}`}
+                type="button"
+                className="group relative aspect-[16/9] overflow-hidden rounded-xl border border-[#f8dcc0]/38 text-left shadow-[0_12px_26px_rgba(0,0,0,0.34)]"
+                onClick={() => setOpenIndex(index)}
+                aria-label={`Open photo ${index + 1}`}
+              >
+                {isPublicStaticImage(src) ? (
+                  <Image
+                    src={src}
+                    alt=""
+                    fill
+                    sizes="(max-width: 640px) 44vw, 180px"
+                    className="object-cover object-center transition duration-500 group-hover:scale-[1.06]"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={src}
+                    alt=""
+                    className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.06]"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(34,9,16,0.5)_0%,transparent_70%)]" />
+              </button>
+            ))}
+          </div>
 
-            <div className="flex flex-col gap-3">
-              {Array.from({ length: Math.max(0, Math.min(2, sideCount)) }).map((_, i) => {
-                const idx = (safeActiveIndex + i + 1) % paths.length;
-                const src = paths[idx]!;
-                return (
-                  <button
-                    key={`side-${idx}-${src.slice(0, 32)}`}
-                    type="button"
-                    className="group relative aspect-[3/4] overflow-hidden rounded-2xl border border-[#f8dcc0]/40 text-left shadow-[0_16px_32px_rgba(0,0,0,0.36)]"
-                    onClick={() => setActiveIndex(idx)}
-                    aria-label={`Set photo ${idx + 1} as highlight`}
-                  >
-                    {isPublicStaticImage(src) ? (
-                      <Image
-                        src={src}
-                        alt=""
-                        fill
-                        sizes="(max-width: 640px) 24vw, 140px"
-                        className="object-cover object-center transition duration-500 group-hover:scale-[1.06]"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    ) : (
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img
-                        src={src}
-                        alt=""
-                        className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.06]"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    )}
-                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(34,9,16,0.48)_0%,transparent_68%)]" />
-                  </button>
-                );
-              })}
+          <div className="mt-2.5">
+            <div className="group relative overflow-hidden rounded-[1.45rem] border border-[#f8dcc0]/65 bg-black/65 text-left shadow-[0_24px_58px_rgba(0,0,0,0.55),0_0_0_1px_rgba(255,255,255,0.08),0_0_36px_rgba(244,200,157,0.16)]">
+              <div className="relative aspect-video w-full">
+                <video
+                  src={DEFAULT_GALLERY_VIDEO_URL}
+                  className="absolute inset-0 h-full w-full object-contain"
+                  controls
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                />
+              </div>
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(34,9,16,0.48)_0%,rgba(34,9,16,0.08)_45%,transparent_78%)]" />
             </div>
           </div>
 
-          <div className="mt-3 grid grid-cols-3 gap-3">
-            {Array.from({ length: Math.max(0, Math.min(3, paths.length - 1)) }).map((_, i) => {
-              const idx = (safeActiveIndex + i + 3) % paths.length;
-              const src = paths[idx]!;
+          <div className="mt-2.5 grid grid-cols-3 gap-2.5">
+            {displayGalleryItems.slice(2).map(({ src, index }) => {
               return (
-                <button
-                  key={`bottom-${idx}-${src.slice(0, 28)}`}
-                  type="button"
-                  className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-[#f8dcc0]/35 text-left shadow-[0_12px_28px_rgba(0,0,0,0.34)]"
-                  onClick={() => setActiveIndex(idx)}
-                  aria-label={`Set photo ${idx + 1} as highlight`}
-                >
-                  {isPublicStaticImage(src) ? (
-                    <Image
-                      src={src}
-                      alt=""
-                      fill
-                      sizes="(max-width: 640px) 28vw, 120px"
-                      className="object-cover object-center transition duration-500 group-hover:scale-[1.06]"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img
-                      src={src}
-                      alt=""
-                      className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.06]"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  )}
-                  <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(34,9,16,0.5)_0%,transparent_70%)]" />
-                </button>
+              <button
+                key={`gallery-bottom-${index}-${src.slice(0, 28)}`}
+                type="button"
+                className="group relative aspect-[16/9] overflow-hidden rounded-xl border border-[#f8dcc0]/38 text-left shadow-[0_12px_26px_rgba(0,0,0,0.34)]"
+                onClick={() => setOpenIndex(index)}
+                aria-label={`Open photo ${index + 1}`}
+              >
+                {isPublicStaticImage(src) ? (
+                  <Image
+                    src={src}
+                    alt=""
+                    fill
+                    sizes="(max-width: 640px) 29vw, 130px"
+                    className="object-cover object-center transition duration-500 group-hover:scale-[1.06]"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={src}
+                    alt=""
+                    className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.06]"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(34,9,16,0.5)_0%,transparent_70%)]" />
+              </button>
               );
             })}
           </div>

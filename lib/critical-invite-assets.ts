@@ -1,4 +1,4 @@
-/** CDN utama untuk frame ayat & amplop pembuka; fallback ke `public/` di `onError` pada komponen. */
+/** Aset penting pakai file lokal agar render stabil dan tidak bergantung request CDN. */
 export const CDN_AYAT_FRAME = "/assets/frame/ayat.webp";
 /** Amplop gunakan aset lokal agar render lebih stabil di Safari iOS. */
 export const CDN_AMPL_OPEN = "/assets/opening/amplop-open.webp";
@@ -15,7 +15,7 @@ export const FALLBACK_AMPL_CLOSED = "/assets/opening/amplop-closed.webp";
 export const OPENING_BORDER_FLOWER_URLS = [
   "/assets/opening/flower-1.webp",
   "/assets/opening/flower-2.webp",
-  "/assets/flowers/bunga-ayat.png",
+  "/assets/flowers/bunga-ayat.webp",
 ] as const;
 
 /**
@@ -26,12 +26,12 @@ export const CRITICAL_INVITE_PREFETCH_URLS = [
   CDN_AMPL_CLOSED,
   CDN_AMPL_OPEN,
   CDN_AYAT_FRAME,
-  "/assets/frame/couple.png",
-  "/assets/frame/date.png",
-  "/assets/frame/gedung.png",
-  "/assets/frame/story.webp",
+  "/assets/frame/couple.jpg",
+  "/assets/frame/date.jpg",
+  "/assets/frame/gedung.jpg",
+  "/assets/frame/story_11zon.webp",
   "/assets/background/background3.webp",
-  "/assets/opening/foto-berdua.jpeg",
+  "/assets/gallery/gallery-moment-04.jpeg",
   "/assets/musics/soft.webm",
   "/assets/musics/soft.mp3",
   ...OPENING_BORDER_FLOWER_URLS,

@@ -38,7 +38,6 @@ async function copyToClipboard(text: string): Promise<boolean> {
 
 const EN_GIFT = {
   kicker: "Wedding Gift",
-  title: "Gift Registry",
   intro:
     "Your presence is already our greatest gift. If you wish to send a blessing, please use one of the accounts below.",
   accountTypeBank: "Bank Transfer",
@@ -109,7 +108,10 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
   };
 
   return (
-    <div className="absolute inset-0 z-30 flex items-center justify-center px-3 py-4 sm:px-4">
+    <div
+      data-cinematic-allow-scroll
+      className="absolute inset-0 z-30 flex items-center justify-center px-3 py-4 sm:px-4"
+    >
       <p id={liveId} className="sr-only" aria-live="polite">
         {liveMessage}
       </p>
@@ -143,52 +145,45 @@ function GiftCinematicSlide({ refs }: { refs: ((el: HTMLDivElement | null) => vo
 
         <div className="relative z-10">
         <header className="relative text-center">
-          <div
-            className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[7.6rem] w-[min(92vw,22rem)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(28,8,14,0.82)_0%,rgba(28,8,14,0.56)_38%,rgba(9,42,31,0.24)_64%,transparent_80%)] blur-[2px]"
-            aria-hidden
-          />
-          <div
-            className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[4.8rem] w-[min(76vw,18rem)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#f8d7b7]/18 bg-[#16070b]/28 shadow-[0_0_40px_rgba(244,200,157,0.14)] backdrop-blur-[1px]"
-            aria-hidden
-          />
-          <p
-            data-cinematic-line
-            className="text-[1.65rem] leading-none text-[#ffd8b5] animate-sway"
-            style={{
-              fontFamily: "'Brittany Signature', serif",
-              textShadow:
-                "0 2px 2px rgba(23,5,9,0.92), 0 8px 22px rgba(0,0,0,0.86), 0 0 20px rgba(244,200,157,0.32)",
-            }}
-          >
-            {EN_GIFT.kicker}
-          </p>
-          <h2
-            id={headingId}
-            data-cinematic-line
-            className="mt-0.5 text-[1.12rem] font-bold leading-tight tracking-[0.16em] uppercase text-[#fff7e8] animate-glow-text"
-            style={{
-              fontFamily: "var(--font-cormorant), serif",
-              textShadow:
-                "0 2px 1px rgba(28,8,14,0.95), 0 8px 20px rgba(0,0,0,0.86), 0 0 18px rgba(255,224,194,0.24)",
-            }}
-          >
-            {EN_GIFT.title}
-          </h2>
-          <div className="mx-auto mt-1.5 flex w-32 items-center justify-center gap-2">
-            <span className="h-px flex-1 bg-[linear-gradient(90deg,transparent,rgba(255,231,202,0.8))]" />
-            <span className="h-1.5 w-1.5 rotate-45 border border-[#ffe1c4]/80 bg-[#f4c89d]/70 shadow-[0_0_12px_rgba(244,200,157,0.72)]" />
-            <span className="h-px flex-1 bg-[linear-gradient(90deg,rgba(255,231,202,0.8),transparent)]" />
+          <div className="mx-auto w-[min(88vw,23rem)] rounded-[2.2rem] border border-[#ffe1c4]/18 bg-[radial-gradient(ellipse_at_center,rgba(28,8,14,0.8)_0%,rgba(28,8,14,0.56)_52%,rgba(9,42,31,0.22)_84%)] px-4 py-3 shadow-[0_16px_36px_rgba(0,0,0,0.34)] backdrop-blur-[1.5px]">
+            <p
+              data-cinematic-line
+              className="text-[1.95rem] leading-none text-[#ffd8b5] animate-sway"
+              style={{
+                fontFamily: "'Brittany Signature', serif",
+                textShadow:
+                  "0 2px 2px rgba(23,5,9,0.92), 0 8px 22px rgba(0,0,0,0.86), 0 0 20px rgba(244,200,157,0.32)",
+              }}
+            >
+              {EN_GIFT.kicker}
+            </p>
+            <h2
+              id={headingId}
+              data-cinematic-line
+              className="mt-0.5 text-[1.08rem] font-bold leading-tight tracking-[0.14em] uppercase text-[#fff7e8] animate-glow-text"
+              style={{
+                fontFamily: "var(--font-cormorant), serif",
+                textShadow:
+                  "0 2px 1px rgba(28,8,14,0.95), 0 8px 20px rgba(0,0,0,0.86), 0 0 18px rgba(255,224,194,0.24)",
+              }}
+            >
+            </h2>
+            <div className="mx-auto mt-1.5 flex w-32 items-center justify-center gap-2">
+              <span className="h-px flex-1 bg-[linear-gradient(90deg,transparent,rgba(255,231,202,0.8))]" />
+              <span className="h-1.5 w-1.5 rotate-45 border border-[#ffe1c4]/80 bg-[#f4c89d]/70 shadow-[0_0_12px_rgba(244,200,157,0.72)]" />
+              <span className="h-px flex-1 bg-[linear-gradient(90deg,rgba(255,231,202,0.8),transparent)]" />
+            </div>
+            <p
+              data-cinematic-line
+              className="mx-auto mt-2 px-2 text-center text-[0.62rem] leading-relaxed text-[#fff4e8]/96 animate-drift"
+              style={{
+                fontFamily: "var(--font-cormorant), serif",
+                textShadow: "0 2px 8px rgba(0,0,0,0.86)",
+              }}
+            >
+              {EN_GIFT.intro}
+            </p>
           </div>
-          <p
-            data-cinematic-line
-            className="mx-auto mt-2 max-w-[34ch] rounded-full border border-[#ffe1c4]/16 bg-[#120607]/24 px-4 py-1.5 text-[0.62rem] leading-relaxed text-[#fff4e8]/96 shadow-[0_10px_30px_rgba(0,0,0,0.28)] backdrop-blur-[1.5px] animate-drift"
-            style={{
-              fontFamily: "var(--font-cormorant), serif",
-              textShadow: "0 2px 8px rgba(0,0,0,0.86)",
-            }}
-          >
-            {EN_GIFT.intro}
-          </p>
         </header>
 
         <motion.ul

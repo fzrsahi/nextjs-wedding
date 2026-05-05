@@ -4,10 +4,7 @@ import type { SlideConfig } from "./CinematicScroll";
 
 import { UI_DRESSCODE_BODY, UI_DRESSCODE_TITLE } from "@/lib/constants/messages.id";
 
-/** Sama dengan slide tanggal / lokasi — CDN + fallback `public`. */
-const CDN_DATE_FRAME =
-  "https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857425/date_fewkmr.png";
-const FALLBACK_DATE_FRAME = "/assets/frame/date.png";
+const DATE_FRAME = "/assets/frame/date.jpg";
 
 /** Visual cue: white is reserved, so avoid dominant white outfits. */
 function NoWhiteSwatch() {
@@ -54,10 +51,10 @@ export function createDresscodeSlide(): SlideConfig {
           }}
         >
           <img
-            src={CDN_DATE_FRAME}
+            src={DATE_FRAME}
             alt=""
             onError={(e) => {
-              e.currentTarget.src = FALLBACK_DATE_FRAME;
+              e.currentTarget.src = DATE_FRAME;
             }}
             className="h-auto w-full animate-frame-pulse drop-shadow-[0_20px_45px_rgba(0,0,0,0.35)]"
           />
@@ -119,10 +116,10 @@ export function createDresscodeSlide(): SlideConfig {
             style={{ top: "8%", right: "-20%", width: "75%", aspectRatio: "1" }}
           >
             <img
-              src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png"
+              src="/assets/flowers/bunga-ayat.webp"
               alt=""
               onError={(e) => {
-                e.currentTarget.src = "/assets/flowers/bunga-ayat.png";
+                e.currentTarget.src = "/assets/flowers/bunga-ayat.webp";
               }}
               className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out"
             />
@@ -133,10 +130,10 @@ export function createDresscodeSlide(): SlideConfig {
             style={{ bottom: "10%", left: "-20%", width: "75%", aspectRatio: "1" }}
           >
             <img
-              src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png"
+              src="/assets/flowers/bunga-ayat.webp"
               alt=""
               onError={(e) => {
-                e.currentTarget.src = "/assets/flowers/bunga-ayat.png";
+                e.currentTarget.src = "/assets/flowers/bunga-ayat.webp";
               }}
               className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed"
             />

@@ -12,6 +12,7 @@ import { createEventDateSlide } from "./EventDateSection";
 import { createEventLocationSlide } from "./EventLocationSection";
 import { createGallerySlide } from "./GallerySection";
 import { createGiftSlide } from "./GiftSection";
+import { createClosingSlide } from "./ClosingSection";
 import { createRsvpSlide } from "./RsvpForm";
 
 import type { TEventScheduleBlock } from "@/lib/types/event.types";
@@ -84,13 +85,22 @@ export function OpeningGate({
     el.currentTime = 0;
   }, []);
 
-  const playMusic = useCallback(() => {
+  const playMusic = useCallback(async () => {
     const el = audioRef.current;
     if (!el) return;
     el.volume = 0.85;
-    el.muted = musicMuted;
-    void el.play().catch(() => {});
-  }, [musicMuted]);
+    // Try audible autoplay first. If blocked by browser policy, fallback to muted.
+    el.muted = false;
+    try {
+      await el.play();
+      setMusicMuted(false);
+      return;
+    } catch {
+      el.muted = true;
+      setMusicMuted(true);
+      void el.play().catch(() => {});
+    }
+  }, []);
 
   const toggleMusicMute = useCallback(() => {
     const el = audioRef.current;
@@ -118,6 +128,11 @@ export function OpeningGate({
     setPhase("opened");
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    void playMusic();
+  }, [isOpen, playMusic]);
 
   // ─── SLIDE DEFINITIONS ───
   // Each slide: refCount, exitOrder, enterOrder, render
@@ -279,10 +294,12 @@ export function OpeningGate({
                       </span>
                       <span
                         data-cinematic-line
-                        className="my-0.5 flex h-[7cqw] w-[7cqw] items-center justify-center rounded-full border border-[#c79a52]/55 bg-[#fff8ec]/70 text-[length:4.1cqw] font-bold text-[#c18a3a] shadow-[0_8px_18px_rgba(24,66,52,0.12),inset_0_1px_0_rgba(255,255,255,0.75)]"
+                        className="mb-[2cqw] mt-[3cqw] flex items-center justify-center text-[length:5.4cqw] text-[#8a2436] drop-shadow-[0_5px_12px_rgba(138,36,54,0.18)]"
                         style={{
                           fontFamily: "var(--font-cormorant), serif",
-                          textShadow: "0 1px 0 rgba(255,255,255,0.82)",
+                          fontStyle: "italic",
+                          lineHeight: 0.75,
+                          textShadow: "0 1px 0 rgba(255,255,255,0.72)",
                         }}
                       >
                         &amp;
@@ -322,7 +339,7 @@ export function OpeningGate({
                 loading="lazy"
               />
             </div>
-            <div ref={refs[3]} className="absolute right-[10%] top-[22%] z-10 aspect-square w-[48%] translate-x-1/4 md:w-[42%] origin-center">
+            <div ref={refs[3]} className="absolute right-[6%] top-[31%] z-10 aspect-square w-[48%] translate-x-1/4 md:w-[42%] origin-center">
               <Image
                 src="/assets/opening/flower-2.webp"
                 alt=""
@@ -355,7 +372,7 @@ export function OpeningGate({
         <div className="absolute inset-0 z-30 flex flex-col items-center justify-center">
           <div
             ref={refs[0]}
-            className="relative origin-center animate-float"
+            className="relative origin-center"
             style={{
               width: "130%",
               marginLeft: "-15%",
@@ -382,7 +399,7 @@ export function OpeningGate({
               </div>
               <p
                 data-cinematic-line
-                className="mb-[1.4cqw] text-[length:2.35cqw] font-bold uppercase tracking-[0.34em] text-[#8a2436] animate-glow-text"
+                className="relative z-20 mb-[1.4cqw] text-[length:2.35cqw] font-bold uppercase tracking-[0.34em] text-[#8a2436]"
                 style={{
                   fontFamily: "var(--font-cormorant), serif",
                   textShadow: "0 1px 0 rgba(255,255,255,0.74)",
@@ -397,7 +414,7 @@ export function OpeningGate({
               />
               <p
                 data-cinematic-line
-                className="mb-[2.6cqw] text-[length:5.25cqw] font-semibold leading-[1.45] text-[#6f1d2d] animate-sway"
+                className="mb-[2.6cqw] text-[length:5.25cqw] font-semibold leading-[1.45] text-[#6f1d2d]"
                 style={{
                   fontFamily: "'Traditional Arabic', 'Amiri', serif",
                   direction: "rtl",
@@ -410,7 +427,7 @@ export function OpeningGate({
               </p>
               <p
                 data-cinematic-line
-                className="mb-[1cqw] text-[length:3.15cqw] font-medium italic leading-[1.45] tracking-[0.03em] text-[#7b2332] animate-drift"
+                className="mb-[1cqw] text-[length:3.15cqw] font-medium italic leading-[1.45] tracking-[0.03em] text-[#7b2332]"
                 style={{
                   fontFamily: "var(--font-cormorant), serif",
                   textShadow: "0 1px 0 rgba(255,255,255,0.76)",
@@ -422,10 +439,10 @@ export function OpeningGate({
             <div
               ref={refs[1]}
               className="absolute z-10 pointer-events-none"
-              style={{ top: "10%", left: "-20%", width: "75%", aspectRatio: "1" }}
+              style={{ top: "10%", left: "-12%", width: "75%", aspectRatio: "1" }}
             >
               <Image
-                src="/assets/flowers/bunga-ayat.png"
+                src="/assets/flowers/bunga-ayat.webp"
                 alt=""
                 fill
                 sizes="75vw"
@@ -435,10 +452,10 @@ export function OpeningGate({
             <div
               ref={refs[2]}
               className="absolute z-10 pointer-events-none"
-              style={{ bottom: "12%", right: "-20%", width: "75%", aspectRatio: "1" }}
+              style={{ bottom: "12%", right: "-16%", width: "75%", aspectRatio: "1" }}
             >
               <Image
-                src="/assets/flowers/bunga-ayat.png"
+                src="/assets/flowers/bunga-ayat.webp"
                 alt=""
                 fill
                 sizes="75vw"
@@ -473,6 +490,9 @@ export function OpeningGate({
 
     // ── SLIDE 10: Gift (masuk di dalam cinematic flow) ──
     createGiftSlide(),
+
+    // ── SLIDE 11: Closing ──
+    createClosingSlide({ coupleHeading, guestName }),
   ], [
     guestName,
     coupleHeading,
@@ -545,7 +565,7 @@ export function OpeningGate({
       </main>
 
       {/* Music & Home FAB */}
-      <div className="fixed bottom-6 right-5 z-[60] flex flex-col gap-3">
+      <div className="fixed bottom-14 right-5 z-[60] flex flex-col gap-3">
         <AnimatePresence>
           {isOpen && (
             <motion.button
@@ -563,31 +583,44 @@ export function OpeningGate({
           )}
         </AnimatePresence>
 
-        <button
+        <motion.button
           type="button"
           onClick={toggleMusicMute}
+          animate={musicMuted ? { scale: [1, 1.06, 1] } : { scale: 1 }}
+          transition={musicMuted ? { duration: 1.1, repeat: Infinity, ease: "easeInOut" } : { duration: 0.2 }}
           className={[
-            "group relative flex h-11 min-w-11 items-center justify-center rounded-full border shadow-sm backdrop-blur-sm transition active:scale-95",
+            "group relative flex min-w-11 items-center justify-center rounded-full border shadow-sm backdrop-blur-sm transition active:scale-95",
             musicMuted
-              ? "border-[#ffd8b5]/70 bg-[#7b2332]/92 px-3 text-[#fff7e8] shadow-[0_0_0_1px_rgba(255,216,181,0.24),0_0_24px_rgba(123,35,50,0.55)]"
-              : "border-[var(--inv-primary)]/20 bg-[#fbfbfa]/80 text-[var(--inv-primary)]",
+              ? "h-14 border-[#ffe4c7]/90 bg-[linear-gradient(135deg,#7b2332_0%,#9b2d42_100%)] px-4 text-[#fff7e8] shadow-[0_0_0_2px_rgba(255,228,199,0.35),0_0_40px_rgba(155,45,66,0.7)]"
+              : "h-12 border-[#cfe6db]/80 bg-[linear-gradient(135deg,#f7fffb_0%,#e8f8f0_100%)] px-3.5 text-[#1d4f3f] shadow-[0_0_0_1px_rgba(207,230,219,0.8),0_0_24px_rgba(36,92,72,0.22)]",
           ].join(" ")}
           aria-label={musicMuted ? "Play music" : "Mute music"}
         >
           {musicMuted ? (
-            <span className="pointer-events-none absolute -inset-1 -z-10 rounded-full bg-[#f4c89d]/24 blur-md" />
+            <>
+              <span className="pointer-events-none absolute -inset-2 -z-10 rounded-full border border-[#ffe6cb]/40" />
+              <span className="pointer-events-none absolute -inset-3 -z-20 rounded-full bg-[#f4c89d]/35 blur-xl animate-pulse" />
+              <span className="pointer-events-none absolute -top-2 right-0 rounded-full border border-[#ffe1c4]/80 bg-[#fff4e8] px-2 py-[2px] text-[9px] font-extrabold uppercase tracking-[0.12em] text-[#7b2332] shadow-[0_8px_18px_rgba(0,0,0,0.3)]">
+                Tap to Play
+              </span>
+            </>
           ) : null}
           {musicMuted ? (
             <>
-              <VolumeX className="h-5 w-5" strokeWidth={2} aria-hidden />
-              <span className="ml-1.5 text-[10px] font-bold uppercase tracking-[0.16em]">
-                Play
+              <VolumeX className="h-5 w-5" strokeWidth={2.3} aria-hidden />
+              <span className="ml-2 text-[11px] font-extrabold uppercase tracking-[0.2em]">
+                Muted
               </span>
             </>
           ) : (
-            <Volume2 className="h-5 w-5" strokeWidth={2} aria-hidden />
+            <>
+              <Volume2 className="h-5 w-5" strokeWidth={2.2} aria-hidden />
+              <span className="ml-1.5 text-[10px] font-bold uppercase tracking-[0.16em]">
+                On
+              </span>
+            </>
           )}
-        </button>
+        </motion.button>
       </div>
 
       {/* Cinematic scroll overlay */}

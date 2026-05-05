@@ -91,7 +91,7 @@ export function createEventLocationSlide(
         >
           {/* Frame image */}
           <img
-            src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857425/date_fewkmr.png"
+            src="/assets/frame/date.jpg"
             alt=""
             onError={(e) => { e.currentTarget.src = "/assets/frame/date.png"; }}
             className="h-auto w-full animate-frame-pulse drop-shadow-[0_20px_45px_rgba(0,0,0,0.35)]"
@@ -127,7 +127,7 @@ export function createEventLocationSlide(
             {/* Middle Section: Building Illustration */}
             <div className="relative z-10 -my-[1.2cqw] aspect-[2/1] w-[105%] opacity-100 group">
                <img 
-                src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857394/gedung_egnabp.png" 
+                src="/assets/frame/gedung.jpg" 
                 alt="Venue Illustration"
                 onError={(e) => { e.currentTarget.src = "/assets/frame/gedung.png"; }}
                 className="absolute inset-0 h-full w-full object-contain filter brightness-[2.5] contrast-[1.2] animate-breathe-deep drop-shadow-[0_0_10px_rgba(251,251,250,0.3)] transition-transform duration-700 group-hover:scale-105" 
@@ -201,9 +201,9 @@ export function createEventLocationSlide(
             style={{ top: "25%", left: "-20%", width: "75%", aspectRatio: "1" }}
           >
             <img 
-              src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png" 
+              src="/assets/flowers/bunga-ayat.webp" 
               alt="" 
-              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.png"; }}
+              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.webp"; }}
               className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out" 
             />
           </div>
@@ -213,9 +213,9 @@ export function createEventLocationSlide(
             style={{ top: "30%", right: "-20%", width: "75%", aspectRatio: "1" }}
           >
             <img 
-              src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png" 
+              src="/assets/flowers/bunga-ayat.webp" 
               alt="" 
-              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.png"; }}
+              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.webp"; }}
               className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed" 
             />
           </div>

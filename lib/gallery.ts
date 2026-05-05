@@ -9,7 +9,7 @@ import { getGalleryAssetPaths } from "@/lib/event-config";
  * Foto fallback jika folder galeri kosong dan `NEXT_PUBLIC_GALLERY_PATHS` tidak diisi / tidak valid.
  * Tambah foto: letakkan berkas di `public/assets/gallery/` (mis. `2.jpeg`, `3.png`) lalu deploy ulang.
  */
-export const GALLERY_FALLBACK_IMAGE = "/assets/opening/foto-berdua.jpeg";
+export const GALLERY_FALLBACK_IMAGE = "/assets/gallery/gallery-moment-04.jpeg";
 
 const GALLERY_DIR = path.join(process.cwd(), "public", "assets", "gallery");
 

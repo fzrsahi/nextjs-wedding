@@ -33,7 +33,7 @@ export function createEventDateSlide(): SlideConfig {
         >
           {/* Frame image */}
           <img
-            src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857425/date_fewkmr.png"
+            src="/assets/frame/date.jpg"
             alt=""
             onError={(e) => { e.currentTarget.src = "/assets/frame/date.png"; }}
             className="h-auto w-full animate-frame-pulse drop-shadow-[0_20px_45px_rgba(0,0,0,0.35)]"
@@ -91,16 +91,17 @@ export function createEventDateSlide(): SlideConfig {
               <div data-cinematic-line className="flex items-center justify-center my-[2cqw]">
                 <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-[#fbfbfa]/40" />
                 <span 
-                  className="mx-6 font-bold drop-shadow-[0_4px_12px_rgba(0,0,0,0.3)] animate-pulse-text" 
+                  className="mx-6 inline-block font-bold drop-shadow-[0_8px_22px_rgba(0,0,0,0.45)] animate-pulse-text-rapid" 
                   style={{ 
                     fontFamily: "serif", 
                     fontSize: "clamp(55px, 15cqw, 90px)",
                     color: "#fbfbfa",
                     lineHeight: 0.9,
-                    letterSpacing: "-0.02em"
+                    letterSpacing: "-0.02em",
+                    textShadow: "0 0 12px rgba(251, 251, 250, 0.35), 0 0 24px rgba(251, 251, 250, 0.2)"
                   }}
                 >
-                  12
+                  16
                 </span>
                 <div className="h-[1px] w-8 bg-gradient-to-l from-transparent to-[#fbfbfa]/40" />
               </div>
@@ -117,7 +118,7 @@ export function createEventDateSlide(): SlideConfig {
                   textTransform: "uppercase"
                 }}
               >
-                December
+                May
               </h4>
               
               <p
@@ -139,7 +140,7 @@ export function createEventDateSlide(): SlideConfig {
                 className="italic opacity-70 animate-drift"
                 style={{ 
                   fontFamily: "var(--font-cormorant), serif",
-                  fontSize: "clamp(9px, 2cqw, 12px)",
+                  fontSize: "clamp(11px, 2.5cqw, 15px)",
                   color: "#fbfbfa"
                 }}
               >
@@ -155,9 +156,9 @@ export function createEventDateSlide(): SlideConfig {
             style={{ top: "8%", right: "-20%", width: "75%", aspectRatio: "1" }}
           >
             <img 
-              src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png" 
+              src="/assets/flowers/bunga-ayat.webp" 
               alt="" 
-              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.png"; }}
+              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.webp"; }}
               className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out" 
             />
           </div>
@@ -167,9 +168,9 @@ export function createEventDateSlide(): SlideConfig {
             style={{ bottom: "10%", left: "-20%", width: "75%", aspectRatio: "1" }}
           >
             <img 
-              src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png" 
+              src="/assets/flowers/bunga-ayat.webp" 
               alt="" 
-              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.png"; }}
+              onError={(e) => { e.currentTarget.src = "/assets/flowers/bunga-ayat.webp"; }}
               className="absolute inset-0 h-full w-full object-contain animate-zoom-in-out-delayed" 
             />
           </div>

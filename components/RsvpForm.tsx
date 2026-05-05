@@ -32,10 +32,7 @@ import {
 import type { TInvitationKind, TRsvpAttendance } from "@/lib/types/guest.types";
 import { parseCompositeRsvpValue } from "@/lib/guest";
 
-/** Sama dengan `DresscodeSection` / `EventDateSection` — CDN + fallback `public`. */
-const CDN_DATE_FRAME =
-  "https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857425/date_fewkmr.png";
-const FALLBACK_DATE_FRAME = "/assets/frame/date.png";
+const DATE_FRAME = "/assets/frame/date.jpg";
 
 export type TRsvpSlideProps = {
   slug: string;
@@ -159,10 +156,10 @@ function RsvpCinematicForm({
         }}
       >
         <img
-          src={CDN_DATE_FRAME}
+          src={DATE_FRAME}
           alt=""
           onError={(e) => {
-            e.currentTarget.src = FALLBACK_DATE_FRAME;
+            e.currentTarget.src = DATE_FRAME;
           }}
           className="pointer-events-none h-auto w-full select-none drop-shadow-[0_20px_45px_rgba(0,0,0,0.35)]"
         />
@@ -340,10 +337,10 @@ function RsvpCinematicForm({
           style={{ top: "8%", right: "-20%", width: "75%", aspectRatio: "1" }}
         >
           <img
-            src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png"
+            src="/assets/flowers/bunga-ayat.webp"
             alt=""
             onError={(e) => {
-              e.currentTarget.src = "/assets/flowers/bunga-ayat.png";
+              e.currentTarget.src = "/assets/flowers/bunga-ayat.webp";
             }}
             className="absolute inset-0 h-full w-full object-contain"
           />
@@ -356,10 +353,10 @@ function RsvpCinematicForm({
           style={{ bottom: "10%", left: "-20%", width: "75%", aspectRatio: "1" }}
         >
           <img
-            src="https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good/v1777857790/bunga-ayat_jhrwpf.png"
+            src="/assets/flowers/bunga-ayat.webp"
             alt=""
             onError={(e) => {
-              e.currentTarget.src = "/assets/flowers/bunga-ayat.png";
+              e.currentTarget.src = "/assets/flowers/bunga-ayat.webp";
             }}
             className="absolute inset-0 h-full w-full object-contain"
           />

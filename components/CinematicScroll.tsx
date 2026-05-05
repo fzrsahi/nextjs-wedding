@@ -6,9 +6,7 @@ import { useLayoutEffect, useRef, useCallback, useMemo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Cloudinary-optimized background (f_auto = best format, q_auto:good = smart compression, w_1080 = mobile-sized)
-const CLOUDINARY_BG =
-  "https://res.cloudinary.com/dg4xtvqwc/image/upload/f_auto,q_auto:good,w_1080/v1777856768/background3_lks3ez.webp";
+const LOCAL_CINEMATIC_BG = "/assets/background/background3.webp";
 
 // --- Text-line stagger (optional per slide via `data-cinematic-line`) ---
 const CINEMATIC_LINE_SEL = "[data-cinematic-line]";
@@ -100,6 +98,16 @@ export function CinematicScrollContainer({
   // This effect runs ONCE on mount. It reads from refs so it always has fresh values.
   useLayoutEffect(() => {
     if (!containerRef.current) return;
+    const htmlEl = document.documentElement;
+    const bodyEl = document.body;
+    const prevHtmlOverflow = htmlEl.style.overflow;
+    const prevBodyOverflow = bodyEl.style.overflow;
+    const prevBodyOverscrollBehaviorY = bodyEl.style.overscrollBehaviorY;
+
+    // Lock native page scrolling while cinematic sections are active.
+    htmlEl.style.overflow = "hidden";
+    bodyEl.style.overflow = "hidden";
+    bodyEl.style.overscrollBehaviorY = "none";
 
     // Register plugin inside effect for safety
     gsap.registerPlugin(ScrollTrigger);
@@ -675,6 +683,8 @@ export function CinematicScrollContainer({
         ignoreCheck: (ev: Event) => {
           const t = ev.target;
           if (!t || !(t instanceof Element)) return false;
+          // Allow scroll gestures inside explicitly whitelisted interactive sections.
+          if (t.closest("[data-cinematic-allow-scroll]")) return false;
           return Boolean(
             t.closest("[data-cinematic-observe-ignore]") ||
               t.closest("button") ||
@@ -689,7 +699,12 @@ export function CinematicScrollContainer({
       return () => { observer.kill(); };
     }, containerRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      htmlEl.style.overflow = prevHtmlOverflow;
+      bodyEl.style.overflow = prevBodyOverflow;
+      bodyEl.style.overscrollBehaviorY = prevBodyOverscrollBehaviorY;
+    };
   }, []);
 
   // Build ref setters for each slide
@@ -720,7 +735,7 @@ export function CinematicScrollContainer({
           <div key={i} className="relative h-screen w-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={CLOUDINARY_BG}
+              src={LOCAL_CINEMATIC_BG}
               alt=""
               onError={(e) => { e.currentTarget.src = backgroundSrc; }}
               className="absolute inset-0 h-full w-full object-cover"

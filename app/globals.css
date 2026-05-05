@@ -77,6 +77,12 @@ body {
   .animate-pulse-text {
     animation: pulse-text 2.5s ease-in-out infinite;
   }
+  /* Date number: faster and larger zoom, GPU-friendly transform only */
+  .animate-pulse-text-rapid {
+    animation: pulse-text-rapid 0.72s ease-in-out infinite;
+    transform-origin: center;
+    will-change: transform;
+  }
   /* Icons — playful wiggle */
   .animate-wiggle {
     animation: wiggle 2s ease-in-out infinite;
@@ -159,6 +165,11 @@ body {
   50% { transform: scale(1.08); }
 }
 
+@keyframes pulse-text-rapid {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
 /* Icons: playful wiggle */
 @keyframes wiggle {
   0%, 100% { transform: rotate(0deg); }
@@ -215,6 +226,7 @@ body {
   .animate-glow-text { animation-duration: 3.2s !important; }
   .animate-float-rotate { animation-duration: 4.2s !important; }
   .animate-pulse-text { animation-duration: 3s !important; }
+  .animate-pulse-text-rapid { animation-duration: 0.9s !important; }
   .animate-frame-pulse { animation-duration: 4.6s !important; }
   .animate-wiggle { animation-duration: 2.4s !important; }
   .animate-sparkle-line { animation-duration: 2.8s !important; }
@@ -236,6 +248,7 @@ body {
   .animate-frame-pulse,
   .animate-breathe-deep,
   .animate-pulse-text,
+  .animate-pulse-text-rapid,
   .animate-wiggle,
   .animate-glow-text,
   .animate-float-rotate,

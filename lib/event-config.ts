@@ -9,7 +9,7 @@ export function getAkadSchedule(): TEventScheduleBlock {
   return {
     title: readPublicEnv("NEXT_PUBLIC_AKAD_TITLE", "Akad Nikah"),
     date: readPublicEnv("NEXT_PUBLIC_AKAD_DATE", "—"),
-    time: readPublicEnv("NEXT_PUBLIC_AKAD_TIME", "—"),
+    time: readPublicEnv("NEXT_PUBLIC_AKAD_TIME", "15.00 WITA"),
     venue: readPublicEnv("NEXT_PUBLIC_AKAD_VENUE", "Alamat akad (atur di .env)"),
     mapUrl: readPublicEnv("NEXT_PUBLIC_AKAD_MAP_URL", ""),
   };
