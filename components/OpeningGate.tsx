@@ -160,23 +160,25 @@ export function OpeningGate({
       render: (refs) => (
         <>
           {/* Caption */}
-          <div ref={refs[0]} className="absolute inset-0 z-10 flex flex-col items-center pt-[6vh]">
-            <div className="relative inline-block animate-float">
-              <div data-cinematic-line className="relative inline-block">
+          <div ref={refs[0]} className="absolute inset-0 z-10 flex flex-col items-center pt-[6vh] px-6">
+            <div className="relative w-full max-w-md animate-float text-center">
+              <div data-cinematic-line className="relative inline-block w-full">
                 <p
-                  className="text-[length:10cqw] text-white drop-shadow-md relative z-10"
-                  style={{ fontFamily: "'Brittany Signature', serif", lineHeight: 1.3 }}
+                  className="text-[length:4.5cqw] text-white drop-shadow-md relative z-10"
+                  style={{ fontFamily: "'Brittany Signature', serif", lineHeight: 1.05 }}
                 >
                   Hi, <br />
-                  <span className="relative inline-block mt-3 px-2">
+                  <span className="relative inline-block mt-0.5 px-6 max-w-full">
                     <span
-                      className="absolute -inset-x-6 bottom-[18%] top-[42%] -z-10 -rotate-2 rounded-sm"
+                      className="absolute inset-x-0 bottom-[24%] top-[44%] -z-10 -rotate-1 rounded-sm"
                       style={{
                         background: "linear-gradient(to right, transparent 0%, rgba(128, 0, 32, 0.6) 5%, rgba(128, 0, 32, 0.7) 50%, rgba(128, 0, 32, 0.6) 95%, transparent 100%)",
                         boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
                       }}
                     />
-                    <span className="relative z-10 text-[length:12.5cqw] text-white drop-shadow-md animate-sway">{guestName}</span>
+                    <span className="relative z-10 text-[length:clamp(0.9rem,5.5cqw,1.9rem)] text-white drop-shadow-md animate-sway block break-words leading-[1.05]">
+                      {guestName}
+                    </span>
                   </span>
                 </p>
               </div>
