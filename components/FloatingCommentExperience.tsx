@@ -69,7 +69,7 @@ type TFloatingChip = {
   comment: TGuestComment;
 };
 
-const FLOATING_LANES = [15, 26, 37, 48, 59, 70] as const;
+const FLOATING_LANES = [-2, 0, 2, 4, 6] as const;
 const MAX_FLOATING_CHIPS = 3;
 const POLL_INTERVAL_MS = 18000;
 const COMMENT_TIMEZONE = "Asia/Makassar";
@@ -137,6 +137,38 @@ export function FloatingCommentExperience({
   const [status, setStatus] = useState<"idle" | "loading" | "ok" | "err">("idle");
   const [feedback, setFeedback] = useState("");
   const [website, setWebsite] = useState(""); // Honeypot field
+
+  const [isFabExpanded, setIsFabExpanded] = useState(true);
+
+  // Auto-collapse FAB after 5s or when scrolling
+  useEffect(() => {
+    if (!isFabExpanded) return;
+
+    const timer = setTimeout(() => {
+      setIsFabExpanded(false);
+    }, 5000);
+
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setIsFabExpanded(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isFabExpanded]);
+
+  const handleFabClick = useCallback(() => {
+    if (!isFabExpanded) {
+      setIsFabExpanded(true);
+    } else {
+      setIsPanelOpen(true);
+    }
+  }, [isFabExpanded]);
+
 
   const commentsRef = useRef(comments);
   const seenIdsRef = useRef<Set<string>>(new Set(initialComments.map((item) => item.id)));
@@ -359,9 +391,10 @@ export function FloatingCommentExperience({
             {floatingChips.map((chip) => (
               <div
                 key={chip.key}
-                className="animate-floating-comment absolute bottom-[7.5rem] right-[2.5rem]"
+                className="animate-floating-comment absolute bottom-[10rem] md:bottom-[8.5rem] right-[3rem]"
                 style={{
                   animationDuration: `${chip.duration}s`,
+                  marginRight: `${chip.lane}vw`,
                 }}
                 onAnimationEnd={() => {
                   setFloatingChips((current) =>
@@ -694,16 +727,31 @@ export function FloatingCommentExperience({
         <motion.button
           key="comment-fab"
           type="button"
-          onClick={() => setIsPanelOpen(true)}
-          initial={{ opacity: 0, scale: 0.88, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.88, y: 10 }}
-          className="group relative flex h-10 w-10 items-center justify-center rounded-full border border-[#edd7c1]/86 bg-[linear-gradient(135deg,#fffaf5_0%,#f3fbf7_100%)] text-[#245c48] shadow-[0_0_0_1px_rgba(237,215,193,0.82),0_0_24px_rgba(36,92,72,0.12)] backdrop-blur-sm transition active:scale-95"
+          onClick={handleFabClick}
+          initial={{ opacity: 0, scale: 0.88, x: 20 }}
+          animate={{ opacity: 1, scale: 1, x: 0 }}
+          exit={{ opacity: 0, scale: 0.88, x: 20 }}
+          className={[
+            "group relative flex h-11 items-center rounded-full border border-[#cfe6db]/40 bg-[#245c48] text-white shadow-[0_8px_20px_rgba(36,92,72,0.3)] backdrop-blur-md transition-all duration-500 ease-in-out active:scale-95",
+            isFabExpanded ? "px-4" : "w-11 justify-center px-0",
+          ].join(" ")}
           aria-label={UI_COMMENT_OPEN}
         >
-          <MessageCircle className="h-5 w-5" strokeWidth={2.05} aria-hidden />
+          <div className="flex h-5 w-5 shrink-0 items-center justify-center">
+            <MessageCircle className="h-5 w-5 shrink-0" strokeWidth={2} aria-hidden />
+          </div>
+          <div
+            className={[
+              "flex items-center overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out",
+              isFabExpanded ? "max-w-[120px] ml-2.5 opacity-100" : "max-w-0 ml-0 opacity-0",
+            ].join(" ")}
+          >
+            <span className="pr-1 text-[10px] font-black uppercase tracking-widest drop-shadow-sm">
+              Send Wishes
+            </span>
+          </div>
           {visibleCount > 0 ? (
-            <span className="absolute -right-1 -top-1 flex h-[1.1rem] min-w-[1.1rem] items-center justify-center rounded-full border border-[#245c48]/10 bg-white/95 px-1 text-[8px] font-extrabold uppercase text-[#7b2332] shadow-sm">
+            <span className="absolute -right-1 -top-1 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full border border-[#245c48]/20 bg-white px-1.5 text-[9px] font-black uppercase text-[#7b2332] shadow-md transition-transform duration-300">
               {visibleCount > 99 ? "99+" : visibleCount}
             </span>
           ) : null}

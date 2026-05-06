@@ -160,23 +160,23 @@ export function OpeningGate({
       render: (refs) => (
         <>
           {/* Caption */}
-          <div ref={refs[0]} className="absolute inset-0 z-10 flex flex-col items-center pt-[6vh] px-6">
+          <div ref={refs[0]} className="absolute inset-0 z-10 flex flex-col items-center pt-[18vh] px-6">
             <div className="relative w-full max-w-md animate-float text-center">
               <div data-cinematic-line className="relative inline-block w-full">
                 <p
-                  className="text-[length:4.5cqw] text-white drop-shadow-md relative z-10"
-                  style={{ fontFamily: "'Brittany Signature', serif", lineHeight: 1.05 }}
+                  className="text-[length:8cqw] text-white drop-shadow-md relative z-10"
+                  style={{ fontFamily: "'Brittany Signature', serif", lineHeight: 1.15 }}
                 >
                   Hi, <br />
-                  <span className="relative inline-block mt-0.5 px-6 max-w-full">
+                  <span className="relative inline-block mt-2 px-6 max-w-full">
                     <span
-                      className="absolute inset-x-0 bottom-[24%] top-[44%] -z-10 -rotate-1 rounded-sm"
+                      className="absolute inset-x-0 bottom-[22%] top-[42%] -z-10 -rotate-1 rounded-sm"
                       style={{
                         background: "linear-gradient(to right, transparent 0%, rgba(128, 0, 32, 0.6) 5%, rgba(128, 0, 32, 0.7) 50%, rgba(128, 0, 32, 0.6) 95%, transparent 100%)",
                         boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
                       }}
                     />
-                    <span className="relative z-10 text-[length:clamp(0.9rem,5.5cqw,1.9rem)] text-white drop-shadow-md animate-sway block break-words leading-[1.05]">
+                    <span className="relative z-10 text-[length:clamp(1.3rem,10cqw,2.4rem)] text-white drop-shadow-md animate-sway block break-words leading-[1.1]">
                       {guestName}
                     </span>
                   </span>
@@ -569,14 +569,14 @@ export function OpeningGate({
       </main>
 
       {/* Music & Home FAB */}
-      <div className="fixed bottom-10 right-4 z-[60] flex flex-row-reverse items-center gap-2.5">
+      <div className="fixed bottom-20 md:bottom-14 right-4 md:right-6 z-[60] flex flex-col items-end gap-3.5">
         <AnimatePresence>
           {isOpen && (
             <motion.button
               key="home-btn"
-              initial={{ opacity: 0, scale: 0.8, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: 10 }}
+              initial={{ opacity: 0, scale: 0.8, x: 10 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              exit={{ opacity: 0, scale: 0.8, x: 10 }}
               type="button"
               onClick={handleBackToOpening}
               className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--inv-primary)]/20 bg-[#fbfbfa]/80 text-[var(--inv-primary)] shadow-sm backdrop-blur-sm transition active:scale-95"
@@ -602,8 +602,8 @@ export function OpeningGate({
           className={[
             "group relative flex items-center justify-center rounded-full border shadow-sm backdrop-blur-md transition active:scale-95",
             musicMuted
-              ? "h-12 border-[#ffe4c7]/90 bg-[linear-gradient(135deg,#7b2332_0%,#9b2d42_100%)] px-4 text-[#fff7e8] shadow-[0_0_30px_rgba(155,45,66,0.6)]"
-              : "h-10 w-10 border-[#cfe6db]/80 bg-[linear-gradient(135deg,#f7fffb_0%,#e8f8f0_100%)] text-[#1d4f3f] shadow-[0_0_24px_rgba(36,92,72,0.12)]",
+              ? "h-11 border-[#ffe4c7]/90 bg-[linear-gradient(135deg,#7b2332_0%,#9b2d42_100%)] px-4 text-[#fff7e8] shadow-[0_4px_14px_rgba(123,35,50,0.35)]"
+              : "h-11 w-11 border-[#cfe6db]/80 bg-[linear-gradient(135deg,#f7fffb_0%,#e8f8f0_100%)] text-[#1d4f3f] shadow-[0_4px_14px_rgba(36,92,72,0.15)]",
           ].join(" ")}
           aria-label={musicMuted ? "Play music" : "Mute music"}
         >
@@ -611,13 +611,13 @@ export function OpeningGate({
              <span className="absolute -inset-1.5 animate-ping rounded-full bg-[#f4c89d]/25" />
           )}
           {musicMuted ? (
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2">
               <div className="relative">
                 <span className="absolute -inset-2 rounded-full bg-white/20 blur-md animate-pulse" />
-                <VolumeX className="relative h-5 w-5" strokeWidth={2.3} aria-hidden />
+                <VolumeX className="relative h-4.5 w-4.5" strokeWidth={2.3} aria-hidden />
               </div>
-              <span className="text-[10px] font-black uppercase tracking-[0.25em] drop-shadow-sm">
-                Tap to Play
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] drop-shadow-sm">
+                Tap to Play Music
               </span>
             </div>
           ) : (
